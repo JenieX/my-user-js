@@ -10,7 +10,7 @@ To use this script, you'll need the [Violentmonkey](https://chrome.google.com/we
 
 Once you have Violentmonkey installed, you can simply click on the following link to install the script:
 
-[Install Instagram Scroll Carousel from GitHub](https://github.com/JenieX/user-js/raw/main/dist/ig-scroll-carousel/ig-scroll-carousel.user.js)
+[Install from GitHub](https://github.com/JenieX/user-js/raw/main/dist/ig-scroll-carousel/ig-scroll-carousel.user.js)
 
 ## Usage
 
@@ -34,7 +34,7 @@ To see the commit history for this user script, visit the following link:
 
 If you'd like to contribute to this script, feel free to open an issue or submit a pull request on GitHub:
 
-[Instagram Scroll Carousel on GitHub](https://github.com/JenieX/user-js/issues)
+[https://github.com/JenieX/user-js/issues](https://github.com/JenieX/user-js/issues)
 
 ## License
 
