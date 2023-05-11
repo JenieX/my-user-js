@@ -1,0 +1,22 @@
+{
+  "files.exclude": {
+    ".commitlintrc.json": true,
+    ".eslintrc.json": true,
+    ".gitignore": true,
+    "build": true,
+    "config.json": true,
+    "dist/**/*.css": true,
+    "dist/**/*.html": true,
+    "dist/**/*.meta.js": true,
+    "dist/**/*.raw.js.map": true,
+    "node_modules": true,
+    "package-lock.json": true,
+    "rollup.config.ts": true,
+    "tsconfig.json": true
+  },
+  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "code-runner.executorMap": { "typescript": "tsx" }
+}
+
+// node_modules\ngit-cli\index.js
