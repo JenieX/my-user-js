@@ -24,6 +24,12 @@ This script is designed to work with the current version of Instagram as of the 
 
 In addition, the script may conflict with other user scripts or browser extensions that modify the behavior of Instagram.
 
+## History
+
+To see the commit history for this user script, visit the following link:
+
+[https://github.com/JenieX/user-js/commits/main?path=src/user-js/ig-scroll-carousel](https://github.com/JenieX/user-js/commits/main?path=src/user-js/ig-scroll-carousel)
+
 ## Contributing
 
 If you'd like to contribute to this script, feel free to open an issue or submit a pull request on GitHub:
