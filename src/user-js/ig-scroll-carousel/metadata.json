@@ -1,0 +1,8 @@
+{
+  "name": "instagram-scroll-carousel",
+  "version": "0.0.1",
+  "description": "Adds functionality to easily scroll through media on Instagram carousel posts",
+  "match": ["https://www.instagram.com/*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=www.instagram.com"
+}
