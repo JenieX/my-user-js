@@ -2,6 +2,8 @@
 
 This user script unlocks the context menu on Instagram images, allowing you to save or copy the image, open it in a new tab, and more.
 
+It's worth noting that the main focus of this userscript is the direct pages of users, as that's how the author is used to using Instagram. While it should work on the main page of Instagram and the single posts pages, it may have some issues there.
+
 ## Installation
 
 To use this script, you'll need the Violentmonkey extension installed in your browser. The script has been tested on both Chrome and Edge with [Violentmonkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag).
