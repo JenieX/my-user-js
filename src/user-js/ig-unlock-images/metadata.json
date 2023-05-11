@@ -1,0 +1,8 @@
+{
+  "name": "instagram-unlock-images",
+  "version": "0.0.1",
+  "description": "Unlocks Instagram image context menu and provides easy copying and saving",
+  "match": ["https://www.instagram.com/*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=www.instagram.com"
+}
