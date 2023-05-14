@@ -1,27 +1,17 @@
 import 'paint-console';
 import minimist from 'minimist';
-import path from 'node:path';
-import { checkbox } from '../utils/prompt';
-import { getConfig, setConfig } from '../utils/config-handler';
-import createChoices from './helpers/create-choices';
+import { initialConfig, setConfig } from '../utils/config-handler';
 import buildTask from './build';
 import { BuildTaskOptions } from './helpers/types';
-import listFolders from '../utils/list-folders';
+import selectUserScripts from './helpers/select-user-scripts';
 
 // BUG when a website is using insecure protocol, will not load the locally served sourcemap file
+// TODO Add minimist back to the deps
 
-const userScriptsAbsolutePath = path.resolve('./src/user-js');
-const userScript = await listFolders({ folderPath: userScriptsAbsolutePath });
-
+const [selectedUserScripts] = await selectUserScripts();
 const { watch } = minimist(process.argv.slice(2)) as { watch?: true };
 
-const config = await getConfig();
-
-const choices = createChoices(userScript, config.lastRunChoices as string[] | undefined);
-const selectedUserScripts = await checkbox('Select some user scripts', choices) as string[];
-
-config.lastRunChoices = selectedUserScripts;
-await setConfig(config);
+await setConfig({ ...initialConfig, lastRunChoices: selectedUserScripts });
 
 const initialOptions: BuildTaskOptions = {
   userScripts: selectedUserScripts,

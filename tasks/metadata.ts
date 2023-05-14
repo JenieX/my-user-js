@@ -5,6 +5,7 @@ import { MetadataTaskOptions } from './helpers/types';
 import type { UserScriptSpecificMetaData } from './helpers/types';
 import createMetaData from './helpers/create-metadata';
 import createMetadataBlock from './helpers/create-metadata-block';
+import { checkNameAgainstAlias, checkRequiredMetadataItems } from './helpers/check';
 
 const developerScriptCodeTemplate = `
 GM.xmlHttpRequest({
@@ -16,23 +17,6 @@ GM.xmlHttpRequest({
   },
 });
 `;
-
-function checkRequiredItems(metadata: UserScriptSpecificMetaData): void {
-  const requiredItems = ['name', 'version', 'description', 'match', 'runAt', 'icon'] as const;
-
-  for (const key of requiredItems) {
-    if (metadata[key] === undefined) {
-      throw new Error(`The required metadata item "${key}" is missing`);
-    }
-  }
-}
-
-function checkNameAgainstAlias(userScriptName: string, alias: string): void {
-  const strippedAlias = alias.replace('ig-', 'instagram-');
-  if (userScriptName !== strippedAlias) {
-    throw new Error('Mismatched between the script folder name and its name');
-  }
-}
 
 async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Promise<string> {
   /** The absolute path of the metadata file of the provided user script */
@@ -49,7 +33,7 @@ async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Prom
   const metadata = JSON.parse(metadataString) as UserScriptSpecificMetaData;
 
   checkNameAgainstAlias(metadata.name, userScript);
-  checkRequiredItems(metadata);
+  checkRequiredMetadataItems(metadata);
 
   const mergedMetadata = createMetaData(metadata, userScript);
   mergedMetadata.name = `jx-${mergedMetadata.name}`;

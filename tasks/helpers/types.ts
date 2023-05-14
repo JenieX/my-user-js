@@ -106,4 +106,31 @@ export interface UserScriptSpecificMetaData {
   icon: string,
   grant?: string[],
   require?: string[],
+  docs: {
+    description: string,
+    usage: string,
+    limitations: string,
+  },
+}
+
+export interface RelatedScripts {
+  userScript: string,
+  userScriptAlias: string,
+}
+
+export interface GenerateReadMe {
+  /** The name of the user script */
+  userScript: string,
+
+  /** The name of the user script folder */
+  userScriptAlias: string,
+
+  /** The full description of the user script */
+  description: string,
+
+  /** Instructions on how to use this user script */
+  usage: string,
+
+  limitations: string,
+  related?: RelatedScripts[],
 }

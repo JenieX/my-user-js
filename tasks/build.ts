@@ -5,7 +5,7 @@ import sleep from '../utils/sleep';
 import { userScriptLogger } from './helpers/logger';
 import watchTask from './watch';
 import getItemInfo from './helpers/get-item-info';
-import { getConfig } from '../utils/config-handler';
+import { initialConfig } from '../utils/config-handler';
 import cssTask from './css';
 import cleanTask from './clean';
 import listFiles from '../utils/list-files';
@@ -88,7 +88,6 @@ async function buildTask(options: BuildTaskOptions): Promise<void> {
 
   if (watch !== undefined) {
     const userScriptsAbsolutePath = path.resolve('./src/user-js');
-    const config = await getConfig() as { sharedModules?: { [key: string]: string[] } };
 
     const watcher = watchTask({ userScripts });
 
@@ -109,7 +108,7 @@ async function buildTask(options: BuildTaskOptions): Promise<void> {
       /** Next section is for trigging related user scripts */
 
       const properFilePath = filePath.replaceAll('\\', '/');
-      const relatedUserScripts = config.sharedModules?.[properFilePath];
+      const relatedUserScripts = initialConfig.sharedModules?.[properFilePath];
 
       if (relatedUserScripts !== undefined) {
         for (const relatedUserScript of relatedUserScripts) {
