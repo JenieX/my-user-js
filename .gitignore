@@ -1,9 +1,7 @@
-node_modules
+*test.*
 build
-config.json
-test.js
-test.ts
 dist/**/*.*
 !dist/**/*.meta.js
 !dist/**/*.user.js
-trash
+node_modules
+tests
