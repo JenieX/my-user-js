@@ -1,5 +1,5 @@
-import fsp from 'node:fs/promises';
 import MagicString, { SourceMap } from 'magic-string';
+import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { IncludeFileOptions } from './types';
 

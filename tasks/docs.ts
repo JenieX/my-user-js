@@ -4,7 +4,7 @@ import path from 'node:path';
 import generateReadMe from './helpers/generate-read-me';
 import readJSON from '../utils/read-json';
 import selectUserScripts from './helpers/select-user-scripts';
-import type { UserScriptSpecificMetaData } from './helpers/types';
+import { UserScriptSpecificMetaData } from './helpers/types';
 import { checkRequiredDocsItems } from './helpers/check';
 import { getPossibleAlias, getPossibleAliasValue, getUserScriptName } from './helpers/alias-handler';
 import { initialConfig, setConfig } from '../utils/config-handler';
@@ -12,9 +12,6 @@ import { initialConfig, setConfig } from '../utils/config-handler';
 async function docsTask(): Promise<void> {
   const [selectedUserScripts, allUserScripts] = await selectUserScripts();
   await setConfig({ ...initialConfig, lastRunChoices: selectedUserScripts });
-
-  console.log(selectedUserScripts);
-  // console.log(allUserScripts);
 
   for (const selectedUserScriptAliasOrName of selectedUserScripts) {
     /** The absolute path of the metadata file of the provided user script */

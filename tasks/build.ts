@@ -1,19 +1,19 @@
 import path from 'node:path';
-import { BuildTaskOptions, WaitTaskOptions } from './helpers/types';
+import bundleTask from './bundle';
+import cleanTask from './clean';
+import cssTask from './css';
+import getItemInfo from './helpers/get-item-info';
+import htmlTask from './html';
+import lintTask from './lint';
+import listFiles from '../utils/list-files';
+import metaBlockTask from './metadata';
+import outputTask from './output';
 import run from './helpers/tasks-runner';
 import sleep from '../utils/sleep';
-import { userScriptLogger } from './helpers/logger';
 import watchTask from './watch';
-import getItemInfo from './helpers/get-item-info';
+import { BuildTaskOptions, WaitTaskOptions } from './helpers/types';
 import { initialConfig } from '../utils/config-handler';
-import cssTask from './css';
-import cleanTask from './clean';
-import listFiles from '../utils/list-files';
-import htmlTask from './html';
-import metaBlockTask from './metadata';
-import bundleTask from './bundle';
-import outputTask from './output';
-import lintTask from './lint';
+import { userScriptLogger } from './helpers/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function waitTask({ delay }: WaitTaskOptions): Promise<void> {

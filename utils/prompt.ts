@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import type { Choice } from './types';
+import { Choice } from './types';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function checkbox(message: string, choices: Choice[]): Promise<Choice['value'][]> {

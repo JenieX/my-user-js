@@ -1,10 +1,9 @@
+import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
-import fs from 'node:fs';
-import { MetadataTaskOptions } from './helpers/types';
-import type { UserScriptSpecificMetaData } from './helpers/types';
-import createMetaData from './helpers/create-metadata';
 import createMetadataBlock from './helpers/create-metadata-block';
+import createMetaData from './helpers/create-metadata';
+import { UserScriptSpecificMetaData, MetadataTaskOptions } from './helpers/types';
 import { checkNameAgainstAlias, checkRequiredMetadataItems } from './helpers/check';
 
 const developerScriptCodeTemplate = `

@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { checkbox } from '../../utils/prompt';
-import { initialConfig } from '../../utils/config-handler';
 import createChoices from './create-choices';
 import listFolders from '../../utils/list-folders';
+import { checkbox } from '../../utils/prompt';
+import { initialConfig } from '../../utils/config-handler';
 
 async function selectUserScripts(): Promise<[string[], string[]]> {
   const userScriptsAbsolutePath = path.resolve('./src/user-js');

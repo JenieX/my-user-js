@@ -1,4 +1,4 @@
-import type { Choice } from '../../utils/types';
+import { Choice } from '../../utils/types';
 
 /**
  * Create a list of user scripts choices to be used for checkbox prompt

@@ -1,4 +1,4 @@
-import type { UserScriptSpecificMetaData } from './types';
+import { UserScriptSpecificMetaData } from './types';
 import { getPossibleAlias, getPossibleAliasValue, getUserScriptName } from './alias-handler';
 
 export function checkNameAgainstAlias(userScriptName: string, userScriptAlias: string): void {

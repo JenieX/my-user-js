@@ -1,6 +1,6 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
-import type { JSONLike } from './types';
+import { JSONLike } from './types';
 
 async function getPackage(): Promise<JSONLike<string>> {
   const packageAbsolutePath = path.resolve('package.json');

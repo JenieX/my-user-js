@@ -1,9 +1,9 @@
 import 'paint-console';
 import minimist from 'minimist';
-import { initialConfig, setConfig } from '../utils/config-handler';
 import buildTask from './build';
-import { BuildTaskOptions } from './helpers/types';
 import selectUserScripts from './helpers/select-user-scripts';
+import { BuildTaskOptions } from './helpers/types';
+import { initialConfig, setConfig } from '../utils/config-handler';
 
 // BUG when a website is using insecure protocol, will not load the locally served sourcemap file
 // TODO Add minimist back to the deps

@@ -6,7 +6,7 @@
   "runAt": "document-start",
   "icon": "https://www.google.com/s2/favicons?sz=64&domain=www.instagram.com",
   "docs": {
-    "description": "This user script adds a carousel functionality to Instagram, allowing you to scroll through multiple media using the mouse wheel.\n\nIt's worth noting that the main focus of this userscript is the direct pages of users, as that's how the author is used to using Instagram. While it should work on the main page of Instagram and the single posts pages, it may have some issues there.",
+    "description": "This user script adds a carousel functionality to Instagram, allowing you to scroll through multiple media using the mouse wheel.\n\nIt's worth noting that the main focus of this user script is the direct pages of users, as that's how the author is used to using Instagram. While it should work on the main page of Instagram and the single posts pages, it may have some issues there.",
     "usage": "Once installed, the script will automatically add the carousel functionality to Instagram.\n\nTo use the carousel functionality, simply scroll up or down with your mouse wheel while hovering over an Instagram post with multiple images.",
     "limitations": "This script is designed to work with the current version of Instagram as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility.\n\nIn addition, the script may conflict with other user scripts or browser extensions that modify the behavior of Instagram."
   }

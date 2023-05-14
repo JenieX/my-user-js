@@ -1,5 +1,5 @@
 import capitalizeWords from '../../../utils/capitalize-words';
-import type { RelatedScripts } from '../types';
+import { RelatedScripts } from '../types';
 
 function relatedScriptsSectionTemplate(relatedScripts: RelatedScripts[]): string {
   let relatedScriptsSection = '';

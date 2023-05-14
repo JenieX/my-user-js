@@ -1,6 +1,6 @@
-import path from 'node:path';
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
+import path from 'node:path';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
 
 const httpServer = createServer(async (request: IncomingMessage, response: ServerResponse) => {

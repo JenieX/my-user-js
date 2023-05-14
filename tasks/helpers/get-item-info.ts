@@ -1,4 +1,4 @@
-import type { ItemInfo } from './types';
+import { ItemInfo } from './types';
 
 /**
  * Get the info for the path that is emitted by the Watcher class

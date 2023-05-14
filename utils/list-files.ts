@@ -1,6 +1,6 @@
-import path from 'node:path';
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
+import path from 'node:path';
 import { ListFilesOptions } from './types';
 
 /**

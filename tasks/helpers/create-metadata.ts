@@ -1,6 +1,6 @@
 import getPackage from '../../utils/get-package';
-import type { JSONLike, Strings } from '../../utils/types';
-import type { UserScriptSpecificMetaData } from './types';
+import { JSONLike, Strings } from '../../utils/types';
+import { UserScriptSpecificMetaData } from './types';
 
 const { author, homepage, bugs, license } = await getPackage();
 

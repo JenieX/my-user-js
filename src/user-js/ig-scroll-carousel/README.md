@@ -4,7 +4,7 @@
 
 This user script adds a carousel functionality to Instagram, allowing you to scroll through multiple media using the mouse wheel.
 
-It's worth noting that the main focus of this userscript is the direct pages of users, as that's how the author is used to using Instagram. While it should work on the main page of Instagram and the single posts pages, it may have some issues there.
+It's worth noting that the main focus of this user script is the direct pages of users, as that's how the author is used to using Instagram. While it should work on the main page of Instagram and the single posts pages, it may have some issues there.
 
 ## Installation
 

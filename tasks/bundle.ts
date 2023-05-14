@@ -1,7 +1,7 @@
-import { rollup, Plugin, RenderChunkHook } from 'rollup';
 import fs from 'node:fs';
-import typescript from '@rollup/plugin-typescript';
 import path from 'node:path';
+import typescript from '@rollup/plugin-typescript';
+import { rollup, Plugin, RenderChunkHook } from 'rollup';
 import { BundleTaskOptions } from './helpers/types';
 import includeFile from './helpers/include-file';
 // import externalGlobals from 'rollup-plugin-external-globals';

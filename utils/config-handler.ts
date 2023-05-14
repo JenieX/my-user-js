@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
-import type { Config } from './types';
+import { Config } from './types';
 
 const configPath = path.resolve('./config.json');
 

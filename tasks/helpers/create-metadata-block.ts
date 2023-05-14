@@ -1,4 +1,4 @@
-import type { JSONLike, Strings } from '../../utils/types';
+import { JSONLike, Strings } from '../../utils/types';
 
 function createLine(key: string, value: string): string {
   const whiteSpace = ' '.repeat(15 - key.length);
