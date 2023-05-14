@@ -1,0 +1,17 @@
+html,
+body {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+iframe#ig-splash-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  border: 0;
+}

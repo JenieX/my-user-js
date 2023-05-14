@@ -1,0 +1,13 @@
+{
+  "name": "instagram-splash-screen",
+  "version": "0.0.1",
+  "description": "Modifies the splash screen to a dark bluish splash screen with a white logo",
+  "match": ["https://www.instagram.com/*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=www.instagram.com",
+  "docs": {
+    "description": "This user script modifies the Instagram splash screen to a dark bluish splash screen with a white Instagram logo.\n\nThe icon used in this script was created by [Icons8](https://icons8.com).",
+    "usage": "Once installed, the script will automatically apply the change.",
+    "limitations": "This script is designed to work with the current version of Instagram as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility.\n\nIn addition, the script may conflict with other user scripts or browser extensions that modify the behavior of Instagram."
+  }
+}
