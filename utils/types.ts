@@ -35,3 +35,9 @@ export interface ListFilesOptions extends ListFoldersOptions {
 }
 
 export interface DeleteFilesOptions extends Omit<ListFilesOptions, 'getFullPath'> {}
+
+export interface Config {
+  'lastRunChoices'?: string[],
+  'sharedModules'?: Record<string, string[]>,
+  'aliases'?: Record<string, string>,
+}
