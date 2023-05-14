@@ -4,8 +4,9 @@
   "author": "JenieX",
   "type": "module",
   "scripts": {
-    "build": "tsx ./tasks/index.ts",
     "watch": "tsx ./tasks/index.ts --watch",
+    "build": "tsx ./tasks/index.ts",
+    "build-docs": "tsx ./tasks/docs.ts",
     "serve": "tsx utils/remove-build.ts && rollup --config --configPlugin typescript && node build/user-js-server.js",
     "stage": "ngit-cli add",
     "commit": "npm run stage && start cmd /k \"git status && cd node_modules/.bin && commit -h"
