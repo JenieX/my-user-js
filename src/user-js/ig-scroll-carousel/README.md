@@ -32,6 +32,7 @@ To see the commit history for this script, click [here](https://github.com/Jenie
 
 ## Related Scripts
 
+- [Instagram Splash Screen](https://github.com/JenieX/user-js/tree/main/src/user-js/ig-splash-screen)
 - [Instagram Unlock Images](https://github.com/JenieX/user-js/tree/main/src/user-js/ig-unlock-images)
 
 ## Contributing

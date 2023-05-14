@@ -31,6 +31,7 @@ To see the commit history for this script, click [here](https://github.com/Jenie
 ## Related Scripts
 
 - [Instagram Scroll Carousel](https://github.com/JenieX/user-js/tree/main/src/user-js/ig-scroll-carousel)
+- [Instagram Splash Screen](https://github.com/JenieX/user-js/tree/main/src/user-js/ig-splash-screen)
 
 ## Contributing
 
