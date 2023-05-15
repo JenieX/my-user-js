@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import contributingSectionTemplate from './contributing';
-import creditSectionTemplate from './credit';
 import descriptionSectionTemplate from './description';
 import headerSectionTemplate from './header';
 import historySectionTemplate from './history';
@@ -35,7 +34,6 @@ async function generateReadMe(options: GenerateReadMe): Promise<void> {
 
   readMeContent += contributingSectionTemplate;
   readMeContent += licenseSectionTemplate;
-  readMeContent += creditSectionTemplate;
 
   /** The absolute path of the read me file of the provided user script */
   const readMeFilePath = path.resolve('src/user-js', userScriptAlias, 'README.md');
