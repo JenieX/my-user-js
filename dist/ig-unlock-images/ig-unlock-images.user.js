@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           jx-instagram-unlock-images
-// @version        0.0.1
+// @version        0.0.2
 // @namespace      https://github.com/JenieX/user-js
 // @description    Unlocks Instagram image context menu and provides easy copying and saving
 // @author         JenieX
