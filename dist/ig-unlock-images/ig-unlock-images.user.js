@@ -17,8 +17,8 @@
 // @license        MIT
 // ==/UserScript==
 
-function unlockImageContextMenu(article) {
-  const emptyDiv = article.querySelector('._aagw');
+function unlockImageContextMenu(parent) {
+  const emptyDiv = parent.querySelector('._aagw');
   if (emptyDiv !== null) {
     emptyDiv.remove();
   }
@@ -28,11 +28,16 @@ const imgSourceSetter = Object.getOwnPropertyDescriptor(HTMLImageElement.prototy
 Object.defineProperty(HTMLImageElement.prototype, 'src', {
   set(value) {
     imgSourceSetter.call(this, value);
-    const article = this.closest('article, main');
-    if (article === null) {
+    const hasLink = this.closest('a') !== null;
+    if (hasLink) {
       return;
     }
 
-    unlockImageContextMenu(article);
+    const emptyDivParent = this.closest('._aagu');
+    if (emptyDivParent === null) {
+      return;
+    }
+
+    unlockImageContextMenu(emptyDivParent);
   },
 });

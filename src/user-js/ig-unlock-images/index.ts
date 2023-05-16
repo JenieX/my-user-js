@@ -1,5 +1,5 @@
-function unlockImageContextMenu(article: HTMLElement): void {
-  const emptyDiv = article.querySelector('._aagw');
+function unlockImageContextMenu(parent: HTMLDivElement): void {
+  const emptyDiv = parent.querySelector('._aagw');
   if (emptyDiv !== null) {
     emptyDiv.remove();
   }
@@ -10,11 +10,16 @@ Object.defineProperty(HTMLImageElement.prototype, 'src', {
   set(this: HTMLImageElement, value: string) {
     imgSourceSetter.call(this, value);
 
-    const article = this.closest('article, main') as HTMLElement | null;
-    if (article === null) {
+    const hasLink = this.closest('a') !== null;
+    if (hasLink) {
       return;
     }
 
-    unlockImageContextMenu(article);
+    const emptyDivParent = this.closest('._aagu') as HTMLDivElement | null;
+    if (emptyDivParent === null) {
+      return;
+    }
+
+    unlockImageContextMenu(emptyDivParent);
   },
 });
