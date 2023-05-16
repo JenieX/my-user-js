@@ -20,8 +20,9 @@ const commitMessage = await fsp.readFile(commitMessageFilePath, 'utf-8');
 const [type] = commitMessage.match(/^[^:]+:/)!;
 
 const isInitialCommit = commitMessage.includes(': Begin the project');
+const isVersionCommit = commitMessage.includes(': Update version');
 
-const typeEmoji = isInitialCommit ? '🎉' : emojiMap[type]!;
+const typeEmoji = isInitialCommit ? '🎉' : (isVersionCommit ? '✅' : emojiMap[type]!);
 const updatedCommitMessage = commitMessage.replace(type, typeEmoji);
 
 await fsp.writeFile(commitMessageFilePath, updatedCommitMessage);
