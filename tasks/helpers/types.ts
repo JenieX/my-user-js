@@ -132,5 +132,5 @@ export interface GenerateReadMe {
   usage: string,
 
   limitations: string,
-  related?: RelatedScripts[],
+  related: RelatedScripts[],
 }

@@ -28,7 +28,7 @@ async function generateReadMe(options: GenerateReadMe): Promise<void> {
 
   readMeContent += historySectionTemplate(userScriptAlias);
 
-  if (related !== undefined) {
+  if (related.length > 0) {
     readMeContent += relatedScriptsSectionTemplate(related);
   }
 
