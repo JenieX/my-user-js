@@ -1,0 +1,14 @@
+{
+  "name": "reload-broken-images",
+  "version": "0.0.1",
+  "description": "Provide a command that searches for broken images and reload them.",
+  "match": ["*://*/*"],
+  "runAt": "document-end",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io",
+  "grant": ["GM.registerMenuCommand"],
+  "docs": {
+    "description": "This user script tries to reload broken images, which usually happen if the server is over loaded or the user's internet connection is slow.",
+    "usage": "Once installed, the script will add a menu command called \"Reload broken images\", that activates the script every time it is clicked.",
+    "limitations": "This script does not load images that are not available already. Also, the reloading is done gradually image by image."
+  }
+}
