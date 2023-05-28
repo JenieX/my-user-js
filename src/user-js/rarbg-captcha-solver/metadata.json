@@ -1,0 +1,14 @@
+{
+  "name": "rarbg-captcha-solver",
+  "version": "0.0.1",
+  "description": "Automatically solves the captcha on Rarbg verifying page.",
+  "match": ["https://rarbgmirror.org/threat_defence.php"],
+  "runAt": "document-end",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=rarbgmirror.org",
+  "require": ["https://unpkg.com/tesseract.js@4.0.6/dist/tesseract.min.js"],
+  "docs": {
+    "description": "This user script automatically solves the captcha on Rarbg verifying page.\n\nThe script uses the [Tesseract.js](https://github.com/naptha/tesseract.js) library to recognize the text contained within the captcha image and automatically fills in the captcha solution on the website.",
+    "usage": "Once installed, the script will automatically recognize the verifying page if encountered and tries to solve the captcha.",
+    "limitations": "This script only supports rarbgmirror.org domain at the moment."
+  }
+}
