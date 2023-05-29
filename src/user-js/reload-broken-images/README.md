@@ -4,6 +4,8 @@
 
 This user script tries to reload broken images, which usually happen if the server is over loaded or the user's internet connection is slow.
 
+It also forces the loading of images with lazy loading, that need to be in the window's visual viewport to normally load.
+
 ## Installation
 
 To use this script, you'll need the [Violentmonkey](https://violentmonkey.github.io) extension installed in your browser. The script has been tested on both Chrome and Edge with Violentmonkey.
