@@ -1,7 +1,7 @@
 {
   "name": "reload-broken-images",
-  "version": "0.0.1",
-  "description": "Provide a command that searches for broken images and reload them.",
+  "version": "0.0.2",
+  "description": "Provides a command that searches for broken images and reload them.",
   "match": ["*://*/*"],
   "runAt": "document-end",
   "icon": "https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io",

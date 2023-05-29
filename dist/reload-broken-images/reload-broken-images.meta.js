@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           jx-reload-broken-images
-// @version        0.0.1
+// @version        0.0.2
 // @namespace      https://github.com/JenieX/user-js
-// @description    Provide a command that searches for broken images and reload them.
+// @description    Provides a command that searches for broken images and reload them.
 // @author         JenieX
 // @match          *://*/*
 // @grant          GM.registerMenuCommand
