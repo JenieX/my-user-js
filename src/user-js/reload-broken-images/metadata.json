@@ -1,6 +1,6 @@
 {
   "name": "reload-broken-images",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Provides a command that searches for broken images and reload them.",
   "match": ["*://*/*"],
   "runAt": "document-end",
