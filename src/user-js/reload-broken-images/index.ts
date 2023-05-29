@@ -30,7 +30,9 @@ async function reloadBrokenImages(): Promise<void> {
   const imgs = document.querySelectorAll('img') as NodeListOf<HTMLImageElement>;
 
   const brokenImgs = [...imgs].filter((img) => {
-    return img.src !== '' && isBrokenImage(img) && !isHiddenImage(img);
+    const hasSource = img.getAttribute('src') !== null && img.getAttribute('src') !== '';
+
+    return hasSource && isBrokenImage(img) && !isHiddenImage(img);
   });
 
   if (brokenImgs.length === 0) {
