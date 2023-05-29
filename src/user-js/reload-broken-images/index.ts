@@ -1,3 +1,5 @@
+import { waitForImageLoad, LOG_ID, alert, confirm } from '../../helpers';
+
 let busy = false;
 
 function isBrokenImage(img: HTMLImageElement): boolean {
@@ -11,25 +13,7 @@ function isHiddenImage(img: HTMLImageElement): boolean {
   return isHidden || isParentHidden;
 }
 
-async function reloadImage(img: HTMLImageElement): Promise<void> {
-  return new Promise((resolve) => {
-    img.removeAttribute('loading');
-
-    const doneCallback = (): void => {
-      img.removeEventListener('load', doneCallback);
-      img.removeEventListener('error', doneCallback);
-
-      resolve();
-    };
-
-    img.addEventListener('load', doneCallback);
-    img.addEventListener('error', doneCallback);
-
-    img.setAttribute('src', img.src);
-  });
-}
-
-async function main(): Promise<void> {
+async function reloadBrokenImages(): Promise<void> {
   if (document.readyState !== 'complete') {
     alert('The page is not fully loaded yet!');
 
@@ -56,21 +40,34 @@ async function main(): Promise<void> {
     return;
   }
 
-  if (!window.confirm(`Found ${brokenImgs.length} broken images, reload all?`)) {
+  if (!confirm(`Found ${brokenImgs.length} broken images, reload all?`)) {
     busy = false;
 
     return;
   }
 
+  /** Still broken images counter */
+  let counter = 0;
+
   for (const img of brokenImgs) {
-    await reloadImage(img);
+    img.removeAttribute('loading');
+    img.setAttribute('src', img.src);
+
+    try {
+      await waitForImageLoad(img);
+    } catch {
+      counter += 1;
+      console.error(LOG_ID, `Couldn't reload: ${img.src}`);
+    }
   }
 
-  alert('Done reloading! \n\nRepeat the process if some images are still broken.');
+  if (counter === 0) {
+    alert('All broken images have been successfully reloaded.');
+  } else {
+    alert(`Couldn't reload ${counter} images. Try repeating the process if necessary.`);
+  }
 
   busy = false;
 }
 
-GM.registerMenuCommand('Reload broken images', main);
-
-export {};
+GM.registerMenuCommand('Reload broken images', reloadBrokenImages);

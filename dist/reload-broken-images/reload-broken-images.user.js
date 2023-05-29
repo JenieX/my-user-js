@@ -2,7 +2,7 @@
 // @name           jx-reload-broken-images
 // @version        0.0.1
 // @namespace      https://github.com/JenieX/user-js
-// @description    Provide a command that searches for broken images and reload them.
+// @description    Provides a command that searches for broken images and reload them.
 // @author         JenieX
 // @match          *://*/*
 // @grant          GM.registerMenuCommand
@@ -18,6 +18,53 @@
 // @license        MIT
 // ==/UserScript==
 
+async function waitForImageLoad(img) {
+  if (img.complete) {
+    return;
+  }
+
+  // eslint-disable-next-line consistent-return
+  return new Promise((resolve, reject) => {
+    let onLoad;
+    let onError;
+
+    const removeListeners = () => {
+      img.removeEventListener('load', onLoad);
+      img.removeEventListener('error', onError);
+    };
+
+    onLoad = () => {
+      removeListeners();
+      resolve();
+    };
+
+    onError = () => {
+      removeListeners();
+      reject(new Error('Image failed to load'));
+    };
+
+    img.addEventListener('load', onLoad);
+    img.addEventListener('error', onError);
+  });
+}
+
+function alert(message) {
+  if (message === undefined) {
+    window.alert(`[ ${GM.info.script.name} ]`);
+
+    return;
+  }
+
+  window.alert(`[ ${GM.info.script.name} ]\n\n${message}`);
+}
+
+function confirm(message) {
+  return window.confirm(`[ ${GM.info.script.name} ]\n\n${message}`);
+}
+
+/** The identifier of the script to be used in logging */
+const LOG_ID = `[${GM.info.script.name}]:`;
+
 let busy = false;
 
 function isBrokenImage(img) {
@@ -31,23 +78,7 @@ function isHiddenImage(img) {
   return isHidden || isParentHidden;
 }
 
-async function reloadImage(img) {
-  return new Promise((resolve) => {
-    img.removeAttribute('loading');
-
-    const doneCallback = () => {
-      img.removeEventListener('load', doneCallback);
-      img.removeEventListener('error', doneCallback);
-      resolve();
-    };
-
-    img.addEventListener('load', doneCallback);
-    img.addEventListener('error', doneCallback);
-    img.setAttribute('src', img.src);
-  });
-}
-
-async function main() {
+async function reloadBrokenImages() {
   if (document.readyState !== 'complete') {
     alert('The page is not fully loaded yet!');
 
@@ -74,18 +105,34 @@ async function main() {
     return;
   }
 
-  if (!window.confirm(`Found ${brokenImgs.length} broken images, reload all?`)) {
+  if (!confirm(`Found ${brokenImgs.length} broken images, reload all?`)) {
     busy = false;
 
     return;
   }
 
+  /** Still broken images counter */
+  let counter = 0;
+
   for (const img of brokenImgs) {
-    await reloadImage(img);
+    img.removeAttribute('loading');
+    img.setAttribute('src', img.src);
+
+    try {
+      await waitForImageLoad(img);
+    } catch {
+      counter += 1;
+      console.error(LOG_ID, `Couldn't reload: ${img.src}`);
+    }
   }
 
-  alert('Done reloading! \n\nRepeat the process if some images are still broken.');
+  if (counter === 0) {
+    alert('All broken images have been successfully reloaded.');
+  } else {
+    alert(`Couldn't reload ${counter} images. Try repeating the process if necessary.`);
+  }
+
   busy = false;
 }
 
-GM.registerMenuCommand('Reload broken images', main);
+GM.registerMenuCommand('Reload broken images', reloadBrokenImages);
