@@ -1,0 +1,13 @@
+{
+  "name": "github-no-symbols-panel",
+  "version": "0.0.1",
+  "description": "An attempt to disable the annoying symbols panel.",
+  "match": ["https://github.com/*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=github.com",
+  "docs": {
+    "description": "This user script disables the symbols panel by preventing the click events that fired when clicking the code in the text area.\n\nAlso, it removes the symbols panel icon.\n\n[Related topic](https://github.com/orgs/community/discussions/54962)",
+    "usage": "Once installed, the script will automatically be activated.",
+    "limitations": "This is just a workaround and hopefully GitHub will add an option to disable this feature."
+  }
+}
