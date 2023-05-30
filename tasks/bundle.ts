@@ -47,6 +47,10 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
       }),
       replacement({ userScript, distPath, files }),
     ],
+    treeshake: {
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
   });
 
   const result = await bundle.generate({

@@ -20,6 +20,7 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
 
   let userBundle = `${metadataBlock}\n${devBundle}`;
   userBundle = userBundle.replace('/* eslint-disable */', '');
+  userBundle = userBundle.replaceAll(/\/\/ (?:eslint-disable|@ts-).+/gm, '');
   userBundle = userBundle.replace(/\/\/# sourceMappingURL=.+/, '');
 
   const results = await eslintInstance.lintText(userBundle /* { filePath: 'test.js' } */);
