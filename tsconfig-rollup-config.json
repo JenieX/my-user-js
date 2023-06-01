@@ -9,5 +9,5 @@
     "moduleResolution": "Node",
     "noUncheckedIndexedAccess": true
   },
-  "include": ["**/*/", ".husky/scripts/"]
+  "include": ["rollup.config.ts"]
 }

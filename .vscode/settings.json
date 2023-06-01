@@ -1,8 +1,10 @@
 {
   "files.exclude": {
     ".commitlintrc.json": true,
+    ".eslintignore": true,
     ".eslintrc.json": true,
     ".gitignore": true,
+    ".husky": true,
     ".prettierignore": true,
     "build": true,
     "config.json": true,
@@ -14,6 +16,7 @@
     "package-lock.json": true,
     "rollup.config.ts": true,
     "tests": true,
+    "tsconfig-rollup-config.json": true,
     "tsconfig.json": true
   },
   "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
