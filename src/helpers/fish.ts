@@ -1,34 +1,21 @@
 import { FishOptions, FishReturn } from './types';
 
 async function fishResponse(url: string, fishOptions: FishOptions): FishReturn {
-  const { through, ...requestOptions } = fishOptions;
-
   let response: Response;
   let abortTimeOut: NodeJS.Timeout | undefined;
 
-  switch (through) {
-    case 'GM': {
-      alert('The option "through: GM" is not supported in this module');
-      throw new Error();
-    }
+  if (fishOptions.timeOut === undefined || fishOptions.signal !== undefined) {
+    response = await fetch(url, fishOptions);
+  } else {
+    const controller = new AbortController();
+    const { signal } = controller;
 
-    default: {
-      if (requestOptions.timeOut === undefined || requestOptions.signal !== undefined) {
-        response = await fetch(url, requestOptions);
-      } else {
-        const controller = new AbortController();
-        const { signal } = controller;
+    abortTimeOut = setTimeout(() => { controller.abort(); }, fishOptions.timeOut);
+    response = await fetch(url, { signal, ...fishOptions });
+  }
 
-        abortTimeOut = setTimeout(() => { controller.abort(); }, requestOptions.timeOut);
-        response = await fetch(url, { signal, ...requestOptions });
-      }
-
-      if (!response.ok) {
-        throw new Error(`Request to ${response.url} ended with ${response.status} status`);
-      }
-
-      break;
-    }
+  if (!response.ok) {
+    throw new Error(`Request to ${response.url} ended with ${response.status} status`);
   }
 
   return { response, abortTimeOut };
