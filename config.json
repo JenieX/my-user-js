@@ -1,12 +1,6 @@
 {
   "lastRunChoices": [
-    "gh-no-symbols-panel",
-    "ig-no-suggestions",
-    "ig-scroll-carousel",
-    "ig-splash-screen",
-    "ig-unlock-images",
-    "rarbg-captcha-solver",
-    "reload-broken-images"
+    "lb-common-films"
   ],
   "sharedModules": {
     "/super-awesome/js/test.ts": [
@@ -15,6 +9,7 @@
   },
   "aliases": {
     "gh": "github",
-    "ig": "instagram"
+    "ig": "instagram",
+    "lb": "letterboxd"
   }
 }

@@ -42,6 +42,7 @@
     "rollup-plugin-external-globals": "^0.7.3",
     "sass": "^1.62.1",
     "terser": "^5.17.1",
+    "tippy.js": "^6.3.7",
     "tslib": "^2.5.0",
     "tsx": "^3.12.7",
     "watcher": "^2.2.2"
