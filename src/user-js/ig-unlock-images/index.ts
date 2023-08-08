@@ -15,7 +15,7 @@ Object.defineProperty(HTMLImageElement.prototype, 'src', {
       return;
     }
 
-    const emptyDivParent = this.closest('._aagu') as HTMLDivElement | null;
+    const emptyDivParent = this.closest<HTMLDivElement>('._aagu');
     if (emptyDivParent === null) {
       return;
     }
