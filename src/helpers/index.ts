@@ -7,5 +7,6 @@ export { default as fishX } from './fish-extra';
 export { default as getSearchParam } from './get-search-param';
 export { default as setSearchParam } from './set-search-param';
 export { default as sleep } from './sleep';
+export { default as waitForCompleteLoad } from './wait-for-complete-load';
 export { default as waitForImageLoad } from './wait-for-image-load';
 export { default as waitForPageLoad } from './wait-for-page-load';
