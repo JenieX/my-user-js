@@ -7,7 +7,7 @@
     "https://letterboxd.com/film/*/likes/*",
     "https://letterboxd.com/film/*/members/*"
   ],
-  "runAt": "document-end",
+  "runAt": "document-start",
   "icon": "https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com",
   "require": [
     "https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js",

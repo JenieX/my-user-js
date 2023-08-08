@@ -9,7 +9,7 @@
 // @match          https://letterboxd.com/film/*/members/*
 // @require        https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js
 // @require        https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.js
-// @run-at         document-end
+// @run-at         document-start
 // @noframes
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey

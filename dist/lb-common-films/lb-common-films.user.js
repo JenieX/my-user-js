@@ -9,7 +9,7 @@
 // @match          https://letterboxd.com/film/*/members/*
 // @require        https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js
 // @require        https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.js
-// @run-at         document-end
+// @run-at         document-start
 // @noframes
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
@@ -115,6 +115,19 @@ async function sleep(milliSeconds) {
   });
 }
 
+async function waitForCompleteLoad() {
+  if (document.readyState === 'complete') {
+    return;
+  }
+
+  // eslint-disable-next-line consistent-return
+  return new Promise((resolve) => {
+    window.addEventListener('load', () => {
+      resolve();
+    });
+  });
+}
+
 function getMyFilmsLink() {
   return $('.main-nav .subnav a[href$="/films/"]').href;
 }
@@ -154,6 +167,7 @@ async function getUserFilms(userFilmsLink, collector) {
 const { tippy } = window;
 
 async function main() {
+  await waitForCompleteLoad();
   const state = { busy: false };
   const myFilmsLink = getMyFilmsLink();
   const myFilms = await getUserFilms(myFilmsLink);

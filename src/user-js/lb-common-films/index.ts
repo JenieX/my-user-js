@@ -1,14 +1,16 @@
 import getMyFilmsLink from './js/get-my-films-link';
 import getUserFilms from './js/get-user-films';
-import { $$ } from '../../helpers';
+import { $$, waitForCompleteLoad } from '../../helpers';
 import { ScriptWindow } from './js/types';
 
 const { tippy } = (window as unknown) as ScriptWindow;
 
 async function main(): Promise<void> {
+  await waitForCompleteLoad();
   const state = { busy: false };
 
   const myFilmsLink = getMyFilmsLink();
+
   const myFilms = await getUserFilms(myFilmsLink);
   const myFilmsIDs = new Set(myFilms.map(({ id }) => id));
 
