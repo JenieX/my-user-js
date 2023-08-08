@@ -1,0 +1,16 @@
+{
+  "name": "letterboxd-common-films",
+  "version": "0.0.1",
+  "description": "Find users that may share similar taste in movies at Letterboxd quicker",
+  "match": [
+    "https://letterboxd.com/film/*/fans/*",
+    "https://letterboxd.com/film/*/likes/*",
+    "https://letterboxd.com/film/*/members/*"
+  ],
+  "runAt": "document-end",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com",
+  "require": [
+    "https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js",
+    "https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.js"
+  ]
+}
