@@ -21,11 +21,55 @@
 // @license        MIT
 // ==/UserScript==
 
-function createTooltipContent(commonFilms) {
+function getFilmClassName(myRating, userRating) {
+  const average = (myRating + userRating) / 2;
+  const difference = Math.abs(userRating - average);
+  let className;
+
+  switch (true) {
+    case (difference === 0): {
+      className = 'prefect-match';
+      break;
+    }
+
+    case (difference === 0.5): {
+      className = 'match';
+      break;
+    }
+
+    case (difference === 1 || difference === 1.5): {
+      className = 'close';
+      break;
+    }
+
+    case (difference >= 2 && difference <= 3): {
+      className = 'off';
+      break;
+    }
+
+    default: {
+      className = 'way-off';
+      break;
+    }
+  }
+
+  return className;
+}
+
+function createTooltipContent(commonFilms, myRatedFilms) {
   let commonFilmsText = '<ul class="common-films">';
 
-  for (const { title, rating } of commonFilms) {
-    commonFilmsText += `<li>${title} (${rating / 2})</li>`;
+  for (const { title, rating: userRating, id } of commonFilms) {
+    const myRating = myRatedFilms[id];
+    if (myRating === undefined) {
+      commonFilmsText += '<li class="not-rated">';
+    } else {
+      const filmClassName = getFilmClassName(userRating, myRating);
+      commonFilmsText += `<li class="${filmClassName}" title="Your rating: ${myRating / 2}">`;
+    }
+
+    commonFilmsText += `<a href="${id}" target="_blank">${title} (${userRating / 2})</a>`;
+    commonFilmsText += '</li>';
   }
 
   commonFilmsText += '</ul>';
@@ -165,7 +209,7 @@ async function getUserFilms(userFilmsLink, collector) {
   for (const posterElement of posterElements) {
     const film = {
       title: $('img', posterElement).alt,
-      id: posterElement.firstElementChild.dataset.filmId,
+      id: posterElement.firstElementChild.dataset.targetLink,
     };
 
     try {
@@ -212,7 +256,19 @@ tippy.setDefaultProps({
   content: messages.loading,
 });
 
-addStyle('.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:5px}.common-films>li.prefect-match{color:#00bfff}.common-films>li.match{color:#8a2be2}.common-films>li.close{color:#32cd32}.common-films>li.off{color:#ff8c00}.common-films>li.way-off{color:crimson}.common-films>li.not-rated{color:gray}.common-films::-webkit-scrollbar{height:3px;width:3px}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
+addStyle('.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #666}.common-films>li.prefect-match>a{color:#11ace0}.common-films>li.match>a{color:#7184e7}.common-films>li.close>a{color:#3dbd70}.common-films>li.off>a{color:#c07923}.common-films>li.way-off>a{color:#c02a47}.common-films>li.not-rated>a{color:#c6c6c6}.common-films::-webkit-scrollbar{height:3px;width:3px}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
+
+function extractMyRatedFilms(myFilms) {
+  const map = {};
+
+  for (const { id, rating } of myFilms) {
+    if (rating !== undefined) {
+      map[id] = rating;
+    }
+  }
+
+  return map;
+}
 
 async function main() {
   await waitForCompleteLoad();
@@ -220,6 +276,7 @@ async function main() {
   const myFilmsLink = getMyFilmsLink();
   const myFilms = await getUserFilms(myFilmsLink);
   const myFilmsIDs = new Set(myFilms.map(({ id }) => id));
+  const myRatedFilms = extractMyRatedFilms(myFilms);
   const avatarElements = $$('table.person-table.film-table a.avatar');
 
   for (const avatarElement of avatarElements) {
@@ -246,19 +303,22 @@ async function main() {
           return;
         }
 
+        avatarElement.parentElement.classList.add('loading');
         const userFilms = await getUserFilms(userFilmsLink);
         const commonFilms = userFilms.filter(({ id }) => myFilmsIDs.has(id));
         if (commonFilms.length === 0) {
           instance.setContent(messages.noCommonFilms);
           state.busy = false;
+          avatarElement.parentElement.classList.add('loaded');
 
           return;
         }
 
-        const commonFilmsText = createTooltipContent(commonFilms);
+        const commonFilmsText = createTooltipContent(commonFilms, myRatedFilms);
         instance.setProps({ interactive: true });
         instance.setContent(commonFilmsText);
         state.busy = false;
+        avatarElement.parentElement.classList.add('loaded');
       },
       onHidden(instance) {
         if (instance.loaded !== true) {

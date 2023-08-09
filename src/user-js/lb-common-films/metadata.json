@@ -15,7 +15,7 @@
   ],
   "docs": {
     "description": "This user script is designed to help you find users on Letterboxd who may have similar movie tastes to yours. When you hover over a user's avatar on supported pages, a list of common movies, along with their ratings, will be displayed.\n\nThe script retrieves the rated movies of the target user and filters the list to only include movies that you have watched as well.",
-    "usage": "After installing the script, it will automatically run on supported pages. Please see the limitations section below for more details.\n\n![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-common-films/preview/1.gif?raw=true)",
-    "limitations": "Currently, the script works only on the members, likes, and fans pages of movies on Letterboxd.\n\nFurthermore, you need to wait for the script to finish retrieving the film data for a user before initiating the process for another user."
+    "usage": "After installing the script, it will automatically run on supported pages. Please see the limitations section below for more details.\n\n![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-common-films/preview/1.gif?raw=true)\n\nThe list of common films is color-coded to indicate the level of match between your rating and the user's rating:\n\n- Royal Blue: Perfect match\n- Purple: Strong match\n- Green: Good match\n- Orange: Fair match\n- Red: Weak match\n\nFilms that you haven't rated will be shown in the default white color.",
+    "limitations": "Currently, the script works only on the members, likes, and fans pages of movies on Letterboxd.\n\nFurthermore, you need to wait for the script to finish retrieving the film data for a user before initiating the process for another user.\n\nThis script is designed to work with the current version of Letterboxd as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility."
   }
 }

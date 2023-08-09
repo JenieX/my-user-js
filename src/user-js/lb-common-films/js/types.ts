@@ -9,3 +9,7 @@ export interface Film {
   id: string,
   rating?: number,
 }
+
+export type MyRatedFilms = Record<string, number>;
+
+export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off' | undefined;

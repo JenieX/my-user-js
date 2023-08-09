@@ -20,11 +20,23 @@ After installing the script, it will automatically run on supported pages. Pleas
 
 ![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-common-films/preview/1.gif?raw=true)
 
+The list of common films is color-coded to indicate the level of match between your rating and the user's rating:
+
+- Royal Blue: Perfect match
+- Purple: Strong match
+- Green: Good match
+- Orange: Fair match
+- Red: Weak match
+
+Films that you haven't rated will be shown in the default white color.
+
 ## Limitations
 
 Currently, the script works only on the members, likes, and fans pages of movies on Letterboxd.
 
 Furthermore, you need to wait for the script to finish retrieving the film data for a user before initiating the process for another user.
+
+This script is designed to work with the current version of Letterboxd as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility.
 
 ## History
 

@@ -20,7 +20,7 @@ async function getUserFilms(userFilmsLink: string, collector?: Film[]): Promise<
   for (const posterElement of posterElements) {
     const film: Film = {
       title: $<HTMLImageElement>('img', posterElement).alt,
-      id: (posterElement.firstElementChild as HTMLDivElement).dataset.filmId!,
+      id: (posterElement.firstElementChild as HTMLDivElement).dataset.targetLink!,
     };
 
     try {
