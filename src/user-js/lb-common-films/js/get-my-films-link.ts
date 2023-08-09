@@ -1,7 +1,12 @@
 import { $ } from '../../../helpers';
 
 function getMyFilmsLink(): string {
-  return $<HTMLAnchorElement>('.main-nav .subnav a[href$="/films/"]').href;
+  const selectors = [
+    '.main-nav .subnav a[href$="/films/"]',
+    '#mobile-nav .subnav a[href$="/films/"]',
+  ];
+
+  return $<HTMLAnchorElement>(selectors.join(',')).href;
 }
 
 export default getMyFilmsLink;

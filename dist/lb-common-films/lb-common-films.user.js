@@ -188,7 +188,12 @@ async function waitForCompleteLoad() {
 }
 
 function getMyFilmsLink() {
-  return $('.main-nav .subnav a[href$="/films/"]').href;
+  const selectors = [
+    '.main-nav .subnav a[href$="/films/"]',
+    '#mobile-nav .subnav a[href$="/films/"]',
+  ];
+
+  return $(selectors.join(',')).href;
 }
 
 async function getUserFilms(userFilmsLink, collector) {
@@ -258,6 +263,7 @@ tippy.setDefaultProps({
 
 addStyle('.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #666}.common-films>li.prefect-match>a{color:#11ace0}.common-films>li.match>a{color:#7184e7}.common-films>li.close>a{color:#3dbd70}.common-films>li.off>a{color:#c07923}.common-films>li.way-off>a{color:#c02a47}.common-films>li.not-rated>a{color:#c6c6c6}.common-films::-webkit-scrollbar{height:3px;width:3px}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
 
+// alert();
 function extractMyRatedFilms(myFilms) {
   const map = {};
 
@@ -280,6 +286,8 @@ async function main() {
   const avatarElements = $$('table.person-table.film-table a.avatar');
 
   for (const avatarElement of avatarElements) {
+    const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
+    avatarElement.removeAttribute('href');
     tippy(avatarElement, {
       async onShow(instance) {
         if (instance.loaded) {
@@ -295,7 +303,6 @@ async function main() {
         // eslint-disable-next-line no-param-reassign
         instance.loaded = true;
         state.busy = true;
-        const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
         if (userFilmsLink.startsWith(myFilmsLink)) {
           instance.setContent(messages.isYou);
           state.busy = false;

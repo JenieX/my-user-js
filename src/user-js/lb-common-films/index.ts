@@ -32,6 +32,9 @@ async function main(): Promise<void> {
   const avatarElements = $$<HTMLAnchorElement>('table.person-table.film-table a.avatar');
 
   for (const avatarElement of avatarElements) {
+    const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
+    avatarElement.removeAttribute('href');
+
     tippy(avatarElement, {
       async onShow(instance) {
         if (instance.loaded) {
@@ -48,7 +51,6 @@ async function main(): Promise<void> {
         instance.loaded = true;
         state.busy = true;
 
-        const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
         if (userFilmsLink.startsWith(myFilmsLink)) {
           instance.setContent(messages.isYou);
           state.busy = false;
