@@ -12,4 +12,4 @@ export interface Film {
 
 export type MyRatedFilms = Record<string, number>;
 
-export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off' | undefined;
+export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off';
