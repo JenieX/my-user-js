@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           jx-letterboxd-common-films
-// @version        0.1.0
+// @version        0.1.1
 // @namespace      https://github.com/JenieX/user-js
 // @description    Find users that may share similar taste in movies at Letterboxd quicker
 // @author         JenieX
@@ -263,7 +263,6 @@ tippy.setDefaultProps({
 
 addStyle('.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #666}.common-films>li.prefect-match>a{color:#11ace0}.common-films>li.match>a{color:#7184e7}.common-films>li.close>a{color:#3dbd70}.common-films>li.off>a{color:#c07923}.common-films>li.way-off>a{color:#c02a47}.common-films>li.not-rated>a{color:#c6c6c6}.common-films::-webkit-scrollbar{height:3px;width:3px}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
 
-// alert();
 function extractMyRatedFilms(myFilms) {
   const map = {};
 

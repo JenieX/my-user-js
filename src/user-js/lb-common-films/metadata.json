@@ -1,6 +1,6 @@
 {
   "name": "letterboxd-common-films",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find users that may share similar taste in movies at Letterboxd quicker",
   "match": [
     "https://letterboxd.com/film/*/fans/*",
