@@ -1,9 +1,10 @@
 import getFilmClassName from './get-film-class-name';
-import { Film, MyRatedFilms } from './types';
+import { CreateTooltipContentOpt } from './types';
 
 const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
 
-function createTooltipContent(commonFilms: Film[], myRatedFilms: MyRatedFilms): string {
+function createTooltipContent(options: CreateTooltipContentOpt): string {
+  const { commonFilms, myRatedFilms, userFilmsLink } = options;
   let perfectPoints = 0;
   let userPoints = 0;
 
@@ -30,7 +31,9 @@ function createTooltipContent(commonFilms: Film[], myRatedFilms: MyRatedFilms): 
   commonFilmsText += '</ul>';
 
   const similarly = Math.floor((userPoints / perfectPoints) * 100);
-  const matchElement = `<h3 class="common-match">Match: ${similarly}%</h3>`;
+  let matchElement = `<a class="common-match" href="${userFilmsLink}" target="_blank">`;
+  matchElement += `<h3>Match: ${similarly}%</h3>`;
+  matchElement += '</a>';
 
   return matchElement + commonFilmsText;
 }

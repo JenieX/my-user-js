@@ -13,3 +13,9 @@ export interface Film {
 export type MyRatedFilms = Record<string, number>;
 
 export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off';
+
+export interface CreateTooltipContentOpt {
+  commonFilms: Film[],
+  myRatedFilms: MyRatedFilms,
+  userFilmsLink: string,
+}

@@ -70,7 +70,7 @@ async function main(): Promise<void> {
           return;
         }
 
-        const commonFilmsText = createTooltipContent(commonFilms, myRatedFilms);
+        const commonFilmsText = createTooltipContent({ commonFilms, myRatedFilms, userFilmsLink });
 
         instance.setProps({ interactive: true });
         instance.setContent(commonFilmsText);
