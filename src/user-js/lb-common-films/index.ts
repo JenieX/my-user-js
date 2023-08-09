@@ -3,7 +3,7 @@ import getMyFilmsLink from './js/get-my-films-link';
 import getUserFilms from './js/get-user-films';
 import messages from './js/messages';
 import tippy from './js/tippy';
-import { $$, addStyle, waitForCompleteLoad } from '../../helpers';
+import { $$, addStyle, waitForCompleteLoad, LOG_ID } from '../../helpers';
 import { Film, MyRatedFilms } from './js/types';
 
 addStyle('include-file: style.min.css');
@@ -88,5 +88,5 @@ async function main(): Promise<void> {
 }
 
 main().catch((exception: Error) => {
-  console.error(exception.message);
+  console.error(LOG_ID, exception.message);
 });

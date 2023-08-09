@@ -80,7 +80,11 @@ function createTooltipContent(options) {
   }
 
   commonFilmsText += '</ul>';
-  const similarly = Math.floor((userPoints / perfectPoints) * 100);
+  let similarly = 0;
+  if (perfectPoints !== 0) {
+    similarly = Math.floor((userPoints / perfectPoints) * 100);
+  }
+
   let matchElement = `<a class="common-match" href="${userFilmsLink}" target="_blank">`;
   matchElement += `<h3>Match: ${similarly}%</h3>`;
   matchElement += '</a>';
@@ -105,6 +109,9 @@ function $$(selector, parent) {
 
   return elements;
 }
+
+/** The identifier of the script to be used in logging */
+const LOG_ID = `[${GM.info.script.name}]:`;
 
 function addStyle(css, parent = document.documentElement) {
   const style = document.createElement('style');
@@ -268,11 +275,11 @@ const { tippy } = window;
 tippy.setDefaultProps({
   allowHTML: true,
   placement: 'right',
-  // maxWidth: 300,
+  maxWidth: 'none',
   content: messages.loading,
 });
 
-addStyle('.common-match>h3{color:#ddd;font-size:small;font-weight:bolder;text-align:center}.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #666}.common-films>li.prefect-match>a{color:#11ace0}.common-films>li.match>a{color:#7184e7}.common-films>li.close>a{color:#3dbd70}.common-films>li.off>a{color:#c07923}.common-films>li.way-off>a{color:#c02a47}.common-films>li.not-rated>a{color:#c6c6c6}.common-films::-webkit-scrollbar{height:3px;width:3px}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
+addStyle('.common-match>h3{color:#ddd;font-size:small;font-weight:bolder;text-align:center}.common-films{max-height:50vh;overflow:auto;width:max-content}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #666}.common-films>li.prefect-match>a{color:#11ace0}.common-films>li.match>a{color:#7184e7}.common-films>li.close>a{color:#3dbd70}.common-films>li.off>a{color:#c07923}.common-films>li.way-off>a{color:#c02a47}.common-films>li.not-rated>a{color:#c6c6c6}.common-films::-webkit-scrollbar{height:3px;width:3px}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
 
 function extractMyRatedFilms(myFilms) {
   const map = {};
@@ -347,5 +354,5 @@ async function main() {
 }
 
 main().catch((exception) => {
-  console.error(exception.message);
+  console.error(LOG_ID, exception.message);
 });

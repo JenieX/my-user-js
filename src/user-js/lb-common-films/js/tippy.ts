@@ -5,7 +5,7 @@ const { tippy } = (window as unknown) as ScriptWindow;
 tippy.setDefaultProps({
   allowHTML: true,
   placement: 'right',
-  // maxWidth: 300,
+  maxWidth: 'none',
   content: messages.loading,
 });
 

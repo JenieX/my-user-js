@@ -30,7 +30,11 @@ function createTooltipContent(options: CreateTooltipContentOpt): string {
 
   commonFilmsText += '</ul>';
 
-  const similarly = Math.floor((userPoints / perfectPoints) * 100);
+  let similarly = 0;
+  if (perfectPoints !== 0) {
+    similarly = Math.floor((userPoints / perfectPoints) * 100);
+  }
+
   let matchElement = `<a class="common-match" href="${userFilmsLink}" target="_blank">`;
   matchElement += `<h3>Match: ${similarly}%</h3>`;
   matchElement += '</a>';
