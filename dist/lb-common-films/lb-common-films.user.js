@@ -21,6 +21,18 @@
 // @license        MIT
 // ==/UserScript==
 
+function createTooltipContent(commonFilms) {
+  let commonFilmsText = '<ul class="common-films">';
+
+  for (const { title, rating } of commonFilms) {
+    commonFilmsText += `<li>${title} (${rating / 2})</li>`;
+  }
+
+  commonFilmsText += '</ul>';
+
+  return commonFilmsText;
+}
+
 function $(selector, parent) {
   const element = (parent ?? document).querySelector(selector);
   if (element === null) {
@@ -37,6 +49,15 @@ function $$(selector, parent) {
   }
 
   return elements;
+}
+
+function addStyle(css, parent = document.documentElement) {
+  const style = document.createElement('style');
+  style.setAttribute('type', 'text/css');
+  style.textContent = css;
+  parent.append(style);
+
+  return style;
 }
 
 async function fishResponse(url, fishOptions) {
@@ -109,12 +130,6 @@ const fish = {
   },
 };
 
-async function sleep(milliSeconds) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliSeconds);
-  });
-}
-
 async function waitForCompleteLoad() {
   if (document.readyState === 'complete') {
     return;
@@ -133,38 +148,71 @@ function getMyFilmsLink() {
 }
 
 async function getUserFilms(userFilmsLink, collector) {
+  const onlyRatedFilms = userFilmsLink.includes('by/entry-rating');
+  let reachedTheEndOfRatedFilms = false;
   const films = collector ?? [];
   const documentX = await fish.document(userFilmsLink);
-  const container = $('.content-wrap ul.poster-list', documentX.body);
-  const elements = $$('li[class="poster-container"]', container);
+  let container;
 
-  for (const element of elements) {
+  try {
+    container = $('.content-wrap ul.poster-list', documentX.body);
+  } catch {
+    return films;
+  }
+
+  const posterElements = $$('li[class="poster-container"]', container);
+
+  for (const posterElement of posterElements) {
     const film = {
-      title: $('img', element).alt,
-      id: element.firstElementChild.dataset.filmId,
+      title: $('img', posterElement).alt,
+      id: posterElement.firstElementChild.dataset.filmId,
     };
 
     try {
-      const ratingElement = $('.rating', element);
+      const ratingElement = $('.rating', posterElement);
       const rating = ratingElement.className.split('-').pop();
       film.rating = Number(rating);
-    } catch {}
+    } catch {
+      if (onlyRatedFilms === true) {
+        reachedTheEndOfRatedFilms = true;
+        break;
+      }
+    }
 
     films.push(film);
   }
 
   const nextPageElement = documentX.querySelector('.paginate-nextprev > a.next');
-  if (nextPageElement === null) {
+  if (nextPageElement === null || reachedTheEndOfRatedFilms === true) {
     return films;
   }
 
-  await sleep(500);
   const nextPageLink = nextPageElement.href;
 
   return getUserFilms(nextPageLink, films);
 }
 
+const loading = 'Loading..';
+const isYou = 'This is you!';
+const wait = 'Wait for previous action to complete..';
+const noCommonFilms = 'You have no common <strong>Rated</strong> films with this user';
+
+const messages = {
+  loading,
+  isYou,
+  wait,
+  noCommonFilms,
+};
+
 const { tippy } = window;
+tippy.setDefaultProps({
+  allowHTML: true,
+  placement: 'right',
+  // maxWidth: 300,
+  content: messages.loading,
+});
+
+addStyle('.common-films{max-height:50vh;overflow:auto}.common-films>li{padding:5px}.common-films>li.prefect-match{color:#00bfff}.common-films>li.match{color:#8a2be2}.common-films>li.close{color:#32cd32}.common-films>li.off{color:#ff8c00}.common-films>li.way-off{color:crimson}.common-films>li.not-rated{color:gray}.common-films::-webkit-scrollbar{height:3px;width:3px}.common-films::-webkit-scrollbar-thumb{background:#5f5f5f}');
 
 async function main() {
   await waitForCompleteLoad();
@@ -172,19 +220,17 @@ async function main() {
   const myFilmsLink = getMyFilmsLink();
   const myFilms = await getUserFilms(myFilmsLink);
   const myFilmsIDs = new Set(myFilms.map(({ id }) => id));
-  const elements = $$('table.person-table.film-table a.avatar');
+  const avatarElements = $$('table.person-table.film-table a.avatar');
 
-  for (const element of elements) {
-    tippy(element, {
-      allowHTML: true,
-      content: 'Loading..',
+  for (const avatarElement of avatarElements) {
+    tippy(avatarElement, {
       async onShow(instance) {
         if (instance.loaded) {
           return;
         }
 
         if (state.busy) {
-          instance.setContent('Wait for previous action to complete..');
+          instance.setContent(messages.wait);
 
           return;
         }
@@ -192,36 +238,32 @@ async function main() {
         // eslint-disable-next-line no-param-reassign
         instance.loaded = true;
         state.busy = true;
-        const userFilmsLink = `${element.href}films/`;
-        if (myFilmsLink === userFilmsLink) {
-          instance.setContent('This is you!');
+        const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
+        if (userFilmsLink.startsWith(myFilmsLink)) {
+          instance.setContent(messages.isYou);
           state.busy = false;
 
           return;
         }
 
         const userFilms = await getUserFilms(userFilmsLink);
-
-        const commonFilms = userFilms.filter(({ id, rating }) => {
-          return myFilmsIDs.has(id) && rating !== undefined;
-        });
-
+        const commonFilms = userFilms.filter(({ id }) => myFilmsIDs.has(id));
         if (commonFilms.length === 0) {
-          instance.setContent('You have no common films with this user');
+          instance.setContent(messages.noCommonFilms);
           state.busy = false;
 
           return;
         }
 
-        let commonFilmsText = '<ul>';
-
-        for (const { title, rating } of commonFilms) {
-          commonFilmsText += `<li>${title} (${rating / 2})</li>`;
-        }
-
-        commonFilmsText += '</ul>';
+        const commonFilmsText = createTooltipContent(commonFilms);
+        instance.setProps({ interactive: true });
         instance.setContent(commonFilmsText);
         state.busy = false;
+      },
+      onHidden(instance) {
+        if (instance.loaded !== true) {
+          instance.setContent(messages.loading);
+        }
       },
     });
   }

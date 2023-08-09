@@ -1,33 +1,31 @@
+import createTooltipContent from './js/create-tooltip-content';
 import getMyFilmsLink from './js/get-my-films-link';
 import getUserFilms from './js/get-user-films';
-import { $$, waitForCompleteLoad } from '../../helpers';
-import { ScriptWindow } from './js/types';
+import messages from './js/messages';
+import tippy from './js/tippy';
+import { $$, addStyle, waitForCompleteLoad } from '../../helpers';
 
-const { tippy } = (window as unknown) as ScriptWindow;
+addStyle('include-file: style.min.css');
 
 async function main(): Promise<void> {
   await waitForCompleteLoad();
   const state = { busy: false };
 
   const myFilmsLink = getMyFilmsLink();
-
   const myFilms = await getUserFilms(myFilmsLink);
   const myFilmsIDs = new Set(myFilms.map(({ id }) => id));
 
-  const elements = $$<HTMLAnchorElement>('table.person-table.film-table a.avatar');
+  const avatarElements = $$<HTMLAnchorElement>('table.person-table.film-table a.avatar');
 
-  for (const element of elements) {
-    tippy(element, {
-      allowHTML: true,
-      content: 'Loading..',
-
+  for (const avatarElement of avatarElements) {
+    tippy(avatarElement, {
       async onShow(instance) {
         if (instance.loaded) {
           return;
         }
 
         if (state.busy) {
-          instance.setContent('Wait for previous action to complete..');
+          instance.setContent(messages.wait);
 
           return;
         }
@@ -36,37 +34,35 @@ async function main(): Promise<void> {
         instance.loaded = true;
         state.busy = true;
 
-        const userFilmsLink = `${element.href}films/`;
-        if (myFilmsLink === userFilmsLink) {
-          instance.setContent('This is you!');
+        const userFilmsLink = `${avatarElement.href}films/by/entry-rating/`;
+        if (userFilmsLink.startsWith(myFilmsLink)) {
+          instance.setContent(messages.isYou);
           state.busy = false;
 
           return;
         }
 
         const userFilms = await getUserFilms(userFilmsLink);
-
-        const commonFilms = userFilms.filter(({ id, rating }) => {
-          return myFilmsIDs.has(id) && rating !== undefined;
-        });
+        const commonFilms = userFilms.filter(({ id }) => myFilmsIDs.has(id));
 
         if (commonFilms.length === 0) {
-          instance.setContent('You have no common films with this user');
+          instance.setContent(messages.noCommonFilms);
           state.busy = false;
 
           return;
         }
 
-        let commonFilmsText = '<ul>';
+        const commonFilmsText = createTooltipContent(commonFilms);
 
-        for (const { title, rating } of commonFilms) {
-          commonFilmsText += `<li>${title} (${rating! / 2})</li>`;
-        }
-
-        commonFilmsText += '</ul>';
-
+        instance.setProps({ interactive: true });
         instance.setContent(commonFilmsText);
         state.busy = false;
+      },
+
+      onHidden(instance) {
+        if (instance.loaded !== true) {
+          instance.setContent(messages.loading);
+        }
       },
     });
   }

@@ -1,0 +1,41 @@
+.common-films {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.common-films > li {
+  padding: 5px;
+}
+
+.common-films > li.prefect-match {
+  color: deepskyblue;
+}
+
+.common-films > li.match {
+  color: blueviolet;
+}
+
+.common-films > li.close {
+  color: limegreen;
+}
+
+.common-films > li.off {
+  color: darkorange;
+}
+
+.common-films > li.way-off {
+  color: crimson;
+}
+
+.common-films > li.not-rated {
+  color: gray;
+}
+
+.common-films::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.common-films::-webkit-scrollbar-thumb {
+  background: #5f5f5f;
+}
