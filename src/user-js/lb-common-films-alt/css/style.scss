@@ -1,0 +1,64 @@
+.common-match > h3 {
+  color: #939393;
+  font-size: medium;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.common-films {
+  width: max-content;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.common-films > li {
+  padding: 7px;
+}
+
+.common-films > :not(:last-child) {
+  border-bottom: 1px solid #353535;
+}
+.common-films > li.prefect-match > a {
+  color: #15b3e9;
+}
+
+.common-films > li.match > a {
+  color: #8f6be2;
+}
+
+.common-films > li.close > a {
+  color: #35d274;
+}
+
+.common-films > li.off > a {
+  color: #dd8820;
+}
+
+.common-films > li.way-off > a {
+  color: #e94363;
+}
+
+.person-summary.loading a.name {
+  color: #d63f74;
+}
+
+.person-summary.loaded a.name {
+  color: #a2ff00;
+}
+
+.common-films::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.common-films::-webkit-scrollbar-thumb {
+  background: #353535;
+}
+
+.tippy-box {
+  background-color: #000;
+}
+
+.tippy-arrow {
+  color: #000;
+}
