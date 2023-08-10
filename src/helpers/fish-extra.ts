@@ -6,16 +6,24 @@ export interface FishOptions extends RequestInit {
   headers?: GM.Request['headers'],
   body?: Blob | FormData | string,
   onProgress?: GM.Request['onprogress'],
+  anonymous?: boolean,
 }
 
+/**
+ * When setting the cookie header, anonymous property must be set to `true`
+ * https://violentmonkey.github.io/api/gm/#gm_xmlhttprequest
+ */
+
 async function fishResponse(url: string, fishOptions: FishOptions = {}): Promise<Response> {
-  const { method, headers, body, onProgress } = fishOptions;
+  const { method, headers, anonymous, body, onProgress } = fishOptions;
 
   return new Promise((resolve, reject) => {
     GM.xmlHttpRequest({
       url,
       method: method ?? 'GET',
       headers,
+      // @ts-expect-error
+      anonymous,
       data: body,
       responseType: 'blob',
       onprogress: onProgress,
