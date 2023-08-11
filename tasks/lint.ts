@@ -14,6 +14,14 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
        */
       rules: {
         'no-use-before-define': [2, { functions: false }],
+        'prefer-destructuring': [
+          2,
+          {
+            VariableDeclarator: { array: true, object: true },
+            AssignmentExpression: { array: false, object: false },
+          },
+          { enforceForRenamedProperties: false },
+        ],
       },
     },
   });

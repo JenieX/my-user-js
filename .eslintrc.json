@@ -5,7 +5,14 @@
     "eol-last": 1,
     "no-multiple-empty-lines": 1,
     "no-trailing-spaces": 1,
-
-    "@typescript-eslint/quotes": 1
+    "@typescript-eslint/quotes": 1,
+    "prefer-destructuring": [
+      2,
+      {
+        "VariableDeclarator": { "array": true, "object": true },
+        "AssignmentExpression": { "array": false, "object": false }
+      },
+      { "enforceForRenamedProperties": false }
+    ]
   }
 }
