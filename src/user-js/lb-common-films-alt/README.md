@@ -31,7 +31,11 @@ The list of common films is color-coded to indicate the level of match between y
 
 ## Limitations
 
-Currently, the script works only on the members, likes, and fans pages of movies on Letterboxd.
+Currently, the script works only on the these pages:
+
+- Members, fans, and likes pages of movies
+- Followers and following pages of users
+- User films page
 
 This script is designed to work with the current version of Letterboxd as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility.
 
