@@ -1,6 +1,6 @@
 {
   "name": "letterboxd-common-films-alt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Discover users on Letterboxd with similar movie tastes",
   "match": [
     "https://letterboxd.com/*/films/*",
