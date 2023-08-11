@@ -1,3 +1,11 @@
 {
-  "extends": "@jeniex/eslint-config-ts"
+  "extends": "@jeniex/eslint-config-ts",
+  "rules": {
+    // TODO To be updated across all projects
+    "eol-last": 1,
+    "no-multiple-empty-lines": 1,
+    "no-trailing-spaces": 1,
+
+    "@typescript-eslint/quotes": 1
+  }
 }
