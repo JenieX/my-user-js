@@ -23,7 +23,7 @@ After installing the script, navigate to your script manager's menu command opti
 
 The list of common films is color-coded to indicate the level of match between your rating and the user's rating:
 
-- Royal Blue: Perfect match
+- Royal Blue: Very strong match
 - Purple: Strong match
 - Green: Good match
 - Orange: Fair match
