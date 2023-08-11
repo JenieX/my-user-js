@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           jx-letterboxd-common-films-alt
-// @version        0.0.1
+// @version        0.0.2
 // @namespace      https://github.com/JenieX/user-js
 // @description    Discover users on Letterboxd with similar movie tastes
 // @author         JenieX
