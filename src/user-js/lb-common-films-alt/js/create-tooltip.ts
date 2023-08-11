@@ -17,12 +17,6 @@ function createContainer(): TooltipElements {
   };
 }
 
-// function createListItem(): HTMLLIElement {
-//   const listItem = document.createElement('li');
-
-//   return listItem;
-// }
-
 function createTooltip(options: CreateTooltipOpt): string {
   const { commonFilms, myRatedFilms, userFilmsLink } = options;
   let perfectPoints = 0;

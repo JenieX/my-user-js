@@ -27,7 +27,13 @@ async function getFilms({ link, collector, myFilmsIDs }: GetFilmsOpt): Promise<F
       }
 
       films.push(film);
-    } catch {}
+    } catch (exception: unknown) {
+      const id = (exception as Error).message;
+      if (!myFilmsIDs.has(id)) {
+        reachedTheEnd = true;
+        break;
+      }
+    }
   }
 
   const nextPageElement = documentX.querySelector('.paginate-nextprev > a.next');

@@ -23,6 +23,7 @@ async function getMyFilms({ link, collector }: GetMyFilmsOpt): Promise<Film[]> {
     try {
       film = extractData(posterElement);
     } catch {
+      // const firstNotRatedFilm = (exception as Error).message;
       reachedTheEnd = true;
 
       break;
