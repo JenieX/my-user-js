@@ -1,8 +1,8 @@
 import extractData from './extract-data';
 import { $, $$, fish } from '../../../helpers';
-import { Film, GetFilmsOpt } from './types';
+import { Films, GetFilmsOpt } from './types';
 
-async function getFilms({ link, collector, myFilmsIDs }: GetFilmsOpt): Promise<Film[]> {
+async function getFilms({ link, collector, myFilmsIDs }: GetFilmsOpt): Promise<Films> {
   // eslint-disable-next-line prefer-const
   let reachedTheEnd = false;
   const films = collector ?? [];
@@ -38,6 +38,11 @@ async function getFilms({ link, collector, myFilmsIDs }: GetFilmsOpt): Promise<F
 
   const nextPageElement = documentX.querySelector('.paginate-nextprev > a.next');
   if (nextPageElement === null || reachedTheEnd === true) {
+    const totalElement = $<HTMLAnchorElement>('.sub-nav > .selected > a', documentX.body);
+    const totalFilms = totalElement.title;
+
+    films.totalFilms = totalFilms;
+
     return films;
   }
 

@@ -4,9 +4,17 @@ export type Elements = NodeListOf<HTMLAnchorElement>;
 
 export type ResolveGetElements = ((value: Elements) => void) | undefined;
 
+export type Films = Film[] & { totalFilms?: string };
+
+export interface Film {
+  title: string,
+  id: string,
+  rating?: number,
+}
+
 export interface GetMyFilmsOpt {
   link: string,
-  collector?: Film[],
+  collector?: Films,
 }
 
 export interface GetFilmsOpt extends GetMyFilmsOpt {
@@ -17,12 +25,6 @@ export type ScriptWindow = Window & {
   tippy: typeof Tippy,
 };
 
-export interface Film {
-  title: string,
-  id: string,
-  rating?: number,
-}
-
 export type MyRatedFilms = Record<string, number>;
 
 export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off';
@@ -31,11 +33,12 @@ export interface CreateTooltipOpt {
   commonFilms: Film[],
   myRatedFilms: MyRatedFilms,
   userFilmsLink: string,
+  totalFilms: string,
 }
 
 export interface TooltipElements {
   container: HTMLDivElement,
   matchElement: HTMLAnchorElement,
-  // totalElement: HTMLHeadingElement,
+  totalElement: HTMLHeadingElement,
   listElement: HTMLDListElement,
 }

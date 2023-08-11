@@ -1,28 +1,15 @@
+import createContainer from './create-container';
 import getFilmClassName from './get-film-class-name';
-import { $ } from '../../../helpers';
-import { CreateTooltipOpt, TooltipElements } from './types';
+import { CreateTooltipOpt } from './types';
 
 const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
 
-function createContainer(): TooltipElements {
-  const container = document.createElement('div');
-  container.innerHTML = 'include-file: container.html';
-  container.setAttribute('class', 'common-films');
-
-  return {
-    container,
-    matchElement: $('#common-films-match', container),
-    // totalElement: $('#common-films-total', container),
-    listElement: $('#common-films-list', container),
-  };
-}
-
 function createTooltip(options: CreateTooltipOpt): string {
-  const { commonFilms, myRatedFilms, userFilmsLink } = options;
+  const { commonFilms, myRatedFilms, userFilmsLink, totalFilms } = options;
   let perfectPoints = 0;
   let userPoints = 0;
 
-  const { container, matchElement, listElement } = createContainer();
+  const { container, listElement, matchElement, totalElement } = createContainer();
 
   for (const { title, rating: userRating, id } of commonFilms) {
     const listItem = document.createElement('li');
@@ -48,6 +35,8 @@ function createTooltip(options: CreateTooltipOpt): string {
     const similarly = Math.floor((userPoints / perfectPoints) * 100);
     matchElement.firstElementChild!.textContent = `Match: ${similarly}%`;
   }
+
+  totalElement.textContent = totalFilms;
 
   return container.outerHTML;
 }

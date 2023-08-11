@@ -59,6 +59,8 @@ async function main(): Promise<void> {
         const commonFilms = await getFilms({ link: userFilmsLink, myFilmsIDs });
         commonFilms.sort((a, b) => b.rating! - a.rating!);
 
+        const totalFilms = commonFilms.totalFilms!;
+
         if (commonFilms.length === 0) {
           instance.setContent(messages.noCommonFilms);
           avatarElement.parentElement!.classList.add('loaded');
@@ -70,6 +72,7 @@ async function main(): Promise<void> {
           commonFilms,
           myRatedFilms,
           userFilmsLink: userFilmsLink.replace('/your-', '/entry-'),
+          totalFilms,
         });
 
         instance.setProps({ interactive: true });
