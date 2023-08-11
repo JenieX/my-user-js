@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Discover users on Letterboxd with similar movie tastes",
   "match": [
+    "https://letterboxd.com/*/films/*",
+    "https://letterboxd.com/*/followers/*",
+    "https://letterboxd.com/*/following/*",
     "https://letterboxd.com/film/*/fans/*",
     "https://letterboxd.com/film/*/likes/*",
     "https://letterboxd.com/film/*/members/*"

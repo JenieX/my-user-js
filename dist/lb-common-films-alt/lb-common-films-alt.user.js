@@ -4,6 +4,9 @@
 // @namespace      https://github.com/JenieX/user-js
 // @description    Discover users on Letterboxd with similar movie tastes
 // @author         JenieX
+// @match          https://letterboxd.com/*/films/*
+// @match          https://letterboxd.com/*/followers/*
+// @match          https://letterboxd.com/*/following/*
 // @match          https://letterboxd.com/film/*/fans/*
 // @match          https://letterboxd.com/film/*/likes/*
 // @match          https://letterboxd.com/film/*/members/*
@@ -23,121 +26,6 @@
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com
 // @license        MIT
 // ==/UserScript==
-
-function getFilmClassName(myRating, userRating) {
-  const average = (myRating + userRating) / 2;
-  const difference = Math.abs(userRating - average);
-  let className;
-
-  switch (true) {
-    case (difference === 0): {
-      className = 'prefect-match';
-      break;
-    }
-
-    case (difference === 0.5): {
-      className = 'match';
-      break;
-    }
-
-    case (difference === 1 || difference === 1.5): {
-      className = 'close';
-      break;
-    }
-
-    case (difference >= 2 && difference <= 3): {
-      className = 'off';
-      break;
-    }
-
-    default: {
-      className = 'way-off';
-      break;
-    }
-  }
-
-  return className;
-}
-
-const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
-
-function createTooltip(options) {
-  const { commonFilms, myRatedFilms, userFilmsLink } = options;
-  let perfectPoints = 0;
-  let userPoints = 0;
-  let commonFilmsText = '<ul class="common-films">';
-
-  for (const { title, rating: userRating, id } of commonFilms) {
-    const myRating = myRatedFilms[id];
-    if (myRating === undefined) {
-      commonFilmsText += '<li class="not-rated">';
-    } else {
-      perfectPoints += 4;
-      const filmClassName = getFilmClassName(userRating, myRating);
-      userPoints += filmClassNames.indexOf(filmClassName);
-      commonFilmsText += `<li class="${filmClassName}" title="Your rating: ${myRating / 2}">`;
-    }
-
-    commonFilmsText += `<a href="${id}" target="_blank">${title} (${userRating / 2})</a>`;
-    commonFilmsText += '</li>';
-  }
-
-  commonFilmsText += '</ul>';
-  let similarly = 0;
-  if (perfectPoints !== 0) {
-    similarly = Math.floor((userPoints / perfectPoints) * 100);
-  }
-
-  let matchElement = `<a class="common-match" href="${userFilmsLink}" target="_blank">`;
-  matchElement += `<h3>Match: ${similarly}%</h3>`;
-  matchElement += '</a>';
-
-  return matchElement + commonFilmsText;
-}
-
-async function getAccount() {
-  const accountUsername = await GM.getValue('accountUsername');
-  if (typeof accountUsername !== 'string') {
-    throw new TypeError('Set your account username to activate the script');
-  }
-
-  return accountUsername;
-}
-
-let detectedElements;
-let resolveGetElements;
-
-function detectElements() {
-  new MutationObserver((mutations, observer) => {
-    for (const mutation of mutations) {
-      const { target } = mutation;
-      if (target instanceof HTMLElement && target.matches('nav.footer-nav.js-footer-nav')) {
-        observer.disconnect();
-        const avatarElements = document.querySelectorAll('table.person-table.film-table a.avatar');
-        if (resolveGetElements === undefined) {
-          detectedElements = avatarElements;
-        } else {
-          resolveGetElements(avatarElements);
-        }
-
-        return;
-      }
-    }
-  }).observe(document, {
-    childList: true,
-    subtree: true,
-  });
-}
-
-async function getElements() {
-  return new Promise((resolve) => {
-    if (detectedElements === undefined) {
-      resolveGetElements = resolve;
-    } else {
-      resolve(detectedElements);
-    }
-  });
-}
 
 function $(selector, parent) {
   const element = (parent ?? document).querySelector(selector);
@@ -159,6 +47,7 @@ function $$(selector, parent) {
 
 /** The identifier of the script to be used in logging */
 const LOG_ID = `[${GM.info.script.name}]:`;
+const IS_ANDROID = window.navigator.userAgent.includes('Android');
 
 function alert(message) {
   if (message === undefined) {
@@ -253,14 +142,150 @@ const fish = {
   },
 };
 
+function createContainer() {
+  const container = document.createElement('div');
+  container.innerHTML = '<header> <a id="common-films-match" target="_blank"> <h3>Match: 0%</h3> </a> <h5 id="common-films-total" title="User films"></h5> </header><article> <ul id="common-films-list"></ul> </article>';
+  container.setAttribute('id', 'common-films');
+
+  return {
+    container,
+    matchElement: $('#common-films-match', container),
+    totalElement: $('#common-films-total', container),
+    listElement: $('#common-films-list', container),
+  };
+}
+
+function getFilmClassName(myRating, userRating) {
+  const average = (myRating + userRating) / 2;
+  const difference = Math.abs(userRating - average);
+  let className;
+
+  switch (true) {
+    case (difference === 0): {
+      className = 'prefect-match';
+      break;
+    }
+
+    case (difference === 0.5): {
+      className = 'match';
+      break;
+    }
+
+    case (difference === 1 || difference === 1.5): {
+      className = 'close';
+      break;
+    }
+
+    case (difference >= 2 && difference <= 3): {
+      className = 'off';
+      break;
+    }
+
+    default: {
+      className = 'way-off';
+      break;
+    }
+  }
+
+  return className;
+}
+
+const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
+
+function createTooltip(options) {
+  const { commonFilms, myRatedFilms, userFilmsLink, totalFilms } = options;
+  let perfectPoints = 0;
+  let userPoints = 0;
+  const { container, listElement, matchElement, totalElement } = createContainer();
+
+  for (const { title, rating: userRating, id } of commonFilms) {
+    const listItem = document.createElement('li');
+    const myRating = myRatedFilms[id];
+    if (myRating !== undefined) {
+      perfectPoints += 4;
+      const filmClassName = getFilmClassName(userRating, myRating);
+      userPoints += filmClassNames.indexOf(filmClassName);
+      listItem.setAttribute('class', filmClassName);
+      listItem.setAttribute('title', `Your rating: ${myRating / 2}`);
+    }
+
+    listItem.innerHTML = `<a href="${id}" target="_blank">${title} (${userRating / 2})</a>`;
+    listElement.append(listItem);
+  }
+
+  matchElement.setAttribute('href', userFilmsLink);
+  if (perfectPoints !== 0) {
+    const similarly = Math.floor((userPoints / perfectPoints) * 100);
+    matchElement.firstElementChild.textContent = `Match: ${similarly}%`;
+  }
+
+  totalElement.textContent = totalFilms;
+
+  return container.outerHTML;
+}
+
+async function getAccount() {
+  const accountUsername = await GM.getValue('accountUsername');
+  if (typeof accountUsername !== 'string') {
+    throw new TypeError('Set your account username to activate the script');
+  }
+
+  return accountUsername;
+}
+
+let detectedElements;
+let resolveGetElements;
+
+function detectElements() {
+  new MutationObserver((mutations, observer) => {
+    for (const mutation of mutations) {
+      const { target } = mutation;
+      if (target instanceof HTMLElement && target.matches('nav.footer-nav.js-footer-nav')) {
+        observer.disconnect();
+
+        const avatarSelectors = [
+          'table.person-table a.avatar',
+          '.profile-mini-person > .avatar',
+        ];
+
+        const avatarElements = document.querySelectorAll(avatarSelectors.join(','));
+        if (resolveGetElements === undefined) {
+          detectedElements = avatarElements;
+        } else {
+          resolveGetElements(avatarElements);
+        }
+
+        return;
+      }
+    }
+  }).observe(document, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+async function getElements() {
+  return new Promise((resolve) => {
+    if (detectedElements === undefined) {
+      resolveGetElements = resolve;
+    } else {
+      resolve(detectedElements);
+    }
+  });
+}
+
 function extractFilmData(posterElement) {
   const title = $('img', posterElement).alt;
   const id = posterElement.firstElementChild.dataset.targetLink;
-  // Next line could crash the scope
-  const ratingElement = $('.rating', posterElement);
-  const rating = Number(ratingElement.className.split('-').pop());
 
-  return { title, id, rating };
+  try {
+    const ratingElement = $('.rating', posterElement);
+    const rating = Number(ratingElement.className.split('-').pop());
+
+    return { title, id, rating };
+  } catch {
+    throw new Error(id);
+  }
 }
 
 async function getFilms({ link, collector, myFilmsIDs }) {
@@ -287,11 +312,21 @@ async function getFilms({ link, collector, myFilmsIDs }) {
       }
 
       films.push(film);
-    } catch {}
+    } catch (exception) {
+      const id = exception.message;
+      if (!myFilmsIDs.has(id)) {
+        reachedTheEnd = true;
+        break;
+      }
+    }
   }
 
   const nextPageElement = documentX.querySelector('.paginate-nextprev > a.next');
   if (nextPageElement === null || reachedTheEnd === true) {
+    const totalElement = $('.sub-nav > .selected > a', documentX.body);
+    const totalFilms = totalElement.title;
+    films.totalFilms = totalFilms;
+
     return films;
   }
 
@@ -320,6 +355,7 @@ async function getMyFilms({ link, collector }) {
     try {
       film = extractFilmData(posterElement);
     } catch {
+      // const firstNotRatedFilm = (exception as Error).message;
       reachedTheEnd = true;
       break;
     }
@@ -384,8 +420,7 @@ tippy.setDefaultProps({
   content: messages.loading,
 });
 
-addStyle('.common-match>h3{color:#939393;font-size:medium;font-weight:bolder;text-align:center}.common-films{max-height:50vh;overflow:auto;width:max-content}.common-films>li{padding:7px}.common-films>:not(:last-child){border-bottom:1px solid #353535}.common-films>li.prefect-match>a{color:#15b3e9}.common-films>li.match>a{color:#8f6be2}.common-films>li.close>a{color:#35d274}.common-films>li.off>a{color:#dd8820}.common-films>li.way-off>a{color:#e94363}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}.common-films::-webkit-scrollbar{height:3px;width:3px}.common-films::-webkit-scrollbar-thumb{background:#353535}.tippy-box{background-color:#000}.tippy-arrow{color:#000}');
-const isAndroid = window.navigator.userAgent.includes('Android');
+addStyle('#common-films>header{cursor:default;margin-bottom:10px}#common-films-match>h3{color:#939393;font-size:medium;font-weight:bolder;text-align:center}#common-films-total{color:#535353;text-align:center}#common-films-list{max-height:50vh;overflow:auto;width:max-content}#common-films-list>li{padding:7px}#common-films-list>:not(:last-child){border-bottom:1px solid #353535}#common-films-list>li.prefect-match>a{color:#15b3e9}#common-films-list>li.match>a{color:#8f6be2}#common-films-list>li.close>a{color:#35d274}#common-films-list>li.off>a{color:#dd8820}#common-films-list>li.way-off>a{color:#e94363}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}#common-films-list::-webkit-scrollbar{height:3px;width:3px}#common-films-list::-webkit-scrollbar-thumb{background:#353535}.tippy-box{background-color:#000}.tippy-arrow{color:#000}');
 
 function extractMyRatedFilms(myFilms) {
   const map = {};
@@ -409,7 +444,7 @@ async function main() {
 
   for (const avatarElement of avatarElements) {
     const userFilmsLink = `${avatarElement.href}films/by/your-rating/`;
-    if (isAndroid) {
+    if (IS_ANDROID) {
       avatarElement.removeAttribute('href');
     }
 
@@ -430,6 +465,7 @@ async function main() {
         avatarElement.parentElement.classList.add('loading');
         const commonFilms = await getFilms({ link: userFilmsLink, myFilmsIDs });
         commonFilms.sort((a, b) => b.rating - a.rating);
+        const { totalFilms } = commonFilms;
         if (commonFilms.length === 0) {
           instance.setContent(messages.noCommonFilms);
           avatarElement.parentElement.classList.add('loaded');
@@ -441,6 +477,7 @@ async function main() {
           commonFilms,
           myRatedFilms,
           userFilmsLink: userFilmsLink.replace('/your-', '/entry-'),
+          totalFilms,
         });
 
         instance.setProps({ interactive: true });

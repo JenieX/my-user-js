@@ -11,7 +11,12 @@ function detectElements(): void {
       if (target instanceof HTMLElement && target.matches('nav.footer-nav.js-footer-nav')) {
         observer.disconnect();
 
-        const avatarElements = document.querySelectorAll('table.person-table.film-table a.avatar');
+        const avatarSelectors = [
+          'table.person-table a.avatar',
+          '.profile-mini-person > .avatar',
+        ];
+
+        const avatarElements = document.querySelectorAll(avatarSelectors.join(','));
 
         if (resolveGetElements === undefined) {
           detectedElements = avatarElements as Elements;

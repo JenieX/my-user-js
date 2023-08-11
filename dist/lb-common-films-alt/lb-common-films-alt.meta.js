@@ -4,6 +4,9 @@
 // @namespace      https://github.com/JenieX/user-js
 // @description    Discover users on Letterboxd with similar movie tastes
 // @author         JenieX
+// @match          https://letterboxd.com/*/films/*
+// @match          https://letterboxd.com/*/followers/*
+// @match          https://letterboxd.com/*/following/*
 // @match          https://letterboxd.com/film/*/fans/*
 // @match          https://letterboxd.com/film/*/likes/*
 // @match          https://letterboxd.com/film/*/members/*
