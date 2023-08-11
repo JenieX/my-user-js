@@ -155,42 +155,42 @@ function createContainer() {
   };
 }
 
-function getFilmClassName(myRating, userRating) {
+const filmClasses = ['way-off', 'off', 'close', 'match', 'great-match'];
+
+function getFilmClass(myRating, userRating) {
   const average = (myRating + userRating) / 2;
-  const difference = Math.abs(userRating - average);
+  const difference = Math.abs(userRating - average) * 2;
   let className;
 
   switch (true) {
-    case (difference === 0): {
-      className = 'prefect-match';
+    case (difference <= 1): {
+      className = filmClasses[4];
       break;
     }
 
-    case (difference === 0.5): {
-      className = 'match';
+    case (difference <= 3): {
+      className = filmClasses[3];
       break;
     }
 
-    case (difference === 1 || difference === 1.5): {
-      className = 'close';
+    case (difference <= 5): {
+      className = filmClasses[2];
       break;
     }
 
-    case (difference >= 2 && difference <= 3): {
-      className = 'off';
+    case (difference <= 7): {
+      className = filmClasses[1];
       break;
     }
 
     default: {
-      className = 'way-off';
+      className = filmClasses[0];
       break;
     }
   }
 
   return className;
 }
-
-const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
 
 function createTooltip(options) {
   const { commonFilms, myRatedFilms, userFilmsLink, totalFilms } = options;
@@ -203,8 +203,8 @@ function createTooltip(options) {
     const myRating = myRatedFilms[id];
     if (myRating !== undefined) {
       perfectPoints += 4;
-      const filmClassName = getFilmClassName(userRating, myRating);
-      userPoints += filmClassNames.indexOf(filmClassName);
+      const filmClassName = getFilmClass(userRating, myRating);
+      userPoints += filmClasses.indexOf(filmClassName);
       listItem.setAttribute('class', filmClassName);
       listItem.setAttribute('title', `Your rating: ${myRating / 2}`);
     }
@@ -420,7 +420,7 @@ tippy.setDefaultProps({
   content: messages.loading,
 });
 
-addStyle('#common-films>header{cursor:default;margin-bottom:10px}#common-films-match>h3{color:#939393;font-size:medium;font-weight:bolder;text-align:center}#common-films-total{color:#535353;text-align:center}#common-films-list{max-height:50vh;overflow:auto;width:max-content}#common-films-list>li{padding:7px}#common-films-list>:not(:last-child){border-bottom:1px solid #353535}#common-films-list>li.prefect-match>a{color:#15b3e9}#common-films-list>li.match>a{color:#8f6be2}#common-films-list>li.close>a{color:#35d274}#common-films-list>li.off>a{color:#dd8820}#common-films-list>li.way-off>a{color:#e94363}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}#common-films-list::-webkit-scrollbar{height:3px;width:3px}#common-films-list::-webkit-scrollbar-thumb{background:#353535}.tippy-box{background-color:#000}.tippy-arrow{color:#000}');
+addStyle('#common-films>header{cursor:default;margin-bottom:10px}#common-films-match>h3{color:#939393;font-size:medium;font-weight:bolder;text-align:center}#common-films-total{color:#535353;text-align:center}#common-films-list{max-height:50vh;overflow:auto;width:max-content}#common-films-list>li{padding:7px}#common-films-list>:not(:last-child){border-bottom:1px solid #353535}#common-films-list>li.great-match>a{color:#15b3e9}#common-films-list>li.match>a{color:#8f6be2}#common-films-list>li.close>a{color:#35d274}#common-films-list>li.off>a{color:#dd8820}#common-films-list>li.way-off>a{color:#e94363}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}#common-films-list::-webkit-scrollbar{height:3px;width:3px}#common-films-list::-webkit-scrollbar-thumb{background:#353535}.tippy-box{background-color:#000}.tippy-arrow{color:#000}');
 
 function extractMyRatedFilms(myFilms) {
   const map = {};

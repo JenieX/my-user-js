@@ -1,8 +1,6 @@
 import createContainer from './create-container';
-import getFilmClassName from './get-film-class-name';
+import getFilmClass, { filmClasses } from './get-film-class';
 import { CreateTooltipOpt } from './types';
-
-const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
 
 function createTooltip(options: CreateTooltipOpt): string {
   const { commonFilms, myRatedFilms, userFilmsLink, totalFilms } = options;
@@ -18,8 +16,8 @@ function createTooltip(options: CreateTooltipOpt): string {
     if (myRating !== undefined) {
       perfectPoints += 4;
 
-      const filmClassName = getFilmClassName(userRating!, myRating);
-      userPoints += filmClassNames.indexOf(filmClassName);
+      const filmClassName = getFilmClass(userRating!, myRating);
+      userPoints += filmClasses.indexOf(filmClassName);
 
       listItem.setAttribute('class', filmClassName);
       listItem.setAttribute('title', `Your rating: ${myRating / 2}`);

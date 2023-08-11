@@ -27,7 +27,7 @@ export type ScriptWindow = Window & {
 
 export type MyRatedFilms = Record<string, number>;
 
-export type FilmClassName = 'close' | 'match' | 'off' | 'prefect-match' | 'way-off';
+export type FilmClass = 'close' | 'great-match' | 'match' | 'off' | 'way-off';
 
 export interface CreateTooltipOpt {
   commonFilms: Film[],
