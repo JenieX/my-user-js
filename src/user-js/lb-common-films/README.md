@@ -42,6 +42,10 @@ This script is designed to work with the current version of Letterboxd as of the
 
 To see the commit history for this script, click [here](https://github.com/JenieX/user-js/commits/main?path=src/user-js/lb-common-films).
 
+## Related Scripts
+
+- [Letterboxd Common Films Alt](https://github.com/JenieX/user-js/tree/main/src/user-js/lb-common-films-alt)
+
 ## Contributing
 
 If you'd like to contribute to this script or any other user script by me, feel free to open an issue or submit a pull request [here](https://github.com/JenieX/user-js/issues).

@@ -2,7 +2,7 @@
 // @name           jx-letterboxd-common-films
 // @version        0.1.4
 // @namespace      https://github.com/JenieX/user-js
-// @description    Find users that may share similar taste in movies at Letterboxd quicker
+// @description    Discover users on Letterboxd with similar movie tastes
 // @author         JenieX
 // @match          https://letterboxd.com/film/*/fans/*
 // @match          https://letterboxd.com/film/*/likes/*
@@ -112,6 +112,7 @@ function $$(selector, parent) {
 
 /** The identifier of the script to be used in logging */
 const LOG_ID = `[${GM.info.script.name}]:`;
+window.navigator.userAgent.includes('Android');
 
 function addStyle(css, parent = document.documentElement) {
   const style = document.createElement('style');
