@@ -7,10 +7,9 @@ import messages from './js/messages';
 import setAccount from './js/set-account';
 import tippy from './js/tippy';
 import { Film, MyRatedFilms } from './js/types';
-import { LOG_ID, addStyle } from '../../helpers';
+import { LOG_ID, IS_ANDROID, addStyle } from '../../helpers';
 
 addStyle('include-file: style.min.css');
-const isAndroid = window.navigator.userAgent.includes('Android');
 
 function extractMyRatedFilms(myFilms: Film[]): MyRatedFilms {
   const map: MyRatedFilms = {};
@@ -36,7 +35,7 @@ async function main(): Promise<void> {
 
   for (const avatarElement of avatarElements) {
     const userFilmsLink = `${avatarElement.href}films/by/your-rating/`;
-    if (isAndroid) {
+    if (IS_ANDROID) {
       avatarElement.removeAttribute('href');
     }
 

@@ -1,45 +1,61 @@
 import getFilmClassName from './get-film-class-name';
-import { CreateTooltipOpt } from './types';
+import { $ } from '../../../helpers';
+import { CreateTooltipOpt, TooltipElements } from './types';
 
 const filmClassNames = ['way-off', 'off', 'close', 'match', 'prefect-match'];
+
+function createContainer(): TooltipElements {
+  const container = document.createElement('div');
+  container.innerHTML = 'include-file: container.html';
+  container.setAttribute('class', 'common-films');
+
+  return {
+    container,
+    matchElement: $('#common-films-match', container),
+    // totalElement: $('#common-films-total', container),
+    listElement: $('#common-films-list', container),
+  };
+}
+
+// function createListItem(): HTMLLIElement {
+//   const listItem = document.createElement('li');
+
+//   return listItem;
+// }
 
 function createTooltip(options: CreateTooltipOpt): string {
   const { commonFilms, myRatedFilms, userFilmsLink } = options;
   let perfectPoints = 0;
   let userPoints = 0;
 
-  let commonFilmsText = '<ul class="common-films">';
+  const { container, matchElement, listElement } = createContainer();
 
   for (const { title, rating: userRating, id } of commonFilms) {
+    const listItem = document.createElement('li');
     const myRating = myRatedFilms[id];
-    if (myRating === undefined) {
-      commonFilmsText += '<li class="not-rated">';
-    } else {
+
+    if (myRating !== undefined) {
       perfectPoints += 4;
 
       const filmClassName = getFilmClassName(userRating!, myRating);
       userPoints += filmClassNames.indexOf(filmClassName);
 
-      commonFilmsText += `<li class="${filmClassName}" title="Your rating: ${myRating / 2}">`;
+      listItem.setAttribute('class', filmClassName);
+      listItem.setAttribute('title', `Your rating: ${myRating / 2}`);
     }
 
-    commonFilmsText += `<a href="${id}" target="_blank">${title} (${userRating! / 2})</a>`;
+    listItem.innerHTML = `<a href="${id}" target="_blank">${title} (${userRating! / 2})</a>`;
 
-    commonFilmsText += '</li>';
+    listElement.append(listItem);
   }
 
-  commonFilmsText += '</ul>';
-
-  let similarly = 0;
+  matchElement.setAttribute('href', userFilmsLink);
   if (perfectPoints !== 0) {
-    similarly = Math.floor((userPoints / perfectPoints) * 100);
+    const similarly = Math.floor((userPoints / perfectPoints) * 100);
+    matchElement.firstElementChild!.textContent = `Match: ${similarly}%`;
   }
 
-  let matchElement = `<a class="common-match" href="${userFilmsLink}" target="_blank">`;
-  matchElement += `<h3>Match: ${similarly}%</h3>`;
-  matchElement += '</a>';
-
-  return matchElement + commonFilmsText;
+  return container.outerHTML;
 }
 
 export default createTooltip;

@@ -1,40 +1,45 @@
-.common-match > h3 {
+#common-films-match > h3 {
   color: #939393;
   font-size: medium;
   font-weight: bolder;
   text-align: center;
 }
 
-.common-films {
+#common-films-total {
+  color: #535353;
+  text-align: center;
+}
+
+#common-films-list {
   width: max-content;
   max-height: 50vh;
   overflow: auto;
 }
 
-.common-films > li {
+#common-films-list > li {
   padding: 7px;
 }
 
-.common-films > :not(:last-child) {
+#common-films-list > :not(:last-child) {
   border-bottom: 1px solid #353535;
 }
-.common-films > li.prefect-match > a {
+#common-films-list > li.prefect-match > a {
   color: #15b3e9;
 }
 
-.common-films > li.match > a {
+#common-films-list > li.match > a {
   color: #8f6be2;
 }
 
-.common-films > li.close > a {
+#common-films-list > li.close > a {
   color: #35d274;
 }
 
-.common-films > li.off > a {
+#common-films-list > li.off > a {
   color: #dd8820;
 }
 
-.common-films > li.way-off > a {
+#common-films-list > li.way-off > a {
   color: #e94363;
 }
 
@@ -46,12 +51,12 @@
   color: #a2ff00;
 }
 
-.common-films::-webkit-scrollbar {
+#common-films-list::-webkit-scrollbar {
   width: 3px;
   height: 3px;
 }
 
-.common-films::-webkit-scrollbar-thumb {
+#common-films-list::-webkit-scrollbar-thumb {
   background: #353535;
 }
 

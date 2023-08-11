@@ -32,3 +32,10 @@ export interface CreateTooltipOpt {
   myRatedFilms: MyRatedFilms,
   userFilmsLink: string,
 }
+
+export interface TooltipElements {
+  container: HTMLDivElement,
+  matchElement: HTMLAnchorElement,
+  // totalElement: HTMLHeadingElement,
+  listElement: HTMLDListElement,
+}
