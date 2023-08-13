@@ -9,7 +9,7 @@
     "prefer-destructuring": [
       2,
       {
-        "VariableDeclarator": { "array": true, "object": true },
+        "VariableDeclarator": { "array": false, "object": true },
         "AssignmentExpression": { "array": false, "object": false }
       },
       { "enforceForRenamedProperties": false }

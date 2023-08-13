@@ -17,7 +17,7 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
         'prefer-destructuring': [
           2,
           {
-            VariableDeclarator: { array: true, object: true },
+            VariableDeclarator: { array: false, object: true },
             AssignmentExpression: { array: false, object: false },
           },
           { enforceForRenamedProperties: false },
