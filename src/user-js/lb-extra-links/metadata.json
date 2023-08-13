@@ -1,0 +1,16 @@
+{
+  "name": "letterboxd-extra-links",
+  "version": "0.0.1",
+  "description": "Exposes the IMDb link of movies in the popup menu of posters",
+  "match": [
+    "https://letterboxd.com/*/films/*",
+    "https://letterboxd.com/film/*"
+  ],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com",
+  "docs": {
+    "description": "This user script exposes the IMDb link of movies in the popup menu of posters. It also adds TL and TG links for easy search.",
+    "usage": "After installing the script, it will automatically run on supported pages. Please see the limitations section below for more details.\n\n![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-extra-links/preview/1.png?raw=true)\n![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-extra-links/preview/2.png?raw=true)\n![Preview](https://github.com/JenieX/user-js/blob/main/src/user-js/lb-extra-links/preview/3.png?raw=true)",
+    "limitations": "Currently, the script works only on the these pages:\n\n- Films main pages\n- User films page\n\nThis script is designed to work with the current version of Letterboxd as of the script's last update. It may not work with future versions of the site, and may require updates to maintain compatibility.\n\nIn addition, the script may conflict with other user scripts or browser extensions that modify the behavior of Letterboxd."
+  }
+}
