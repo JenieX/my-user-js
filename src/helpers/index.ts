@@ -1,5 +1,5 @@
 export { $, $$ } from './query-selector';
-export { LOG_ID, TAB_URL, IS_ANDROID } from './constants';
+export { LOG_ID, TAB_URL } from './constants';
 export { alert, confirm, prompt } from './dialogs';
 export { default as addStyle } from './add-style';
 export { default as fish } from './fish';

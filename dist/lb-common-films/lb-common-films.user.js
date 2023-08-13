@@ -112,7 +112,6 @@ function $$(selector, parent) {
 
 /** The identifier of the script to be used in logging */
 const LOG_ID = `[${GM.info.script.name}]:`;
-window.navigator.userAgent.includes('Android');
 
 function addStyle(css, parent = document.documentElement) {
   const style = document.createElement('style');

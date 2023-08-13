@@ -47,7 +47,6 @@ function $$(selector, parent) {
 
 /** The identifier of the script to be used in logging */
 const LOG_ID = `[${GM.info.script.name}]:`;
-const IS_ANDROID = window.navigator.userAgent.includes('Android');
 
 function alert(message) {
   if (message === undefined) {
@@ -420,6 +419,7 @@ tippy.setDefaultProps({
   content: messages.loading,
 });
 
+const IS_ANDROID = window.navigator.userAgent.includes('Android');
 addStyle('#common-films>header{cursor:default;margin-bottom:10px}#common-films-match>h3{color:#939393;font-size:medium;font-weight:bolder;text-align:center}#common-films-total{color:#535353;text-align:center}#common-films-list{max-height:50vh;overflow:auto;width:max-content}#common-films-list>li{padding:7px}#common-films-list>:not(:last-child){border-bottom:1px solid #353535}#common-films-list>li.great-match>a{color:#15b3e9}#common-films-list>li.match>a{color:#8f6be2}#common-films-list>li.close>a{color:#35d274}#common-films-list>li.off>a{color:#dd8820}#common-films-list>li.way-off>a{color:#e94363}.person-summary.loading a.name{color:#d63f74}.person-summary.loaded a.name{color:#a2ff00}#common-films-list::-webkit-scrollbar{height:3px;width:3px}#common-films-list::-webkit-scrollbar-thumb{background:#353535}.tippy-box{background-color:#000}.tippy-arrow{color:#000}');
 
 function extractMyRatedFilms(myFilms) {

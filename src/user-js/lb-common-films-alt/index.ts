@@ -7,7 +7,9 @@ import messages from './js/messages';
 import setAccount from './js/set-account';
 import tippy from './js/tippy';
 import { Film, MyRatedFilms } from './js/types';
-import { LOG_ID, IS_ANDROID, addStyle } from '../../helpers';
+import { LOG_ID, addStyle } from '../../helpers';
+
+const IS_ANDROID = window.navigator.userAgent.includes('Android');
 
 addStyle('include-file: style.min.css');
 
