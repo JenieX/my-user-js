@@ -1,6 +1,6 @@
 {
   "name": "letterboxd-extra-links",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Exposes the IMDb link of movies in the popup menu of posters",
   "match": [
     "https://letterboxd.com/*/films/*",

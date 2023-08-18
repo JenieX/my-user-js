@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           jx-letterboxd-extra-links
-// @version        0.0.1
+// @version        0.1.0
 // @namespace      https://github.com/JenieX/user-js
 // @description    Exposes the IMDb link of movies in the popup menu of posters
 // @author         JenieX
