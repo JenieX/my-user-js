@@ -22,6 +22,8 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
           },
           { enforceForRenamedProperties: false },
         ],
+
+        'unicorn/no-unused-properties': 1,
       },
     },
   });

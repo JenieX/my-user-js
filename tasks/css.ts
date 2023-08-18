@@ -1,8 +1,8 @@
-import cssnano from 'cssnano';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import cssnano from 'cssnano';
 import postcss from 'postcss';
-import sass from 'sass';
+import * as sass from 'sass';
 import listFiles from '../utils/list-files.js';
 import { CSSTaskOptions } from './helpers/types';
 
