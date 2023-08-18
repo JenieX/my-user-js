@@ -1,14 +1,10 @@
-import addElements from './add-elements';
 import getIdentifier from '../get-identifier';
 import { fish } from '../../../../helpers';
 
-async function fetchIdentifier(filmLink: string, listElement: HTMLUListElement): Promise<void> {
+async function fetchIdentifier(filmLink: string): Promise<string> {
   const documentX = await fish.document(filmLink);
 
-  try {
-    const filmID = getIdentifier(documentX.body);
-    addElements(listElement, filmID);
-  } catch {}
+  return getIdentifier(documentX.body);
 }
 
 export default fetchIdentifier;

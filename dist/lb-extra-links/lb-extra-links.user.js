@@ -24,24 +24,24 @@ const IMDB = {
 };
 
 const TL = {
-  label: 'TorrentLeech',
+  label: 'Search TL',
   template: 'https://www.torrentleech.org/torrents/browse/index/query/%s/orderby/size/order/desc',
 };
 
 const TG = {
-  label: 'TorrentGalaxy',
+  label: 'Search TG',
   template: 'https://torrentgalaxy.to/torrents.php?search=%s&%3Bsort=size&%3Border=desc&sort=size&order=desc',
 };
 
 const templates = [IMDB, TL, TG];
 
-function createItem({ label, template, imdbID, className }) {
+function createItem({ label, template, replacement, className }) {
   const element = document.createElement('li');
   const child = document.createElement('a');
   if (template === undefined) {
     child.setAttribute('href', '#');
   } else {
-    child.setAttribute('href', template.replace('%s', imdbID));
+    child.setAttribute('href', template.replace('%s', replacement));
     child.setAttribute('target', '_blank');
   }
 
@@ -58,6 +58,10 @@ function createItem({ label, template, imdbID, className }) {
 function createItems(imdbID, className) {
   const elements = [];
   let finalTemplates = templates;
+  /**
+   * Remove the first item that is `imdb`, if on a film page. And as it happened, items
+   * in there do not require a class name.
+   */
   if (className === undefined) {
     finalTemplates = templates.slice(1);
   }
@@ -66,7 +70,7 @@ function createItems(imdbID, className) {
     const element = createItem({
       label,
       template,
-      imdbID,
+      replacement: imdbID,
       className,
     });
 
@@ -205,6 +209,37 @@ function filmPageHandler() {
   });
 }
 
+const username = TAB_URL.split('/')[3];
+let isMyPage = false;
+
+/**
+ * Adds the user activity link for that film
+ */
+function addActivity(listElement) {
+  if (isMyPage) {
+    return;
+  }
+
+  const myActivityLinkElement = $('.fm-show-activity.popup-menu-text > a', listElement);
+  const myActivityLink = myActivityLinkElement.getAttribute('href');
+  if (myActivityLink.startsWith(`/${username}`)) {
+    isMyPage = true;
+
+    return;
+  }
+
+  const userActivityTemplate = `/%s/${myActivityLink.split('/').slice(2, -1).join('/')}`;
+
+  const userActivityElement = createItem({
+    label: 'Show user activity',
+    template: userActivityTemplate,
+    replacement: username,
+    className: 'popup-menu-text',
+  });
+
+  myActivityLinkElement.parentElement.insertAdjacentElement('afterend', userActivityElement);
+}
+
 function addElements(parent, filmID) {
   const extraElements = createItems(filmID, 'popup-menu-text');
 
@@ -213,49 +248,62 @@ function addElements(parent, filmID) {
   }
 }
 
-async function fetchIdentifier(filmLink, listElement) {
+async function fetchIdentifier(filmLink) {
   const documentX = await fish.document(filmLink);
 
-  try {
-    const filmID = getIdentifier(documentX.body);
-    addElements(listElement, filmID);
-  } catch {}
+  return getIdentifier(documentX.body);
 }
 
 function modifyList(listElement) {
-  const filmLink = listElement.lastElementChild.firstElementChild.href;
+  const filmLinkElement = $('li.fm-film-page.popup-menu-text > a', listElement);
+  const filmLink = filmLinkElement.href;
   // Cleanup
-  listElement.lastElementChild?.remove();
-  listElement.lastElementChild?.remove();
+  filmLinkElement.parentElement.remove();
+  $('a[href^="/film/"][href$="/watch/"]', listElement).parentElement.remove();
+  // Adding the extra elements
+  // Inspired by: https://github.com/theredsox/letterboxd
+  addActivity(listElement);
 
   const loaderElement = createItem({
-    label: 'Hover to load links',
+    label: 'Load extra links',
     className: 'popup-menu-text',
   });
 
-  const listener = async () => {
-    loaderElement.removeEventListener('mouseenter', listener);
-    loaderElement.firstElementChild.textContent = 'Loading';
-    await fetchIdentifier(filmLink, listElement);
-    loaderElement.remove();
-  };
-
   listElement.append(loaderElement);
-  loaderElement.addEventListener('mouseenter', listener);
+  loaderElement.addEventListener('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    loaderElement.firstElementChild.textContent = 'Loading';
+
+    try {
+      const filmID = await fetchIdentifier(filmLink);
+      addElements(listElement, filmID);
+    } catch {}
+
+    loaderElement.remove();
+  }, { capture: true, once: true });
 }
 
 function userPageHandler() {
   const { setAttribute } = Element.prototype;
-  Element.prototype.setAttribute = setAttributeOverride;
-
-  function setAttributeOverride(name, value) {
+  let setAttributeOverride;
+  // eslint-disable-next-line prefer-const
+  setAttributeOverride = function override1(name, value) {
+    // console.log(setAttributeOverride.name);
     if (name === 'class' && value === 'fm-film-page popup-menu-text -last') {
       const listElement = this.parentElement;
-      modifyList(listElement);
+
+      try {
+        modifyList(listElement);
+      } catch (exception) {
+        console.error(exception);
+      }
     }
 
     return setAttribute.call(this, name, value);
-  }
+  };
+
+  Element.prototype.setAttribute = setAttributeOverride;
 }
 
 if (TAB_URL.startsWith('https://letterboxd.com/film/')) {

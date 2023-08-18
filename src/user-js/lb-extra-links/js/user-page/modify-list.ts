@@ -1,28 +1,42 @@
-import { createItem } from '../create-items';
+import addActivity from './add-activity';
+import addElements from './add-elements';
 import fetchIdentifier from './fetch-identifier';
+import { $ } from '../../../../helpers';
+import { createItem } from '../create-items';
 
 function modifyList(listElement: HTMLUListElement): void {
-  const filmLink = (listElement.lastElementChild!.firstElementChild as HTMLAnchorElement).href;
+  const filmLinkElement = $('li.fm-film-page.popup-menu-text > a', listElement);
+  const filmLink = (filmLinkElement as HTMLAnchorElement).href;
 
   // Cleanup
-  listElement.lastElementChild?.remove();
-  listElement.lastElementChild?.remove();
+  filmLinkElement.parentElement!.remove();
+  $('a[href^="/film/"][href$="/watch/"]', listElement).parentElement!.remove();
+
+  // Adding the extra elements
+
+  // Inspired by: https://github.com/theredsox/letterboxd
+  addActivity(listElement);
 
   const loaderElement = createItem({
-    label: 'Hover to load links',
+    label: 'Load extra links',
     className: 'popup-menu-text',
   });
 
-  const listener = async (): Promise<void> => {
-    loaderElement.removeEventListener('mouseenter', listener);
+  listElement.append(loaderElement);
+
+  loaderElement.addEventListener('click', async (event): Promise<void> => {
+    event.preventDefault();
+    event.stopPropagation();
+
     loaderElement.firstElementChild!.textContent = 'Loading';
 
-    await fetchIdentifier(filmLink, listElement);
-    loaderElement.remove();
-  };
+    try {
+      const filmID = await fetchIdentifier(filmLink);
+      addElements(listElement, filmID);
+    } catch {}
 
-  listElement.append(loaderElement);
-  loaderElement.addEventListener('mouseenter', listener);
+    loaderElement.remove();
+  }, { capture: true, once: true });
 }
 
 export default modifyList;

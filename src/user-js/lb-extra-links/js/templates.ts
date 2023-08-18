@@ -4,12 +4,12 @@ const IMDB = {
 };
 
 const TL = {
-  label: 'TorrentLeech',
+  label: 'Search TL',
   template: 'https://www.torrentleech.org/torrents/browse/index/query/%s/orderby/size/order/desc',
 };
 
 const TG = {
-  label: 'TorrentGalaxy',
+  label: 'Search TG',
   template: 'https://torrentgalaxy.to/torrents.php?search=%s&%3Bsort=size&%3Border=desc&sort=size&order=desc',
 };
 
