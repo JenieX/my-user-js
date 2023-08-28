@@ -6,3 +6,8 @@ export type FishReturn = Promise<{
   response: Response,
   abortTimeOut: NodeJS.Timeout | undefined,
 }>;
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const GM_info: typeof GM.info;
+}
