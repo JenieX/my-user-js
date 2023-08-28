@@ -1,0 +1,9 @@
+{
+  "name": "inspector",
+  "version": "0.0.1",
+  "description": "Open the DevTools for pages",
+  "match": ["*://*/*", "file:///*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io",
+  "grant": ["GM.registerMenuCommand", "GM.setValue", "GM.getValue"]
+}
