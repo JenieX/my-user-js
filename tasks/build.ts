@@ -107,8 +107,7 @@ async function buildTask(options: BuildTaskOptions): Promise<void> {
 
       /** Next section is for trigging related user scripts */
 
-      const properFilePath = filePath.replaceAll('\\', '/');
-      const relatedUserScripts = initialConfig.sharedModules?.[properFilePath];
+      const relatedUserScripts = initialConfig.sharedModules?.[owner];
 
       if (relatedUserScripts !== undefined) {
         for (const relatedUserScript of relatedUserScripts) {

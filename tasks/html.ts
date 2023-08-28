@@ -1,6 +1,6 @@
 import fsp from 'node:fs/promises';
-import htmlnano from 'htmlnano';
 import path from 'node:path';
+import htmlnano from 'htmlnano';
 import posthtml from 'posthtml';
 import listFiles from '../utils/list-files';
 import { HTMLTaskOptions } from './helpers/types';

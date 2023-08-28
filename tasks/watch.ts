@@ -1,5 +1,5 @@
-import Watcher from 'watcher';
 import path from 'node:path';
+import Watcher from 'watcher';
 import watcherIgnore from './helpers/watcher-ignore';
 import { watcherLogger } from './helpers/logger';
 

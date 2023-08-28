@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-array-push-push */
-
 import chalk from 'chalk';
 
 const pink = chalk.rgb(211, 0, 155).underline.bold;
@@ -26,10 +24,12 @@ export function startLogger(taskName: string): void {
 export function finishLogger(taskName: string, timeDifference: number): void {
   const parts: string[] = [];
 
-  parts.push('Finished');
-  parts.push(blue(taskName));
-  parts.push('after');
-  parts.push(purple(`${timeDifference} ms`));
+  parts.push(
+    'Finished',
+    blue(taskName),
+    'after',
+    purple(`${timeDifference} ms`),
+  );
 
   console.log(...parts);
 }
@@ -37,14 +37,18 @@ export function finishLogger(taskName: string, timeDifference: number): void {
 export function watcherLogger(userScripts: string[]): void {
   const parts: string[] = [];
 
-  parts.push('Starting ');
-  parts.push(blue('watchTask'));
-  parts.push(' for:');
-  parts.push('\n');
+  parts.push(
+    'Starting ',
+    blue('watchTask'),
+    ' for:',
+    '\n',
+  );
 
   for (const userScript of userScripts) {
-    parts.push('\n  • ');
-    parts.push(green(userScript));
+    parts.push(
+      '\n  • ',
+      green(userScript),
+    );
   }
 
   parts.push('\n');

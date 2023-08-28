@@ -4,6 +4,8 @@ import path from 'node:path';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
 
 const httpServer = createServer(async (request: IncomingMessage, response: ServerResponse) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
+
   const sendErrorResponse = (message: string, statusCode: number): void => {
     response.writeHead(statusCode, { 'Content-Type': 'application/json' });
     response.write(JSON.stringify({ error: true, message }));

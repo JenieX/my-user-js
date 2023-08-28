@@ -1,6 +1,6 @@
-import MagicString, { SourceMap } from 'magic-string';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import MagicString, { SourceMap } from 'magic-string';
 import { IncludeFileOptions } from './types';
 
 async function includeFile(options: IncludeFileOptions): Promise<[string, SourceMap]> {
