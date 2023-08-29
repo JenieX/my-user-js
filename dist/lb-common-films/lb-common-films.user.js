@@ -110,8 +110,9 @@ function $$(selector, parent) {
   return elements;
 }
 
+const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
 /** The identifier of the script to be used in logging */
-const LOG_ID = `[${GM.info.script.name}]:`;
+const LOG_ID = `[${SCRIPT_NAME}]:`;
 
 function addStyle(css, parent = document.documentElement) {
   const style = document.createElement('style');

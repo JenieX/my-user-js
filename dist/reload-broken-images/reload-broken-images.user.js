@@ -18,6 +18,24 @@
 // @license        MIT
 // ==/UserScript==
 
+const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
+/** The identifier of the script to be used in logging */
+const LOG_ID = `[${SCRIPT_NAME}]:`;
+
+function alert(message) {
+  if (message === undefined) {
+    window.alert(`[ ${SCRIPT_NAME} ]`);
+
+    return;
+  }
+
+  window.alert(`[ ${SCRIPT_NAME} ]\n\n${message}`);
+}
+
+function confirm(message) {
+  return window.confirm(`[ ${SCRIPT_NAME} ]\n\n${message}`);
+}
+
 async function waitForImageLoad(img) {
   if (img.complete) {
     return;
@@ -47,23 +65,6 @@ async function waitForImageLoad(img) {
     img.addEventListener('error', onError);
   });
 }
-
-function alert(message) {
-  if (message === undefined) {
-    window.alert(`[ ${GM.info.script.name} ]`);
-
-    return;
-  }
-
-  window.alert(`[ ${GM.info.script.name} ]\n\n${message}`);
-}
-
-function confirm(message) {
-  return window.confirm(`[ ${GM.info.script.name} ]\n\n${message}`);
-}
-
-/** The identifier of the script to be used in logging */
-const LOG_ID = `[${GM.info.script.name}]:`;
 
 let busy = false;
 

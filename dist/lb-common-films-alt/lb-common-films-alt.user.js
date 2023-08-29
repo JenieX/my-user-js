@@ -45,21 +45,22 @@ function $$(selector, parent) {
   return elements;
 }
 
+const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
 /** The identifier of the script to be used in logging */
-const LOG_ID = `[${GM.info.script.name}]:`;
+const LOG_ID = `[${SCRIPT_NAME}]:`;
 
 function alert(message) {
   if (message === undefined) {
-    window.alert(`[ ${GM.info.script.name} ]`);
+    window.alert(`[ ${SCRIPT_NAME} ]`);
 
     return;
   }
 
-  window.alert(`[ ${GM.info.script.name} ]\n\n${message}`);
+  window.alert(`[ ${SCRIPT_NAME} ]\n\n${message}`);
 }
 
 function prompt(message, _default) {
-  return window.prompt(`[ ${GM.info.script.name} ]\n\n${message}`, _default);
+  return window.prompt(`[ ${SCRIPT_NAME} ]\n\n${message}`, _default);
 }
 
 function addStyle(css, parent = document.documentElement) {

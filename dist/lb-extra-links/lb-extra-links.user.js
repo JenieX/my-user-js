@@ -89,7 +89,6 @@ function $(selector, parent) {
   return element;
 }
 
-/** The identifier of the script to be used in logging */
 /** The initial tab URL on the script run */
 const TAB_URL = window.location.href;
 
