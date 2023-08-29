@@ -39,7 +39,7 @@ function alert$1(message) {
  * When setting the cookie header, anonymous property must be set to `true`
  * https://violentmonkey.github.io/api/gm/#gm_xmlhttprequest
  */
-async function fishResponse(url, fishOptions = {}) {
+async function fishXResponse(url, fishOptions = {}) {
   const { method, headers, anonymous, body, onProgress } = fishOptions;
 
   return new Promise((resolve, reject) => {
@@ -52,7 +52,7 @@ async function fishResponse(url, fishOptions = {}) {
       data: body,
       responseType: 'blob',
       onprogress: onProgress,
-      onload({ response, statusText, status }) {
+      onload({ response, statusText, status, finalUrl }) {
         const ok = status >= 200 && status < 300;
         if (!ok) {
           reject(new Error(`Request to ${url} ended with ${status} status`));
@@ -65,6 +65,7 @@ async function fishResponse(url, fishOptions = {}) {
           status,
         });
 
+        Object.defineProperty(properResponse, 'url', { value: finalUrl });
         resolve(properResponse);
       },
       onerror({ status }) {
@@ -76,31 +77,31 @@ async function fishResponse(url, fishOptions = {}) {
 
 const fishX = {
   async buffer(url, fishOptions) {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseBuffer = await response.arrayBuffer();
 
     return responseBuffer;
   },
   async blob(url, fishOptions) {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseBlob = await response.blob();
 
     return responseBlob;
   },
   async json(url, fishOptions) {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseJSON = await response.json();
 
     return responseJSON;
   },
   async text(url, fishOptions) {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseText = await response.text();
 
     return responseText;
   },
   async document(url, fishOptions) {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseText = await response.text();
     const parser = new DOMParser();
 
@@ -137,8 +138,6 @@ async function OpenDevTools(port, targetURL) {
   }
 }
 
-const VM_BACKGROUND_PAGE_URL = 'chrome-extension://jinjaccalgkegednnccohejagnlnfdag/_generated_background_page.html';
-
 async function setPort() {
   const port = Number(prompt('Provide your browser debugging port:'));
   console.warn({ port });
@@ -163,11 +162,16 @@ async function getPort() {
   return port;
 }
 
+const PR_BACKGROUND_PAGE_URL = 'chrome-extension://bpiomkmniogokfcahjbbmabknjljbcjc/_generated_background_page.html';
+
+const VM_BACKGROUND_PAGE_URL = 'chrome-extension://jinjaccalgkegednnccohejagnlnfdag/_generated_background_page.html';
+
 async function main() {
   const port = await getPort();
-  GM.registerMenuCommand('Inspect VM', OpenDevTools.bind(undefined, port, VM_BACKGROUND_PAGE_URL));
   // Gets the tab URL dynamically ever time the command is initiated.
   GM.registerMenuCommand('Inspect page', OpenDevTools.bind(undefined, port, undefined));
+  GM.registerMenuCommand('Inspect VM', OpenDevTools.bind(undefined, port, VM_BACKGROUND_PAGE_URL));
+  GM.registerMenuCommand('Inspect PR', OpenDevTools.bind(undefined, port, PR_BACKGROUND_PAGE_URL));
   GM.registerMenuCommand('Set port', async () => {
     try {
       await setPort();
