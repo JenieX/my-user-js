@@ -13,6 +13,10 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
        * there are few of theme
        */
       rules: {
+        // temp. Workaround for the JS version of " @typescript-eslint/naming-convention".
+        // https://github.com/iamturns/eslint-config-airbnb-typescript/blob/master/lib/shared.js
+        camelcase: 0,
+
         'no-use-before-define': [2, { functions: false }],
         'prefer-destructuring': [
           2,
