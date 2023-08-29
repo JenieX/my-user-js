@@ -1,0 +1,20 @@
+#imdb-letterboxd-link {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100000;
+}
+
+#imdb-letterboxd-link > a {
+  background-position: 0 -800px;
+  height: 40px;
+  width: 62px;
+  background-size: 800px 1020px;
+  display: block;
+}
+
+a.imdb-letterboxd-logo {
+  // background: url(https://s.ltrbxd.com/static/img/sprite.23b1933f.svg) no-repeat;
+  background: url(https://github.com/JenieX/user-js/blob/main/src/user-js/imdb-letterboxd-link/assets/sprite.svg?raw=true)
+    no-repeat;
+}

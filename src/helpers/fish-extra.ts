@@ -14,7 +14,7 @@ export interface FishOptions extends RequestInit {
  * https://violentmonkey.github.io/api/gm/#gm_xmlhttprequest
  */
 
-async function fishResponse(url: string, fishOptions: FishOptions = {}): Promise<Response> {
+async function fishXResponse(url: string, fishOptions: FishOptions = {}): Promise<Response> {
   const { method, headers, anonymous, body, onProgress } = fishOptions;
 
   return new Promise((resolve, reject) => {
@@ -27,7 +27,7 @@ async function fishResponse(url: string, fishOptions: FishOptions = {}): Promise
       data: body,
       responseType: 'blob',
       onprogress: onProgress,
-      onload({ response, statusText, status }) {
+      onload({ response, statusText, status, finalUrl }) {
         const ok = status >= 200 && status < 300;
         if (!ok) {
           reject(new Error(`Request to ${url} ended with ${status} status`));
@@ -40,6 +40,8 @@ async function fishResponse(url: string, fishOptions: FishOptions = {}): Promise
           status,
         });
 
+        Object.defineProperty(properResponse, 'url', { value: finalUrl });
+
         resolve(properResponse);
       },
       onerror({ status }) {
@@ -51,41 +53,45 @@ async function fishResponse(url: string, fishOptions: FishOptions = {}): Promise
 
 const fishX = {
   async buffer(url: string, fishOptions?: FishOptions): Promise<ArrayBuffer> {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseBuffer = await response.arrayBuffer();
 
     return responseBuffer;
   },
 
   async blob(url: string, fishOptions?: FishOptions): Promise<Blob> {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseBlob = await response.blob();
 
     return responseBlob;
   },
 
   async json(url: string, fishOptions?: FishOptions): Promise<object> {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseJSON = await response.json() as object;
 
     return responseJSON;
   },
 
   async text(url: string, fishOptions?: FishOptions): Promise<string> {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseText = await response.text();
 
     return responseText;
   },
 
   async document(url: string, fishOptions?: FishOptions): Promise<Document> {
-    const response = await fishResponse(url, fishOptions);
+    const response = await fishXResponse(url, fishOptions);
     const responseText = await response.text();
 
     const parser = new DOMParser();
 
     return parser.parseFromString(responseText, 'text/html');
   },
+};
+
+export {
+  fishXResponse,
 };
 
 export default fishX;
