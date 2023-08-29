@@ -6,6 +6,8 @@
 // @author         JenieX
 // @match          https://www.imdb.com/title/*/*
 // @grant          GM.xmlHttpRequest
+// @grant          GM.getResourceUrl
+// @resource       letterboxdLogo https://github.com/JenieX/user-js/blob/main/src/user-js/imdb-letterboxd-link/assets/sprite.svg?raw=true
 // @run-at         document-start
 // @noframes
 // @compatible     edge Violentmonkey
@@ -18,17 +20,28 @@
 // @license        MIT
 // ==/UserScript==
 
-function createElement(link) {
+async function createElement(link) {
   const divElement = document.createElement('div');
   divElement.id = 'imdb-letterboxd-link';
   const aElement = document.createElement('a');
   aElement.setAttribute('href', link);
   aElement.setAttribute('class', 'imdb-letterboxd-logo');
   aElement.setAttribute('target', '_blank');
+  const blobURL = await GM.getResourceUrl('letterboxdLogo');
+  if (blobURL === undefined || blobURL === '') {
+    throw new Error('There was an error loading the Letterboxd logo.');
+  }
+
+  aElement.style.setProperty('background', `url('${blobURL}')`);
+  aElement.style.setProperty('background-position', '0 -800px');
+  aElement.style.setProperty('background-size', '800px 1020px');
   divElement.append(aElement);
   document.documentElement.append(divElement);
 }
 
+const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
+/** The identifier of the script to be used in logging */
+const LOG_ID = `[${SCRIPT_NAME}]:`;
 /** The initial tab URL on the script run */
 const TAB_URL = window.location.href;
 
@@ -106,11 +119,12 @@ async function fetchLink(imdbIdentifier) {
 
 async function main() {
   const imdbIdentifier = getIdentifier();
+  // May throw an error!
   const link = await fetchLink(imdbIdentifier);
-  createElement(link);
-  addStyle('#imdb-letterboxd-link{left:0;position:fixed;top:0;z-index:100000}#imdb-letterboxd-link>a{background-position:0 -800px;background-size:800px 1020px;display:block;height:40px;width:62px}a.imdb-letterboxd-logo{background:url(https://github.com/JenieX/user-js/blob/main/src/user-js/imdb-letterboxd-link/assets/sprite.svg?raw=true) no-repeat}');
+  await createElement(link);
+  addStyle('#imdb-letterboxd-link{left:0;position:fixed;top:0;z-index:100000}#imdb-letterboxd-link>a{display:block;height:40px;width:62px}');
 }
 
 main().catch((exception) => {
-  console.error(exception);
+  console.error(LOG_ID, exception);
 });

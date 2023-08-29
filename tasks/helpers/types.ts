@@ -106,6 +106,7 @@ export interface UserScriptSpecificMetaData {
   icon: string,
   grant?: string[],
   require?: string[],
+  resource?: string[],
   docs: {
     description: string,
     usage: string,

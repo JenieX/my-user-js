@@ -7,14 +7,21 @@ import { UserScriptSpecificMetaData, MetadataTaskOptions } from './helpers/types
 import { checkNameAgainstAlias, checkRequiredMetadataItems } from './helpers/check';
 
 const developerScriptCodeTemplate = `
-GM.xmlHttpRequest({
-  url: 'http://localhost:1011/{userScript}',
-  method: 'GET',
-  onload({ responseText }) {
+let url = 'http://localhost:1011/{userScript}';
+
+if (navigator.userAgent.includes('Firefox')) {
+  const exposerUUID = sessionStorage.getItem('exposerUUID').slice(0, -1);
+
+  // eslint-disable-next-line prefer-template
+  url = exposerUUID + '/{userScript}/{userScript}.raw.js';
+}
+
+fetch(url)
+  .then(async (response) => response.text())
+  .then(async (responseText) => {
     // eslint-disable-next-line no-eval
     eval(responseText);
-  },
-});
+  }).catch((exception) => console.error(exception));
 `;
 
 async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Promise<string> {
@@ -46,12 +53,6 @@ async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Prom
   // Mutating the original because we are done with it
   mergedMetadata.name += ' [DEV]';
   mergedMetadata.version = '0.0.0';
-  const grant = mergedMetadata.grant as string[] | undefined;
-  if (grant === undefined) {
-    mergedMetadata.grant = ['GM.xmlHttpRequest'];
-  } else if (!grant.includes('GM.xmlHttpRequest')) {
-    grant.push('GM.xmlHttpRequest');
-  }
 
   const developerMetadataBlock = createMetadataBlock(mergedMetadata);
   const developerScriptCode = developerScriptCodeTemplate.replace('{userScript}', userScript);

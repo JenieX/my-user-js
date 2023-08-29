@@ -5,5 +5,8 @@
   "match": ["https://www.imdb.com/title/*/*"],
   "runAt": "document-start",
   "icon": "https://www.google.com/s2/favicons?sz=64&domain=www.imdb.com",
-  "grant": ["GM.xmlHttpRequest"]
+  "grant": ["GM.xmlHttpRequest", "GM.getResourceUrl"],
+  "resource": [
+    "letterboxdLogo https://github.com/JenieX/user-js/blob/main/src/user-js/imdb-letterboxd-link/assets/sprite.svg?raw=true"
+  ]
 }

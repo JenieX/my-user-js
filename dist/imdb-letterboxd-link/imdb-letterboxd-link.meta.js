@@ -6,6 +6,8 @@
 // @author         JenieX
 // @match          https://www.imdb.com/title/*/*
 // @grant          GM.xmlHttpRequest
+// @grant          GM.getResourceUrl
+// @resource       letterboxdLogo https://github.com/JenieX/user-js/blob/main/src/user-js/imdb-letterboxd-link/assets/sprite.svg?raw=true
 // @run-at         document-start
 // @noframes
 // @compatible     edge Violentmonkey

@@ -16,6 +16,7 @@ function createMetaData(options: UserScriptSpecificMetaData, alias: string): JSO
     match,
     grant: options.grant,
     require: options.require,
+    resource: options.resource,
     'run-at': runAt,
     noframes: '',
     compatible: ['edge Violentmonkey', 'chrome Violentmonkey'],
