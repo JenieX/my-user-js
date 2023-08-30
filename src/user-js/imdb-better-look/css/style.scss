@@ -1,0 +1,128 @@
+#__next > section,
+[data-testid='hero-rating-bar__popularity'],
+[data-testid='hero-rating-bar__user-rating'],
+[data-testid='hero-subnav-bar-share-button'],
+[data-testid='title-cast-styling-proupsell'],
+div.ipc-title__actions,
+footer.imdb-footer {
+  display: none;
+}
+
+#imdbHeader
+  .ipc-page-content-container
+  > *:not(#suggestion-search-container):not(#home_img_holder) {
+  display: none;
+}
+
+.ipc-page-grid--bias-left
+  section:not([cel_widget_id='StaticFeature_Awards']):not(
+    [cel_widget_id='StaticFeature_VideosX']
+  ):not([cel_widget_id='StaticFeature_PhotosX']):not(
+    [cel_widget_id='StaticFeature_Cast']
+  ):not([cel_widget_id='StaticFeature_Storyline']):not(
+    [cel_widget_id='StaticFeature_DidYouKnowX']
+  ):not([cel_widget_id='StaticFeature_UserReviews']):not(
+    [cel_widget_id='StaticFeature_Details']
+  ):not([cel_widget_id='StaticFeature_Awards']):not(
+    [cel_widget_id='StaticFeature_Filmography']
+  ):not([cel_widget_id='StaticFeature_PersonalDetails']) {
+  display: none;
+}
+
+div[data-testid='Filmography'] > section {
+  display: block !important;
+}
+
+div[data-testid='Filmography'] > section div {
+  // background-color: #171717;
+  // box-shadow: unset !important;
+  border: unset;
+  // outline-style: none;
+}
+
+.ipc-accordion__item__header {
+  background-color: #171717 !important;
+}
+
+.ipc-accordion__item__header-shadow-cover,
+.ipc-accordion__item__header-shadow {
+  display: none;
+}
+
+.date-credits-accordion .accordion-item::after {
+  display: none;
+}
+
+.ipc-page-grid--bias-left {
+  display: block;
+}
+
+@media screen and (min-width: 1280px) {
+  .ipc-page-content-container--center {
+    max-width: 1100px !important;
+  }
+}
+
+#ipc-wrap-background-id {
+  background-color: #000;
+}
+
+section * {
+  color: rgb(202, 202, 202) !important;
+}
+
+section[data-testid='atf-wrapper-bg']
+  .ipc-page-content-container
+  > .ipc-page-background
+  > div {
+  display: none;
+}
+
+section {
+  z-index: unset !important;
+  background: unset !important;
+  background-color: #171717 !important;
+}
+
+[data-testid='awards'],
+.ipc-list-card--border-line {
+  background-color: #171717 !important;
+}
+
+.ipc-media--avatar-circle {
+  border: 2px solid #acacac;
+}
+
+.ipc-list-card--border-speech {
+  box-shadow: unset !important;
+  background-color: #171717;
+}
+
+.ipc-list-card--base.ipc-list-card--border-speech:after,
+.ipc-list-card--base.ipc-list-card--border-speech:before {
+  display: none;
+}
+
+button[data-testid='nm-ov-atl-sm'] {
+  background-color: #171717 !important;
+}
+
+button.ipc-overflowText-overlay {
+  background: unset !important;
+
+  svg {
+    display: none;
+  }
+}
+
+div[data-testid='review-featured-header'] > div {
+  background-color: #5b5b5b;
+}
+
+div[data-testid='awards'] {
+  border-color: #5b5b5b;
+
+  > div {
+    background-color: #5b5b5b;
+  }
+}
