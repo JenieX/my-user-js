@@ -5,7 +5,17 @@ import { UserScriptSpecificMetaData } from './types';
 const { author, homepage, bugs, license } = await getPackage();
 
 function createMetaData(options: UserScriptSpecificMetaData, alias: string): JSONLike<Strings> {
-  const { name, version, description, match, runAt, icon } = options;
+  const {
+    name,
+    version,
+    description,
+    match,
+    excludeMatch,
+    include,
+    exclude,
+    runAt,
+    icon,
+  } = options;
 
   return {
     name,
@@ -14,6 +24,9 @@ function createMetaData(options: UserScriptSpecificMetaData, alias: string): JSO
     description,
     author,
     match,
+    excludeMatch,
+    include,
+    exclude,
     grant: options.grant,
     require: options.require,
     resource: options.resource,
@@ -30,19 +43,3 @@ function createMetaData(options: UserScriptSpecificMetaData, alias: string): JSO
 }
 
 export default createMetaData;
-
-// 'GM.deleteValue',
-// 'GM.getValue',
-// 'GM.registerMenuCommand',
-// 'GM.setValue',
-// 'GM_addValueChangeListener',
-//
-// 'GM.addElement',
-// 'GM.addStyle',
-// 'GM.getResourceUrl',
-// 'GM.info',
-// 'GM.listValues',
-// 'GM.notification',
-// 'GM.openInTab',
-// 'GM.setClipboard',
-// 'GM.xmlHttpRequest',
