@@ -1,0 +1,16 @@
+{
+  "name": "letterboxd-actors-avatars",
+  "version": "0.0.1",
+  "description": "Adds avatars to the list of actors in films pages.",
+  "match": ["https://letterboxd.com/film/*/"],
+  "excludeMatch": [
+    "https://letterboxd.com/film/*/fans/*",
+    "https://letterboxd.com/film/*/likes/*",
+    "https://letterboxd.com/film/*/lists/*",
+    "https://letterboxd.com/film/*/members/*",
+    "https://letterboxd.com/film/*/reviews/*"
+  ],
+  "runAt": "document-end",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com",
+  "grant": ["GM.xmlHttpRequest"]
+}

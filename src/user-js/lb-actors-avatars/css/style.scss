@@ -1,0 +1,11 @@
+.actor-with-avatar {
+  background-size: cover !important;
+  height: 70px;
+  width: 70px;
+  margin-right: 5px !important;
+  border-radius: 50%;
+}
+
+.actor-with-avatar > img {
+  height: 70px;
+}
