@@ -20,6 +20,16 @@
 // @license        MIT
 // ==/UserScript==
 
+// @ts-nocheck
+
+function addKeyListener(link) {
+  document.addEventListener('keyup', async ({ code: keyName }) => {
+    if (keyName === 'KeyL') {
+      window.location.href = link;
+    }
+  });
+}
+
 async function createElement(link) {
   const divElement = document.createElement('div');
   divElement.id = 'imdb-letterboxd-link';
@@ -122,6 +132,7 @@ async function main() {
   // May throw an error!
   const link = await fetchLink(imdbIdentifier);
   await createElement(link);
+  addKeyListener(link);
   addStyle('#imdb-letterboxd-link{left:0;position:fixed;top:0;z-index:100000}#imdb-letterboxd-link>a{display:block;height:40px;width:62px}');
 }
 
