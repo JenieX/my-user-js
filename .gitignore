@@ -6,8 +6,8 @@ dist/**/*.*
 
 node_modules/
 
-*test.*
-tests/
+testing.js
+**/testing.*.*
 
 dist/rarbg-captcha-solver/
 src/user-js/rarbg-captcha-solver/
@@ -17,3 +17,4 @@ src/user-js/test-script/
 
 dist/lb-common-films-nightly/
 src/user-js/lb-common-films-nightly/
+

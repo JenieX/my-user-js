@@ -1,31 +1,6 @@
 {
-  "extends": "@jeniex/eslint-config-ts",
+  "extends": "@jeniex/eslint-config",
   "rules": {
-    // TODO Add global: GM_info
-    // TODO To be updated across all projects (newly added rules should go first!!!)
-    // ------------------------ START
-    /* OFF */
-    "import/prefer-default-export": 0,
-
-    /* Warn */
-    "@typescript-eslint/indent": 1,
-    "@typescript-eslint/object-curly-spacing": 1,
-    "prefer-const": 1,
-    "eol-last": 1,
-    "no-multiple-empty-lines": 1,
-    "no-trailing-spaces": 1,
-    "unicorn/no-unused-properties": 1,
-    "@typescript-eslint/quotes": 1,
-
-    /* Special */
-    "prefer-destructuring": [
-      2,
-      {
-        "VariableDeclarator": { "array": false, "object": true },
-        "AssignmentExpression": { "array": false, "object": false }
-      },
-      { "enforceForRenamedProperties": false }
-    ]
-    // ------------------------ END
+    "import/extensions": [2, "ignorePackages", { "ts": "never" }]
   }
 }

@@ -1,7 +1,9 @@
 {
+  "bracketSameLine": true,
   "printWidth": 80,
-  "singleAttributePerLine": true,
   "singleQuote": true,
   "tabWidth": 2,
-  "bracketSameLine": true
-}
+  "plugins": ["prettier-plugin-jsdoc"],
+  "jsdocPreferCodeFences": false,
+  "jsdocSingleLineComment": true
+}  

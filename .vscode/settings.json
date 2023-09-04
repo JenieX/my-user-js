@@ -1,30 +1,22 @@
 {
   "files.exclude": {
-    ".commitlintrc.json": true,
-    ".eslintignore": true,
-    ".eslintrc.json": true,
-    ".gitignore": true,
     ".husky": true,
-    ".prettierignore": true,
-    ".prettierrc.json": true,
     "build": true,
-    "config.json": true,
     "dist/**/*.css": true,
     "dist/**/*.html": true,
     "dist/**/*.meta.js": true,
     "dist/**/*.raw.js.map": true,
     "node_modules": true,
-    "package-lock.json": true,
-    "rollup.config.ts": true,
-    "tasks": true,
-    "tests": true,
-    "tsconfig-rollup-config.json": true,
-    "tsconfig.json": true,
+    // "tasks": true,
     "utils": true
   },
-  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  // "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
   "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
-  "code-runner.executorMap": { "typescript": "tsx" }
+  "code-runner.executorMap": { "typescript": "tsx" },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "testing.js": "testing.*.ts, testing.*.js",
+    "package.json": ".gitignore, config.json, tsconfig-rollup-config.json, tsconfig.json, .commitlint*, .eslint*, .prettier*, package-lock.json, rollup.config.*"
+  }
 }
-
-// node_modules\ngit-cli\index.js
