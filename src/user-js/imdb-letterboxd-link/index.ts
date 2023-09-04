@@ -1,3 +1,4 @@
+import addKeyListener from './js/add-key-listener';
 import createElement from './js/create-element';
 import getIdentifier from './js/get-Identifier';
 import getLink from './js/get-link';
@@ -10,6 +11,7 @@ async function main(): Promise<void> {
   const link = await getLink(imdbIdentifier);
 
   await createElement(link);
+  addKeyListener(link);
 
   addStyle('include-file: style.min.css');
 }
