@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import typescript from '@rollup/plugin-typescript';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { rollup, Plugin, RenderChunkHook } from 'rollup';
 import { BundleTaskOptions } from './helpers/types';
 import includeFile from './helpers/include-file';
-// import externalGlobals from 'rollup-plugin-external-globals';
 
 function replacement({ distPath, files }: BundleTaskOptions): Plugin {
   return {
@@ -46,6 +46,7 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
         ],
       }),
       replacement({ userScript, distPath, files }),
+      nodeResolve(),
     ],
     treeshake: {
       propertyReadSideEffects: false,
@@ -54,7 +55,6 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
   });
 
   const result = await bundle.generate({
-    banner: '/* eslint-disable */\n',
     sourcemap: true,
     sourcemapPathTransform: (relativeSourcePath) => {
       return `..\\${relativeSourcePath}`;

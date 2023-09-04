@@ -6,7 +6,6 @@ import { BuildTaskOptions } from './helpers/types';
 import { initialConfig, setConfig } from '../utils/config-handler';
 
 // BUG when a website is using insecure protocol, will not load the locally served sourcemap file
-// TODO Add minimist back to the deps
 
 const [selectedUserScripts] = await selectUserScripts();
 const { watch } = minimist(process.argv.slice(2)) as { watch?: true };

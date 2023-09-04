@@ -7,6 +7,8 @@ function createLine(key: string, value: string): string {
   return `// @${joined}\n`;
 }
 
+// TODO Change `metadataBlock` initial value into an array, for performance.
+
 function createMetadataBlock(mergedMetadata: JSONLike<Strings>): string {
   let metadataBlock = '';
   metadataBlock += '// ==UserScript==\n';
