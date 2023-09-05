@@ -1,4 +1,4 @@
-import { waitForImageLoad, LOG_ID, alert, confirm } from '../../helpers';
+import { imageLoad, logId, alert, confirm } from '@jeniex/utils/browser';
 
 let busy = false;
 
@@ -56,10 +56,10 @@ async function reloadBrokenImages(): Promise<void> {
     img.setAttribute('src', img.src);
 
     try {
-      await waitForImageLoad(img);
+      await imageLoad(img);
     } catch {
       counter += 1;
-      console.error(LOG_ID, `Couldn't reload: ${img.src}`);
+      console.error(logId, `Couldn't reload: ${img.src}`);
     }
   }
 

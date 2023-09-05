@@ -1,7 +1,7 @@
+import { $ } from '@jeniex/utils/browser';
 import addActivity from './add-activity';
 import addElements from './add-elements';
 import fetchIdentifier from './fetch-identifier';
-import { $ } from '../../../../helpers';
 import { createItem } from '../create-items';
 
 function modifyList(listElement: HTMLUListElement): void {

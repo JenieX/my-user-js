@@ -1,4 +1,4 @@
-import { $ } from '../../../helpers';
+import { $ } from '@jeniex/utils/browser';
 import { Film } from './types';
 
 function extractFilmData(posterElement: HTMLLIElement): Film {

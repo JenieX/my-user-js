@@ -1,6 +1,15 @@
 {
   "extends": "@jeniex/eslint-config",
   "rules": {
-    "import/extensions": [2, "ignorePackages", { "ts": "never" }]
-  }
+    "import/extensions": [2, "ignorePackages", { "ts": "never" }],
+    "@typescript-eslint/keyword-spacing": 1
+  },
+  "overrides": [
+    {
+      "files": ["./dist/**/*.user.js"],
+      "parserOptions": {
+        "project": "./tsconfig.dist.json"
+      }
+    }
+  ]
 }

@@ -1,7 +1,7 @@
-import { $, TAB_URL } from '../../../../helpers';
+import { $, tabURL } from '@jeniex/utils/browser';
 import { createItem } from '../create-items';
 
-const username = TAB_URL.split('/')[3]!;
+const username = tabURL.split('/')[3]!;
 let isMyPage = false;
 
 /**

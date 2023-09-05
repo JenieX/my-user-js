@@ -27,40 +27,149 @@
 // @license        MIT
 // ==/UserScript==
 
-function $(selector, parent) {
-  const element = (parent ?? document).querySelector(selector);
+function isString(object) {
+  return typeof object === 'string';
+}
+
+function ensureJoin(object, separator = ',') {
+  if (isString(object)) {
+    return object;
+  }
+
+  return object.join(separator);
+}
+
+let infoObject;
+if (typeof GM !== 'undefined') {
+  infoObject = GM.info;
+  // eslint-disable-next-line unicorn/no-negated-condition
+} else if (typeof GM_info === 'undefined') {
+  infoObject = { script: { name: document.title } };
+} else {
+  infoObject = GM_info;
+}
+
+const scriptName = infoObject.script.name;
+/** The identifier of the script to be used in logging. */
+const logId = `[${scriptName}]:`;
+
+function alert(message) {
+  if (message === undefined) {
+    window.alert(`[ ${scriptName} ]`);
+
+    return;
+  }
+
+  window.alert(`[ ${scriptName} ]\n\n${message}`);
+}
+
+function prompt(message, _default) {
+  return window.prompt(`[ ${scriptName} ]\n\n${message}`, _default);
+}
+
+async function fishResponse(url, options) {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Request to ${response.url} ended with ${response.status} status.`);
+  }
+
+  return response;
+}
+
+// Note: to set the 'cookie' header, you have to set 'anonymous' to true.
+async function fishXResponse(url, fishOptions) {
+  const { method, anonymous, headers, body, timeOut, onProgress } = fishOptions ?? {};
+
+  return new Promise((resolve, reject) => {
+    GM.xmlHttpRequest({
+      url,
+      method: method ?? 'GET',
+      headers,
+      anonymous,
+      data: body,
+      responseType: 'blob',
+      timeout: timeOut,
+      onprogress: onProgress,
+      onload({ response, statusText, status, finalUrl }) {
+        const ok = status >= 200 && status < 300;
+        if (!ok) {
+          reject(new Error(`Request to ${url} ended with ${status} status.`));
+
+          return;
+        }
+
+        const properResponse = new Response(response, {
+          statusText,
+          status,
+        });
+
+        Object.defineProperty(properResponse, 'url', { value: finalUrl });
+        resolve(properResponse);
+      },
+      onerror({ status }) {
+        reject(new Error(`Request to ${url} ended with ${status} status.`));
+      },
+    });
+  });
+}
+
+async function fishBlob(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.blob();
+}
+
+async function fishBuffer(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.arrayBuffer();
+}
+
+async function fishDocument(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+  const responseText = await response.text();
+  const parser = new DOMParser();
+
+  return parser.parseFromString(responseText, 'text/html');
+}
+
+async function fishJson(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.json();
+}
+
+async function fishText(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.text();
+}
+
+// https://httpbin.org/anything
+const fish = {
+  blob: async (url, options) => fishBlob(url, options),
+  buffer: async (url, options) => fishBuffer(url, options),
+  document: async (url, options) => fishDocument(url, options),
+  json: async (url, options) => fishJson(url, options),
+  text: async (url, options) => fishText(url, options),
+};
+
+function $(selectors, parent) {
+  const element = (parent ?? document).querySelector(ensureJoin(selectors));
   if (element === null) {
-    throw new Error(`Couldn't find the element with the selector ${selector}`);
+    throw new Error(`Couldn't find the element with the selector ${selectors}`);
   }
 
   return element;
 }
 
-function $$(selector, parent) {
-  const elements = (parent ?? document).querySelectorAll(selector);
+function $$(selectors, parent) {
+  const elements = (parent ?? document).querySelectorAll(ensureJoin(selectors));
   if (elements.length === 0) {
-    throw new Error(`Couldn't find any element with the selector ${selector}`);
+    throw new Error(`Couldn't find any element with the selector ${selectors}`);
   }
 
   return elements;
-}
-
-const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
-/** The identifier of the script to be used in logging */
-const LOG_ID = `[${SCRIPT_NAME}]:`;
-
-function alert(message) {
-  if (message === undefined) {
-    window.alert(`[ ${SCRIPT_NAME} ]`);
-
-    return;
-  }
-
-  window.alert(`[ ${SCRIPT_NAME} ]\n\n${message}`);
-}
-
-function prompt(message, _default) {
-  return window.prompt(`[ ${SCRIPT_NAME} ]\n\n${message}`, _default);
 }
 
 function addStyle(css, parent = document.documentElement) {
@@ -71,76 +180,6 @@ function addStyle(css, parent = document.documentElement) {
 
   return style;
 }
-
-async function fishResponse(url, fishOptions) {
-  let response;
-  let abortTimeOut;
-  if (fishOptions.timeOut === undefined || fishOptions.signal !== undefined) {
-    response = await fetch(url, fishOptions);
-  } else {
-    const controller = new AbortController();
-    const { signal } = controller;
-    abortTimeOut = setTimeout(() => { controller.abort(); }, fishOptions.timeOut);
-    response = await fetch(url, { signal, ...fishOptions });
-  }
-
-  if (!response.ok) {
-    throw new Error(`Request to ${response.url} ended with ${response.status} status`);
-  }
-
-  return { response, abortTimeOut };
-}
-
-const fish = {
-  async buffer(url, fishOptions = {}) {
-    const { response, abortTimeOut } = await fishResponse(url, fishOptions);
-    const responseBuffer = await response.arrayBuffer();
-    if (abortTimeOut !== undefined) {
-      clearTimeout(abortTimeOut);
-    }
-
-    return responseBuffer;
-  },
-  async blob(url, fishOptions = {}) {
-    const { response, abortTimeOut } = await fishResponse(url, fishOptions);
-    const responseBlob = await response.blob();
-    if (abortTimeOut !== undefined) {
-      clearTimeout(abortTimeOut);
-    }
-
-    return responseBlob;
-  },
-  async json(url, fishOptions = {}) {
-    const { response, abortTimeOut } = await fishResponse(url, fishOptions);
-    const responseJSON = await response.json();
-    if (abortTimeOut !== undefined) {
-      clearTimeout(abortTimeOut);
-    }
-
-    return responseJSON;
-  },
-  async text(url, fishOptions = {}) {
-    const { response, abortTimeOut } = await fishResponse(url, fishOptions);
-    const responseText = await response.text();
-    if (abortTimeOut !== undefined) {
-      clearTimeout(abortTimeOut);
-    }
-
-    return responseText;
-  },
-  async document(url, fishOptions = {}) {
-    // const response = await fishResponse(url, fishOptions);
-    const { response, abortTimeOut } = await fishResponse(url, fishOptions);
-    const responseText = await response.text();
-    if (abortTimeOut !== undefined) {
-      clearTimeout(abortTimeOut);
-    }
-
-    const parser = new DOMParser();
-
-    return parser.parseFromString(responseText, 'text/html');
-  },
-};
 
 function createContainer() {
   const container = document.createElement('div');
@@ -491,6 +530,6 @@ async function main() {
 
 detectElements();
 main().catch((exception) => {
-  console.error(LOG_ID, exception.message);
+  console.error(logId, exception.message);
 });
 GM.registerMenuCommand('Set your account username', setAccount);

@@ -1,5 +1,5 @@
+import { addStyle } from '@jeniex/utils/browser';
 import { AddEventListenerArgs } from './types';
-import { addStyle } from '../../helpers';
 
 addStyle('include-file: style.min.css');
 

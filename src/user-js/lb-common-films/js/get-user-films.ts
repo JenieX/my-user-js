@@ -1,4 +1,4 @@
-import { $, $$, fish } from '../../../helpers';
+import { $, $$, fish } from '@jeniex/utils/browser';
 import { Film } from './types';
 
 async function getUserFilms(userFilmsLink: string, collector?: Film[]): Promise<Film[]> {

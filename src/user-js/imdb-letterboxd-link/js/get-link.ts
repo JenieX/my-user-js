@@ -1,4 +1,4 @@
-import { fishXResponse } from '../../../helpers';
+import { fishXResponse } from '@jeniex/utils/browser';
 
 async function fetchLink(imdbIdentifier: string): Promise<string> {
   const linkInStorage = sessionStorage.getItem(imdbIdentifier);

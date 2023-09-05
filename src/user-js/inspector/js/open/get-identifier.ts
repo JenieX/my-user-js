@@ -1,5 +1,5 @@
+import { fishX } from '@jeniex/utils/browser';
 import { DebugEntry } from '../types';
-import { fishX } from '../../../../helpers';
 
 async function getIdentifier(port: number, targetURL?: string): Promise<string> {
   const debugEntries = await fishX.json(`http://localhost:${port}/json`) as DebugEntry[];

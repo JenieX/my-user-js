@@ -1,6 +1,6 @@
+import { $ } from '@jeniex/utils/browser';
 import createItems from '../create-items';
 import getIdentifier from '../get-identifier';
-import { $ } from '../../../../helpers';
 
 function rebuildContent(htmlContent: string): string {
   const tempElement = document.createElement('div');

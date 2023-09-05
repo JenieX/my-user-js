@@ -1,4 +1,4 @@
-import { alert, prompt, fish } from '../../../helpers';
+import { alert, prompt, fish } from '@jeniex/utils/browser';
 
 async function checkAccount(username: string): Promise<boolean> {
   try {

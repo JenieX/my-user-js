@@ -1,4 +1,4 @@
-import { addStyle } from '../../helpers';
+import { addStyle } from '@jeniex/utils/browser';
 
 addStyle('include-file: style.min.css');
 

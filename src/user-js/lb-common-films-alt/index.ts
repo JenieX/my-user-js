@@ -1,3 +1,4 @@
+import { logId, addStyle } from '@jeniex/utils/browser';
 import createTooltip from './js/create-tooltip';
 import getAccount from './js/get-account';
 import getElements, { detectElements } from './js/get-elements';
@@ -7,7 +8,6 @@ import messages from './js/messages';
 import setAccount from './js/set-account';
 import tippy from './js/tippy';
 import { Film, MyRatedFilms } from './js/types';
-import { LOG_ID, addStyle } from '../../helpers';
 
 const IS_ANDROID = window.navigator.userAgent.includes('Android');
 
@@ -88,7 +88,7 @@ async function main(): Promise<void> {
 detectElements();
 
 main().catch((exception: Error) => {
-  console.error(LOG_ID, exception.message);
+  console.error(logId, exception.message);
 });
 
 GM.registerMenuCommand('Set your account username', setAccount);

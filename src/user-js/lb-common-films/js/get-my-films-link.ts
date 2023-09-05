@@ -1,4 +1,4 @@
-import { $ } from '../../../helpers';
+import { $ } from '@jeniex/utils/browser';
 
 function getMyFilmsLink(): string {
   const selectors = [

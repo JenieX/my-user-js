@@ -1,8 +1,8 @@
+import { logId, addStyle } from '@jeniex/utils/browser';
 import addKeyListener from './js/add-key-listener';
 import createElement from './js/create-element';
 import getIdentifier from './js/get-Identifier';
 import getLink from './js/get-link';
-import { LOG_ID, addStyle } from '../../helpers';
 
 async function main(): Promise<void> {
   const imdbIdentifier = getIdentifier();
@@ -17,5 +17,5 @@ async function main(): Promise<void> {
 }
 
 main().catch((exception) => {
-  console.error(LOG_ID, exception);
+  console.error(logId, exception);
 });

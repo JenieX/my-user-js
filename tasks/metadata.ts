@@ -61,7 +61,7 @@ async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Prom
   const developerScriptFileName = `${userScript}.dev.js`;
   await fsp.writeFile(path.join(distPath, developerScriptFileName), developerScript);
 
-  return `${metadataBlock}\n// @ts-nocheck\n`;
+  return metadataBlock;
 }
 
 export default metadataTask;

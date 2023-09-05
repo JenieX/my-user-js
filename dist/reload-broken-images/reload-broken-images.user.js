@@ -18,31 +18,45 @@
 // @license        MIT
 // ==/UserScript==
 
-const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
-/** The identifier of the script to be used in logging */
-const LOG_ID = `[${SCRIPT_NAME}]:`;
+let infoObject;
+if (typeof GM !== 'undefined') {
+  infoObject = GM.info;
+  // eslint-disable-next-line unicorn/no-negated-condition
+} else if (typeof GM_info === 'undefined') {
+  infoObject = { script: { name: document.title } };
+} else {
+  infoObject = GM_info;
+}
+
+const scriptName = infoObject.script.name;
+/** The identifier of the script to be used in logging. */
+const logId = `[${scriptName}]:`;
 
 function alert(message) {
   if (message === undefined) {
-    window.alert(`[ ${SCRIPT_NAME} ]`);
+    window.alert(`[ ${scriptName} ]`);
 
     return;
   }
 
-  window.alert(`[ ${SCRIPT_NAME} ]\n\n${message}`);
+  window.alert(`[ ${scriptName} ]\n\n${message}`);
 }
 
 function confirm(message) {
-  return window.confirm(`[ ${SCRIPT_NAME} ]\n\n${message}`);
+  return window.confirm(`[ ${scriptName} ]\n\n${message}`);
 }
 
-async function waitForImageLoad(img) {
-  if (img.complete) {
-    return;
-  }
-
-  // eslint-disable-next-line consistent-return
+/**
+ * Waits for image to fully load or throws an error if it fails.
+ */
+async function imageLoad(img) {
   return new Promise((resolve, reject) => {
+    if (img.complete) {
+      resolve();
+
+      return;
+    }
+
     let onLoad;
     let onError;
 
@@ -122,10 +136,10 @@ async function reloadBrokenImages() {
     img.setAttribute('src', img.src);
 
     try {
-      await waitForImageLoad(img);
+      await imageLoad(img);
     } catch {
       counter += 1;
-      console.error(LOG_ID, `Couldn't reload: ${img.src}`);
+      console.error(logId, `Couldn't reload: ${img.src}`);
     }
   }
 

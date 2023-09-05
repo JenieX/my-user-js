@@ -1,9 +1,9 @@
+import { $$, addStyle, pageLoad, logId } from '@jeniex/utils/browser';
 import createTooltipContent from './js/create-tooltip-content';
 import getMyFilmsLink from './js/get-my-films-link';
 import getUserFilms from './js/get-user-films';
 import messages from './js/messages';
 import tippy from './js/tippy';
-import { $$, addStyle, waitForCompleteLoad, LOG_ID } from '../../helpers';
 import { Film, MyRatedFilms } from './js/types';
 
 addStyle('include-file: style.min.css');
@@ -21,7 +21,7 @@ function extractMyRatedFilms(myFilms: Film[]): MyRatedFilms {
 }
 
 async function main(): Promise<void> {
-  await waitForCompleteLoad();
+  await pageLoad();
   const state = { busy: false };
 
   const myFilmsLink = getMyFilmsLink();
@@ -88,5 +88,5 @@ async function main(): Promise<void> {
 }
 
 main().catch((exception: Error) => {
-  console.error(LOG_ID, exception.message);
+  console.error(logId, exception.message);
 });

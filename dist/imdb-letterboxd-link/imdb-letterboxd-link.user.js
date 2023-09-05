@@ -20,12 +20,84 @@
 // @license        MIT
 // ==/UserScript==
 
-// @ts-nocheck
+let infoObject;
+if (typeof GM !== 'undefined') {
+  infoObject = GM.info;
+  // eslint-disable-next-line unicorn/no-negated-condition
+} else if (typeof GM_info === 'undefined') {
+  infoObject = { script: { name: document.title } };
+} else {
+  infoObject = GM_info;
+}
+
+const scriptName = infoObject.script.name;
+/** The identifier of the script to be used in logging. */
+const logId = `[${scriptName}]:`;
+/** The initial tab URL on the script run. */
+const tabURL = window.location.href;
+
+// Note: to set the 'cookie' header, you have to set 'anonymous' to true.
+async function fishXResponse(url, fishOptions) {
+  const { method, anonymous, headers, body, timeOut, onProgress } = fishOptions ?? {};
+
+  return new Promise((resolve, reject) => {
+    GM.xmlHttpRequest({
+      url,
+      method: method ?? 'GET',
+      headers,
+      anonymous,
+      data: body,
+      responseType: 'blob',
+      timeout: timeOut,
+      onprogress: onProgress,
+      onload({ response, statusText, status, finalUrl }) {
+        const ok = status >= 200 && status < 300;
+        if (!ok) {
+          reject(new Error(`Request to ${url} ended with ${status} status.`));
+
+          return;
+        }
+
+        const properResponse = new Response(response, {
+          statusText,
+          status,
+        });
+
+        Object.defineProperty(properResponse, 'url', { value: finalUrl });
+        resolve(properResponse);
+      },
+      onerror({ status }) {
+        reject(new Error(`Request to ${url} ended with ${status} status.`));
+      },
+    });
+  });
+}
+
+function addStyle(css, parent = document.documentElement) {
+  const style = document.createElement('style');
+  style.setAttribute('type', 'text/css');
+  style.textContent = css;
+  parent.append(style);
+
+  return style;
+}
 
 function addKeyListener(link) {
+  let setTimeoutRef;
   document.addEventListener('keyup', async ({ code: keyName }) => {
     if (keyName === 'KeyL') {
-      window.location.href = link;
+      if (setTimeoutRef !== undefined) {
+        clearTimeout(setTimeoutRef);
+        setTimeoutRef = undefined;
+        window.open(link);
+
+        return;
+      }
+
+      setTimeoutRef = setTimeout(() => {
+        setTimeoutRef = undefined;
+        window.location.href = link;
+      }, 500);
     }
   });
 }
@@ -49,65 +121,8 @@ async function createElement(link) {
   document.documentElement.append(divElement);
 }
 
-const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
-/** The identifier of the script to be used in logging */
-const LOG_ID = `[${SCRIPT_NAME}]:`;
-/** The initial tab URL on the script run */
-const TAB_URL = window.location.href;
-
-function addStyle(css, parent = document.documentElement) {
-  const style = document.createElement('style');
-  style.setAttribute('type', 'text/css');
-  style.textContent = css;
-  parent.append(style);
-
-  return style;
-}
-
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-// https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-/**
- * When setting the cookie header, anonymous property must be set to `true`
- * https://violentmonkey.github.io/api/gm/#gm_xmlhttprequest
- */
-async function fishXResponse(url, fishOptions = {}) {
-  const { method, headers, anonymous, body, onProgress } = fishOptions;
-
-  return new Promise((resolve, reject) => {
-    GM.xmlHttpRequest({
-      url,
-      method: method ?? 'GET',
-      headers,
-      // @ts-expect-error
-      anonymous,
-      data: body,
-      responseType: 'blob',
-      onprogress: onProgress,
-      onload({ response, statusText, status, finalUrl }) {
-        const ok = status >= 200 && status < 300;
-        if (!ok) {
-          reject(new Error(`Request to ${url} ended with ${status} status`));
-
-          return;
-        }
-
-        const properResponse = new Response(response, {
-          statusText,
-          status,
-        });
-
-        Object.defineProperty(properResponse, 'url', { value: finalUrl });
-        resolve(properResponse);
-      },
-      onerror({ status }) {
-        reject(new Error(`Request to ${url} ended with ${status} status`));
-      },
-    });
-  });
-}
-
 function getIdentifier() {
-  return TAB_URL.split('/')[4];
+  return tabURL.split('/')[4];
 }
 
 async function fetchLink(imdbIdentifier) {
@@ -137,5 +152,5 @@ async function main() {
 }
 
 main().catch((exception) => {
-  console.error(LOG_ID, exception);
+  console.error(logId, exception);
 });

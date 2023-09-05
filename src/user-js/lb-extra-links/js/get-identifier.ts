@@ -1,4 +1,4 @@
-import { $ } from '../../../helpers';
+import { $ } from '@jeniex/utils/browser';
 
 function getIdentifier(parent?: HTMLElement): string {
   const element = $<HTMLAnchorElement>('a[href^="http://www.imdb.com/title/"', parent);

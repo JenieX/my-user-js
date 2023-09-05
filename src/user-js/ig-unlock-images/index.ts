@@ -23,3 +23,5 @@ Object.defineProperty(HTMLImageElement.prototype, 'src', {
     unlockImageContextMenu(emptyDivParent);
   },
 });
+
+export {};

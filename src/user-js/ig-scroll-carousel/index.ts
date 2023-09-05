@@ -48,3 +48,5 @@ window.addEventListener('wheel', (event): void => {
     }
   }
 }, { passive: false });
+
+export {};

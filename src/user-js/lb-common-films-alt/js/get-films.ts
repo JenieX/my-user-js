@@ -1,5 +1,5 @@
+import { $, $$, fish } from '@jeniex/utils/browser';
 import extractData from './extract-data';
-import { $, $$, fish } from '../../../helpers';
 import { Films, GetFilmsOpt } from './types';
 
 async function getFilms({ link, collector, myFilmsIDs }: GetFilmsOpt): Promise<Films> {

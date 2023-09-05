@@ -1,5 +1,5 @@
+import { fish } from '@jeniex/utils/browser';
 import getIdentifier from '../get-identifier';
-import { fish } from '../../../../helpers';
 
 async function fetchIdentifier(filmLink: string): Promise<string> {
   const documentX = await fish.document(filmLink);

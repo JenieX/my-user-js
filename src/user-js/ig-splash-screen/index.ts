@@ -1,4 +1,4 @@
-import { addStyle } from '../../helpers';
+import { addStyle } from '@jeniex/utils/browser';
 
 const splashScreenFrame = document.createElement('iframe');
 splashScreenFrame.setAttribute('id', 'ig-splash-screen');

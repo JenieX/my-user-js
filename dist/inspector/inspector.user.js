@@ -21,41 +21,61 @@
 // @license        MIT
 // ==/UserScript==
 
-const SCRIPT_NAME = (typeof GM === 'undefined' ? GM_info : GM.info).script.name;
+async function sleep(milliSeconds) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliSeconds);
+  });
+}
+
+let infoObject;
+if (typeof GM !== 'undefined') {
+  infoObject = GM.info;
+  // eslint-disable-next-line unicorn/no-negated-condition
+} else if (typeof GM_info === 'undefined') {
+  infoObject = { script: { name: document.title } };
+} else {
+  infoObject = GM_info;
+}
+
+const scriptName = infoObject.script.name;
 
 function alert$1(message) {
   if (message === undefined) {
-    window.alert(`[ ${SCRIPT_NAME} ]`);
+    window.alert(`[ ${scriptName} ]`);
 
     return;
   }
 
-  window.alert(`[ ${SCRIPT_NAME} ]\n\n${message}`);
+  window.alert(`[ ${scriptName} ]\n\n${message}`);
 }
 
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-// https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-/**
- * When setting the cookie header, anonymous property must be set to `true`
- * https://violentmonkey.github.io/api/gm/#gm_xmlhttprequest
- */
-async function fishXResponse(url, fishOptions = {}) {
-  const { method, headers, anonymous, body, onProgress } = fishOptions;
+async function fishResponse(url, options) {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Request to ${response.url} ended with ${response.status} status.`);
+  }
+
+  return response;
+}
+
+// Note: to set the 'cookie' header, you have to set 'anonymous' to true.
+async function fishXResponse(url, fishOptions) {
+  const { method, anonymous, headers, body, timeOut, onProgress } = fishOptions ?? {};
 
   return new Promise((resolve, reject) => {
     GM.xmlHttpRequest({
       url,
       method: method ?? 'GET',
       headers,
-      // @ts-expect-error
       anonymous,
       data: body,
       responseType: 'blob',
+      timeout: timeOut,
       onprogress: onProgress,
       onload({ response, statusText, status, finalUrl }) {
         const ok = status >= 200 && status < 300;
         if (!ok) {
-          reject(new Error(`Request to ${url} ended with ${status} status`));
+          reject(new Error(`Request to ${url} ended with ${status} status.`));
 
           return;
         }
@@ -69,51 +89,51 @@ async function fishXResponse(url, fishOptions = {}) {
         resolve(properResponse);
       },
       onerror({ status }) {
-        reject(new Error(`Request to ${url} ended with ${status} status`));
+        reject(new Error(`Request to ${url} ended with ${status} status.`));
       },
     });
   });
 }
 
-const fishX = {
-  async buffer(url, fishOptions) {
-    const response = await fishXResponse(url, fishOptions);
-    const responseBuffer = await response.arrayBuffer();
+async function fishBlob(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
 
-    return responseBuffer;
-  },
-  async blob(url, fishOptions) {
-    const response = await fishXResponse(url, fishOptions);
-    const responseBlob = await response.blob();
-
-    return responseBlob;
-  },
-  async json(url, fishOptions) {
-    const response = await fishXResponse(url, fishOptions);
-    const responseJSON = await response.json();
-
-    return responseJSON;
-  },
-  async text(url, fishOptions) {
-    const response = await fishXResponse(url, fishOptions);
-    const responseText = await response.text();
-
-    return responseText;
-  },
-  async document(url, fishOptions) {
-    const response = await fishXResponse(url, fishOptions);
-    const responseText = await response.text();
-    const parser = new DOMParser();
-
-    return parser.parseFromString(responseText, 'text/html');
-  },
-};
-
-async function sleep(milliSeconds) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliSeconds);
-  });
+  return response.blob();
 }
+
+async function fishBuffer(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.arrayBuffer();
+}
+
+async function fishDocument(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+  const responseText = await response.text();
+  const parser = new DOMParser();
+
+  return parser.parseFromString(responseText, 'text/html');
+}
+
+async function fishJson(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.json();
+}
+
+async function fishText(url, options, x) {
+  const response = await (x ? fishXResponse : fishResponse)(url, options);
+
+  return response.text();
+}
+
+const fishX = {
+  blob: async (url, options) => fishBlob(url, options, true),
+  buffer: async (url, options) => fishBuffer(url, options, true),
+  document: async (url, options) => fishDocument(url, options, true),
+  json: async (url, options) => fishJson(url, options, true),
+  text: async (url, options) => fishText(url, options, true),
+};
 
 async function getIdentifier(port, targetURL) {
   const debugEntries = await fishX.json(`http://localhost:${port}/json`);

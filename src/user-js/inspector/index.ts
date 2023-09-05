@@ -1,5 +1,5 @@
+import { alert, sleep } from '@jeniex/utils/browser';
 import OpenDevTools from './js/open';
-import { alert, sleep } from '../../helpers';
 import { getPort, setPort } from './js/config';
 import {
   PR_BACKGROUND_PAGE_URL,

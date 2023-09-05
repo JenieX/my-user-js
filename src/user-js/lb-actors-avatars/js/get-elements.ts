@@ -1,5 +1,5 @@
+import { $, $$ } from '@jeniex/utils/browser';
 import selectors from './selectors';
-import { $, $$ } from '../../../helpers';
 import { Elements } from './types';
 
 function getElements(): Elements {

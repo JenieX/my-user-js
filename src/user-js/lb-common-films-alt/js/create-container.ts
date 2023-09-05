@@ -1,4 +1,4 @@
-import { $ } from '../../../helpers';
+import { $ } from '@jeniex/utils/browser';
 import { TooltipElements } from './types';
 
 function createContainer(): TooltipElements {

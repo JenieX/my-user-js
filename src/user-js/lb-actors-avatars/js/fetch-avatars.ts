@@ -1,5 +1,5 @@
+import { $, $$, fishX } from '@jeniex/utils/browser';
 import selectors from './selectors';
-import { $, $$, fishX } from '../../../helpers';
 import { Avatars } from './types';
 
 async function fetchAvatars(): Promise<Record<string, string>> {
