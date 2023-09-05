@@ -2,10 +2,10 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
 
 export interface FishOptions extends RequestInit {
-  method?: GM.Request['method'],
-  headers?: GM.Request['headers'],
+  method?: string,
+  headers?: Record<string, string>,
   body?: Blob | FormData | string,
-  onProgress?: GM.Request['onprogress'],
+  onProgress?: (response: VMScriptResponseObject<Blob>) => Promise<void> | void,
   anonymous?: boolean,
 }
 
@@ -22,7 +22,6 @@ async function fishXResponse(url: string, fishOptions: FishOptions = {}): Promis
       url,
       method: method ?? 'GET',
       headers,
-      // @ts-expect-error
       anonymous,
       data: body,
       responseType: 'blob',
