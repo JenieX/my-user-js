@@ -43,6 +43,7 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
         include: [
           './src/helpers/*.ts',
           `./src/user-js/${userScript}/**/*.ts`,
+          './node_modules/@violentmonkey/types/index.d.ts',
         ],
       }),
       replacement({ userScript, distPath, files }),

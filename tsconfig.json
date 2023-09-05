@@ -11,6 +11,6 @@
     "checkJs": true,
     "outDir": "./temp"
   },
-  "include": ["**/*/", ".husky/scripts/"],
+  "include": ["**/*/", ".husky/scripts/", "node_modules/@violentmonkey/types"],
   "exclude": ["dist/**/*.dev.js", "dist/**/*.raw.js"]
 }
