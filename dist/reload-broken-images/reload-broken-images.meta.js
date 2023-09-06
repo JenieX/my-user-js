@@ -11,7 +11,7 @@
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
 // @supportURL     https://github.com/JenieX/user-js/issues
-// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/user-js/reload-broken-images
+// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/reload-broken-images
 // @updateURL      https://github.com/JenieX/user-js/raw/main/dist/reload-broken-images/reload-broken-images.meta.js
 // @downloadURL    https://github.com/JenieX/user-js/raw/main/dist/reload-broken-images/reload-broken-images.user.js
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io

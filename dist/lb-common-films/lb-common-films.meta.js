@@ -14,7 +14,7 @@
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
 // @supportURL     https://github.com/JenieX/user-js/issues
-// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/user-js/lb-common-films
+// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/lb-common-films
 // @updateURL      https://github.com/JenieX/user-js/raw/main/dist/lb-common-films/lb-common-films.meta.js
 // @downloadURL    https://github.com/JenieX/user-js/raw/main/dist/lb-common-films/lb-common-films.user.js
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com

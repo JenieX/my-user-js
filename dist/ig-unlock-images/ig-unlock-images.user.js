@@ -10,7 +10,7 @@
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
 // @supportURL     https://github.com/JenieX/user-js/issues
-// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/user-js/ig-unlock-images
+// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/ig-unlock-images
 // @updateURL      https://github.com/JenieX/user-js/raw/main/dist/ig-unlock-images/ig-unlock-images.meta.js
 // @downloadURL    https://github.com/JenieX/user-js/raw/main/dist/ig-unlock-images/ig-unlock-images.user.js
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=www.instagram.com

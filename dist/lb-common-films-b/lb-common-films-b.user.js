@@ -11,7 +11,7 @@
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
 // @supportURL     https://github.com/JenieX/user-js/issues
-// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/user-js/lb-common-films-b
+// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/lb-common-films-b
 // @updateURL      https://github.com/JenieX/user-js/raw/main/dist/lb-common-films-b/lb-common-films-b.meta.js
 // @downloadURL    https://github.com/JenieX/user-js/raw/main/dist/lb-common-films-b/lb-common-films-b.user.js
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io

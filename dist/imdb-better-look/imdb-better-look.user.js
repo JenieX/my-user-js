@@ -10,7 +10,7 @@
 // @compatible     edge Violentmonkey
 // @compatible     chrome Violentmonkey
 // @supportURL     https://github.com/JenieX/user-js/issues
-// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/user-js/imdb-better-look
+// @homepageURL    https://github.com/JenieX/user-js/tree/main/src/imdb-better-look
 // @updateURL      https://github.com/JenieX/user-js/raw/main/dist/imdb-better-look/imdb-better-look.meta.js
 // @downloadURL    https://github.com/JenieX/user-js/raw/main/dist/imdb-better-look/imdb-better-look.user.js
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=www.imdb.com
