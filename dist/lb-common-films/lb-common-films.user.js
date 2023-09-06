@@ -113,7 +113,7 @@ async function fishDocument(url, options, x) {
   return parser.parseFromString(responseText, 'text/html');
 }
 
-async function fishJson(url, options, x) {
+async function fishJSON(url, options, x) {
   const response = await (x ? fishXResponse : fishResponse)(url, options);
 
   return response.json();
@@ -130,7 +130,7 @@ const fish = {
   blob: async (url, options) => fishBlob(url, options),
   buffer: async (url, options) => fishBuffer(url, options),
   document: async (url, options) => fishDocument(url, options),
-  json: async (url, options) => fishJson(url, options),
+  JSON: async (url, options) => fishJSON(url, options),
   text: async (url, options) => fishText(url, options),
 };
 
