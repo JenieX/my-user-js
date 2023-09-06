@@ -1,15 +1,32 @@
 {
   "lastRunChoices": [
-    "lb-extra-links"
+    "gh-no-symbols-panel",
+    "ig-no-suggestions",
+    "ig-scroll-carousel",
+    "ig-splash-screen",
+    "ig-unlock-images",
+    "imdb-better-look",
+    "imdb-letterboxd-link",
+    "inspector",
+    "lb-actors-avatars",
+    "lb-common-films",
+    "lb-common-films-alt",
+    "lb-common-films-b",
+    "lb-common-films-nightly",
+    "lb-extra-links",
+    "rarbg-captcha-solver",
+    "reload-broken-images",
+    "test-script"
   ],
   "sharedModules": {
-    "/super-awesome/js/test.ts": [
-      "ig-scroll-carousel"
+    "lb-common-films-nightly-X": [
+      "lb-common-films-b"
     ]
   },
   "aliases": {
     "gh": "github",
     "ig": "instagram",
+    "imdb": "imdb",
     "lb": "letterboxd"
   }
 }

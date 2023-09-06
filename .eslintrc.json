@@ -2,7 +2,8 @@
   "extends": "@jeniex/eslint-config",
   "rules": {
     "import/extensions": [2, "ignorePackages", { "ts": "never" }],
-    "@typescript-eslint/keyword-spacing": 1
+    "@typescript-eslint/keyword-spacing": 1,
+    "unicorn/prefer-json-parse-buffer": 0
   },
   "overrides": [
     {

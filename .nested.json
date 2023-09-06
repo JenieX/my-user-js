@@ -1,0 +1,17 @@
+{
+  "package.json": [
+    ".commitlint*",
+    ".eslint*",
+    ".gitignore",
+    ".nested.json",
+    ".prettier*",
+    "config.json",
+    "package-lock.json",
+    "rollup.config.*",
+    "scrap.ts",
+    "to-do.md",
+    "tsconfig-rollup-config.json",
+    "tsconfig.*.json",
+    "tsconfig.json"
+  ]
+}

@@ -6,17 +6,17 @@
     "dist/**/*.html": true,
     "dist/**/*.meta.js": true,
     "dist/**/*.raw.js.map": true,
+    "dummy.js": true,
     "node_modules": true,
-    // "tasks": true,
-    "utils": true
+    "src/lb-common-films": true,
+    "src/lb-common-films-alt": true,
+    "src/lb-common-films-b": true
   },
-  // "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
   "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
   "code-runner.executorMap": { "typescript": "tsx" },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "testing.js": "testing.*.ts, testing.*.js",
-    "package.json": ".gitignore, config.json, tsconfig-rollup-config.json, tsconfig.json, .commitlint*, .eslint*, .prettier*, package-lock.json, rollup.config.*"
+    "package.json": ".commitlint*, .eslint*, .gitignore, .nested.json, .prettier*, config.json, package-lock.json, rollup.config.*, scrap.ts, to-do.md, tsconfig-rollup-config.json, tsconfig.*.json, tsconfig.json"
   }
 }

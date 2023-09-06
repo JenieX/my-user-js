@@ -6,7 +6,7 @@ dist/**/*.*
 
 node_modules/
 
-testing.js
+dummy.js
 **/testing.*.*
 
 dist/rarbg-captcha-solver/
@@ -21,3 +21,6 @@ src/lb-common-films-b/
 dist/lb-common-films-nightly/
 src/lb-common-films-nightly/
 
+utils-node
+to-do.md
+scrap.ts

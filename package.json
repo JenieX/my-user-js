@@ -4,12 +4,13 @@
   "author": "JenieX",
   "type": "module",
   "scripts": {
-    "watch": "tsx ./tasks/index.ts --watch",
+    "develop": "tsx ./tasks/index.ts --watch",
     "build": "tsx ./tasks/index.ts",
     "build-docs": "tsx ./tasks/docs.ts",
-    "serve": "tsx utils/remove-build.ts && rollup --config --configPlugin \"typescript={tsconfig: './tsconfig-rollup-config.json'}\" && node build/user-js-server.js",
+    "serve": "tsx utils/remove-build.ts && rollup --config --configPlugin \"typescript={include: ['./rollup.config.ts']}\" && node build/user-js-server.js",
     "stage": "ngit-cli add",
-    "commit": "npm run stage && start cmd /k \"git status && cd node_modules/.bin && commit -h"
+    "commit": "npm run stage && start cmd /k \"git status && cd node_modules/.bin && commit -h",
+    "config": "echo To be added!"
   },
   "homepage": "https://github.com/JenieX/user-js",
   "bugs": "https://github.com/JenieX/user-js/issues",
@@ -33,6 +34,7 @@
     "htmlnano": "^2.0.4",
     "husky": "^8.0.3",
     "inquirer": "^9.2.2",
+    "json5": "^2.2.3",
     "magic-string": "^0.30.0",
     "minimist": "^1.2.8",
     "ngit-cli": "^1.2.0",
