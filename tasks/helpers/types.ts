@@ -130,11 +130,11 @@ export interface GenerateReadMe {
   userScriptAlias: string,
 
   /** The full description of the user script */
-  description: string,
+  description?: string,
 
   /** Instructions on how to use this user script */
-  usage: string,
+  usage?: string,
 
-  limitations: string,
+  limitations?: string,
   related: RelatedScripts[],
 }

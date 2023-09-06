@@ -30,7 +30,7 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
   const { userScript, distPath, files } = options;
 
   /** The absolute path of the index file of the provided user script */
-  const indexFilePath = path.resolve('src/user-js', userScript, 'index.ts');
+  const indexFilePath = path.resolve('src', userScript, 'index.ts');
 
   if (fs.existsSync(indexFilePath) === false) {
     throw new Error('This user script does not have an index file');
@@ -41,8 +41,7 @@ async function bundleTask(options: BundleTaskOptions): Promise<[string, string]>
     plugins: [
       typescript({
         include: [
-          './src/helpers/*.ts',
-          `./src/user-js/${userScript}/**/*.ts`,
+          `./src/${userScript}/**/*.ts`,
           './node_modules/@violentmonkey/types/index.d.ts',
         ],
       }),

@@ -22,7 +22,7 @@ async function lintTask({ devBundle, metadataBlock }: LintTaskOptions): Promise<
 
   const results = await eslintInstance.lintText(userBundle, {
     // A hack to bypass the `@typescript-eslint/parser` error.
-    filePath: 'testing.js',
+    filePath: 'dummy.js',
   });
 
   const lintedCode = results[0]!.output;

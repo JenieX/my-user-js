@@ -26,7 +26,7 @@ fetch(url)
 
 async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Promise<string> {
   /** The absolute path of the metadata file of the provided user script */
-  const metadataFilePath = path.resolve('src/user-js', userScript, 'metadata.json');
+  const metadataFilePath = path.resolve('src', userScript, 'metadata.json');
 
   if (fs.existsSync(metadataFilePath) === false) {
     throw new Error('This user script does not have a metadata file');

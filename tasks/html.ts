@@ -7,7 +7,7 @@ import { HTMLTaskOptions } from './helpers/types';
 
 async function htmlTask({ userScript, distPath }: HTMLTaskOptions): Promise<string[]> {
   /** The absolute path of the document folder of the provided user script */
-  const documentFolderPath = path.resolve('src/user-js', userScript, 'html');
+  const documentFolderPath = path.resolve('src', userScript, 'html');
 
   /** A list of absolute paths to the document files located at the user script document folder */
   const documentFilesPaths = await listFiles({

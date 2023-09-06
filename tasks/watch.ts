@@ -5,7 +5,7 @@ import { watcherLogger } from './helpers/logger';
 
 function watchTask({ userScripts }: { userScripts: string[] }): Watcher {
   const userScriptsPaths = userScripts.map((userScript) => {
-    return path.resolve('src/user-js', userScript);
+    return path.resolve('src', userScript);
   });
 
   watcherLogger(userScripts);

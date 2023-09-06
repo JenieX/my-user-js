@@ -1,25 +1,24 @@
 import path from 'node:path';
 import getItemInfo from './get-item-info';
 
-const userScriptsAbsolutePath = path.resolve('./src/user-js');
+const sourceAbsolutePath = path.resolve('./src');
 
-function watcherIgnore(itemAbsolutePath: string): boolean {
-  const itemPath = itemAbsolutePath.replace(userScriptsAbsolutePath, '');
-  const itemPathSegments = itemPath.split('\\');
+function watcherIgnore(scriptAbsolutePath: string): boolean {
+  const scriptRelativePath = scriptAbsolutePath.replace(sourceAbsolutePath, '');
+  const itemPathSegments = scriptRelativePath.split('\\');
 
-  // ------------------------
-  /** Just to make the process easier after */
-  if (itemAbsolutePath === userScriptsAbsolutePath) {
+  /** Just to make the process easier after. */
+  if (scriptAbsolutePath === sourceAbsolutePath) {
     return false;
   }
 
-  // ------------------------
-  // Example: \userscript-name
+  /** Example: "\userscript-name". */
   if (itemPathSegments.length === 2) {
     return false;
   }
 
   // ------------------------
+
   const stripedItemPath = itemPathSegments.slice(2).join('\\');
 
   const allowedAtRoot = [
@@ -39,20 +38,19 @@ function watcherIgnore(itemAbsolutePath: string): boolean {
   }
 
   // ------------------------
-  const itemInfo = getItemInfo(itemPath);
+
+  const itemInfo = getItemInfo(scriptRelativePath);
 
   /** The case of files that are targets */
   if (itemInfo.type !== undefined) {
     return false;
   }
 
-  // ------------------------
   /** The case of files (or folders containing a "."), which will be ignored */
   if (itemInfo.isFile) {
     return true;
   }
 
-  // ------------------------
   /** The case of folders or files with no "."  */
   return false;
 }

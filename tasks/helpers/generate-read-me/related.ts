@@ -8,7 +8,7 @@ function relatedScriptsSectionTemplate(relatedScripts: RelatedScripts[]): string
 
   for (const { userScript, userScriptAlias } of relatedScripts) {
     const properUserScriptName = capitalizeWords(userScript.replaceAll('-', ' '));
-    relatedScriptsSection += `- [${properUserScriptName}](https://github.com/JenieX/user-js/tree/main/src/user-js/${userScriptAlias})\n`;
+    relatedScriptsSection += `- [${properUserScriptName}](https://github.com/JenieX/user-js/tree/main/src/${userScriptAlias})\n`;
   }
 
   relatedScriptsSection += '\n';

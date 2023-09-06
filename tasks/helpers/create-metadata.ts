@@ -34,7 +34,7 @@ function createMetaData(options: UserScriptSpecificMetaData, alias: string): JSO
     noframes: '',
     compatible: ['edge Violentmonkey', 'chrome Violentmonkey'],
     supportURL: bugs,
-    homepageURL: `${homepage}/tree/main/src/user-js/${alias}`,
+    homepageURL: `${homepage}/tree/main/src/${alias}`,
     updateURL: `${homepage}/raw/main/dist/${alias}/${alias}.meta.js`,
     downloadURL: `${homepage}/raw/main/dist/${alias}/${alias}.user.js`,
     icon,

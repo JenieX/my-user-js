@@ -8,7 +8,7 @@ import { CSSTaskOptions } from './helpers/types';
 
 async function cssTask({ userScript, distPath }: CSSTaskOptions): Promise<string[]> {
   /** The absolute path of the style folder of the provided user script */
-  const styleFolderPath = path.resolve('src/user-js', userScript, 'css');
+  const styleFolderPath = path.resolve('src', userScript, 'css');
 
   /** A list of absolute paths to the style files located at the user script style folder */
   const styleFilesPaths = await listFiles({

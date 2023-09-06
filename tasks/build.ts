@@ -29,7 +29,7 @@ async function runBuildTask(buildOptions: BuildTaskOptions): Promise<void> {
     await buildTask(buildOptions);
     building = false;
   } else {
-    console.warn('There is already a build task in progress');
+    console.warn('There is already a build task in progress.');
   }
 }
 
@@ -67,13 +67,6 @@ async function buildTask(options: BuildTaskOptions): Promise<void> {
 
     let userBundle: string | undefined;
     if (lint === true) {
-      // devBundle = devBundle.replaceAll(/^\/\* (.+) \*\/$/gm, (match, g1) => {
-      //   if (g1.includes('@typescript-eslint')) {
-      //     return '';
-      //   }
-
-      //   return match;
-      // });
       userBundle = await run<string>(lintTask, { devBundle, metadataBlock });
     }
 
@@ -87,7 +80,7 @@ async function buildTask(options: BuildTaskOptions): Promise<void> {
   }
 
   if (watch !== undefined) {
-    const userScriptsAbsolutePath = path.resolve('./src/user-js');
+    const userScriptsAbsolutePath = path.resolve('./src');
 
     const watcher = watchTask({ userScripts });
 
