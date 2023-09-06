@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           jx-letterboxd-actors-avatars
-// @version        0.0.1
+// @version        0.0.2
 // @namespace      https://github.com/JenieX/user-js
 // @description    Adds avatars to the list of actors in films pages.
 // @author         JenieX
@@ -171,7 +171,7 @@ const selectors = {
     avatar: 'section[cel_widget_id="StaticFeature_Cast"] img.ipc-image',
   },
   letterboxd: {
-    actor: '#tab-cast a[href^="/actor/contributor:"',
+    actor: '#tab-cast a[href^="/actor/"',
     imdb: 'a[href*="www.imdb.com/title/"]',
   },
 };

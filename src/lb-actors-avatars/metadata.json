@@ -1,6 +1,6 @@
 {
   "name": "letterboxd-actors-avatars",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Adds avatars to the list of actors in films pages.",
   "match": ["https://letterboxd.com/film/*/"],
   "excludeMatch": [

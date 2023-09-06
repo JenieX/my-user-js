@@ -3,7 +3,7 @@ const selectors = {
     avatar: 'section[cel_widget_id="StaticFeature_Cast"] img.ipc-image',
   },
   letterboxd: {
-    actor: '#tab-cast a[href^="/actor/contributor:"',
+    actor: '#tab-cast a[href^="/actor/"',
     imdb: 'a[href*="www.imdb.com/title/"]',
   },
 };
