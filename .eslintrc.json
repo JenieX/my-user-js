@@ -3,7 +3,8 @@
   "rules": {
     "import/extensions": [2, "ignorePackages", { "ts": "never" }],
     "@typescript-eslint/keyword-spacing": 1,
-    "unicorn/prefer-json-parse-buffer": 0
+    "unicorn/prefer-json-parse-buffer": 0,
+    "@typescript-eslint/space-before-blocks": 1
   },
   "overrides": [
     {
