@@ -55,7 +55,7 @@ async function metadataTask({ userScript, distPath }: MetadataTaskOptions): Prom
   mergedMetadata.version = '0.0.0';
 
   const developerMetadataBlock = createMetadataBlock(mergedMetadata);
-  const developerScriptCode = developerScriptCodeTemplate.replace('{userScript}', userScript);
+  const developerScriptCode = developerScriptCodeTemplate.replaceAll('{userScript}', userScript);
   const developerScript = developerMetadataBlock + developerScriptCode;
 
   const developerScriptFileName = `${userScript}.dev.js`;
