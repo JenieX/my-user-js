@@ -1,26 +1,17 @@
+.vscode/
 build/
-
-dist/**/*.*
-!dist/**/*.meta.js
-!dist/**/*.user.js
-
+dist/
 node_modules/
 
 dummy.js
 **/testing.*.*
 
-dist/rarbg-captcha-solver/
 src/rarbg-captcha-solver/
-
-dist/test-script/
 src/test-script/
-
-dist/lb-common-films-b/
 src/lb-common-films-b/
-
-dist/lb-common-films-nightly/
-src/lb-common-films-nightly/
+src/lb-common-taste/
 
 utils-node
 to-do.md
 scrap.ts
+config.json

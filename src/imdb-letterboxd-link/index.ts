@@ -4,6 +4,8 @@ import createElement from './js/create-element';
 import getIdentifier from './js/get-Identifier';
 import getLink from './js/get-link';
 
+// TODO Allow script on trailers pages by exposing LB link inside session storage.
+
 async function main(): Promise<void> {
   const imdbIdentifier = getIdentifier();
 

@@ -1,0 +1,40 @@
+section.col-17.col-main {
+  width: 100%;
+}
+
+.icon-common {
+  padding-left: 24px;
+}
+
+.icon-common > .icon {
+  background-position: -410px -90px;
+  height: 16px;
+  width: 20px;
+}
+
+.person-table .table-stats {
+  width: unset !important;
+}
+
+.person-table .table-person {
+  width: 35% !important;
+}
+
+.cols-2 > .sidebar {
+  display: none;
+}
+
+// .sidebar:not(#find-friends) {
+//   position: absolute;
+//   right: 25px;
+//   top: 230px;
+// }
+
+// .poster-list.-p230 .poster {
+//   width: fit-content !important;
+// }
+
+// .poster-list.-p230 .poster .image {
+//   width: 150px;
+//   height: auto;
+// }

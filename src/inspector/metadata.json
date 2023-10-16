@@ -5,5 +5,10 @@
   "match": ["*://*/*", "file:///*"],
   "runAt": "document-start",
   "icon": "https://www.google.com/s2/favicons?sz=64&domain=violentmonkey.github.io",
-  "grant": ["GM.registerMenuCommand", "GM.setValue", "GM.getValue"]
+  "grant": [
+    "GM.xmlHttpRequest",
+    "GM.registerMenuCommand",
+    "GM.setValue",
+    "GM.getValue"
+  ]
 }

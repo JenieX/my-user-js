@@ -1,0 +1,14 @@
+{
+  "name": "letterboxd-common-films-nightly",
+  "version": "1.0.0",
+  "description": "Discover users on Letterboxd with similar movie tastes",
+  "match": ["https://letterboxd.com/*"],
+  "runAt": "document-start",
+  "icon": "https://www.google.com/s2/favicons?sz=64&domain=letterboxd.com",
+  "grant": ["GM.registerMenuCommand"],
+  "require": [
+    "https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.js",
+    "https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.js",
+    "https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.js"
+  ]
+}
