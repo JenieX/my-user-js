@@ -1,4 +1,4 @@
-import { alert } from '@jeniex/utils/browser';
+import { alert, tabURL } from '@jeniex/utils/browser';
 import createTooltip from './create-tooltip';
 import evaluateFilms from './evaluate-films';
 import messages from './messages';
@@ -14,7 +14,13 @@ async function prepareTooltip(instance: TippyInstance, filter?: EvalFilter): Pro
   state.lasRunFilter = filter;
   const element = instance.reference as HTMLAnchorElement;
 
-  const user = element.getAttribute('href')!.slice(1, -1);
+  let user: string;
+
+  if (element.matches('#avatar-zoom')) {
+    user = tabURL.split('/')[3]!;
+  } else {
+    user = element.getAttribute('href')!.slice(1, -1);
+  }
 
   if (IS_ANDROID) {
     element.removeAttribute('href');
@@ -55,7 +61,9 @@ async function prepareTooltip(instance: TippyInstance, filter?: EvalFilter): Pro
     return;
   }
 
-  const totalFilms = commonFilms.totalFilms!;
+  const totalFilms = commonFilms.totalFilms!.slice(0, -6);
+
+  // console.log(commonFilms);
 
   const evaluatedFilms = evaluateFilms({
     commonFilms,
@@ -65,20 +73,18 @@ async function prepareTooltip(instance: TippyInstance, filter?: EvalFilter): Pro
 
   // console.log(evaluatedFilms);
 
+  const commonFilmsLength = evaluatedFilms.filter(({ myRating }) => {
+    return /* label === 'watchlisted' && */ myRating !== undefined;
+  }).length;
+
   const commonFilmsText = createTooltip({
     evaluatedFilms,
     user,
-    totalFilms,
+    totalFilms: `${commonFilmsLength} / ${totalFilms}`,
   });
 
   instance.setProps({ interactive: true });
   instance.setContent(commonFilmsText);
-
-  // const similarlyEvent = new CustomEvent('jx-lb-common-films-similarly', {
-  //   detail: { message: { user, similarly } },
-  // });
-
-  // document.dispatchEvent(similarlyEvent);
 
   // eslint-disable-next-line no-param-reassign
   instance.busy = false;
@@ -95,8 +101,6 @@ async function prepareTooltip(instance: TippyInstance, filter?: EvalFilter): Pro
 }
 
 async function attachTooltip(element: HTMLAnchorElement): Promise<void> {
-  // console.log(element);
-
   tippy(element, {
     async onShow(instance) {
       if (instance.options === undefined) {

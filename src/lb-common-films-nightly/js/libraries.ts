@@ -11,6 +11,7 @@ const Cookies = win.Cookies ?? winX.Cookies;
 unsafeWindow.Cookies = Cookies;
 
 tippy.setDefaultProps({
+  appendTo: document.documentElement,
   allowHTML: true,
   placement: 'right',
   maxWidth: 'none',

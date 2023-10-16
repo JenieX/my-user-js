@@ -4,12 +4,9 @@
   "author": "JenieX",
   "type": "module",
   "scripts": {
-    "develop": "tsx ./tasks/index.ts --watch",
+    "dev": "tsx ./tasks/index.ts --watch",
     "build": "tsx ./tasks/index.ts",
-    "serve": "tsx utils/remove-build.ts && rollup --config --configPlugin \"typescript={include: ['./rollup.config.ts']}\" && node build/user-js-server.js",
-    "stage": "ngit-cli add",
-    "commit": "npm run stage && start cmd /k \"git status && cd node_modules/.bin && commit -h",
-    "config": "echo To be added!"
+    "serve": "tsx utils/remove-build.ts && rollup --config --configPlugin \"typescript={include: ['./rollup.config.ts']}\" && node build/user-js-server.js"
   },
   "homepage": "https://github.com/JenieX/user-js",
   "bugs": "https://github.com/JenieX/user-js/issues",
