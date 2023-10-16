@@ -6,6 +6,7 @@
 // @author         JenieX
 // @match          *://*/*
 // @match          file:///*
+// @grant          GM.xmlHttpRequest
 // @grant          GM.registerMenuCommand
 // @grant          GM.setValue
 // @grant          GM.getValue

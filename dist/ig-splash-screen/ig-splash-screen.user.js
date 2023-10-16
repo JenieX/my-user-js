@@ -29,16 +29,26 @@ function addStyle(css, parent = document.documentElement) {
 const splashScreenFrame = document.createElement('iframe');
 splashScreenFrame.setAttribute('id', 'ig-splash-screen');
 document.documentElement.append(splashScreenFrame);
-addStyle('body{background-color:#081017}svg{fill:#fff;inset:0;margin:auto;position:absolute}', splashScreenFrame.contentDocument.head);
-splashScreenFrame.contentDocument.body.insertAdjacentHTML('beforeend', '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 50 50"><path d="M16 3C8.832 3 3 8.832 3 16v18c0 7.168 5.832 13 13 13h18c7.168 0 13-5.832 13-13V16c0-7.168-5.832-13-13-13H16zm0 2h18c6.086 0 11 4.914 11 11v18c0 6.086-4.914 11-11 11H16C9.914 45 5 40.086 5 34V16C5 9.914 9.914 5 16 5zm21 6a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2zm-12 3c-6.063 0-11 4.937-11 11s4.937 11 11 11 11-4.937 11-11-4.937-11-11-11zm0 2c4.982 0 9 4.018 9 9s-4.018 9-9 9-9-4.018-9-9 4.018-9 9-9z"/></svg>');
-const mainStyle = addStyle('body,html{overflow:hidden}::-webkit-scrollbar{display:none}iframe#ig-splash-screen{border:0;height:100%;inset:0;position:fixed;width:100%;z-index:3000}');
+addStyle(
+  'body{background-color:#081017}svg{fill:#fff;inset:0;margin:auto;position:absolute}',
+  splashScreenFrame.contentDocument.head,
+);
+splashScreenFrame.contentDocument.body.insertAdjacentHTML(
+  'beforeend',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 50 50"><path d="M16 3C8.832 3 3 8.832 3 16v18c0 7.168 5.832 13 13 13h18c7.168 0 13-5.832 13-13V16c0-7.168-5.832-13-13-13H16zm0 2h18c6.086 0 11 4.914 11 11v18c0 6.086-4.914 11-11 11H16C9.914 45 5 40.086 5 34V16C5 9.914 9.914 5 16 5zm21 6a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2zm-12 3c-6.063 0-11 4.937-11 11s4.937 11 11 11 11-4.937 11-11-4.937-11-11-11zm0 2c4.982 0 9 4.018 9 9s-4.018 9-9 9-9-4.018-9-9 4.018-9 9-9z"/></svg>',
+);
+const mainStyle = addStyle(
+  'body,html{overflow:hidden}::-webkit-scrollbar{display:none}iframe#ig-splash-screen{border:0;height:100%;inset:0;position:fixed;width:100%;z-index:3000}',
+);
 
 function detectSplashScreen(mutations, observer) {
   for (const { target } of mutations) {
-    if (target.nodeType === Node.ELEMENT_NODE &&
-            target instanceof HTMLDivElement &&
-            target.matches('#splash-screen') &&
-            target.style.getPropertyValue('display') === 'none') {
+    if (
+      target.nodeType === Node.ELEMENT_NODE &&
+      target instanceof HTMLDivElement &&
+      target.matches('#splash-screen') &&
+      target.style.getPropertyValue('display') === 'none'
+    ) {
       observer.disconnect();
       splashScreenFrame.remove();
       mainStyle.remove();

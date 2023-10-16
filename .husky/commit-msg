@@ -3,4 +3,4 @@
 
 # npx --no -- commitlint --edit ${1}
 ./node_modules/.bin/commitlint --edit
-./node_modules/.bin/tsx ./.husky/scripts/transform-types.ts ${1}
+# ./node_modules/.bin/tsx ./.husky/scripts/transform-types.ts ${1}
